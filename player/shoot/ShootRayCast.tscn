@@ -1,0 +1,47 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://player/shoot/ShootRayCast.gd" type="Script" id=1]
+[ext_resource path="res://player/shoot/crosshair.png" type="Texture" id=2]
+
+[sub_resource type="CylinderMesh" id=1]
+top_radius = 0.03
+bottom_radius = 0.03
+height = 0.2
+
+[node name="ShootRayCast" type="RayCast"]
+enabled = true
+cast_to = Vector3( 0, 0, -100 )
+script = ExtResource( 1 )
+
+[node name="FireRate" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
+
+[node name="Shoulder" type="Position3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2, -0.2, 0 )
+
+[node name="Hand" type="Position3D" parent="Shoulder"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.08, 0.05, -0.35 )
+
+[node name="Weapon" type="MeshInstance" parent="Shoulder/Hand"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.03, 0 )
+mesh = SubResource( 1 )
+material/0 = null
+
+[node name="Crosshair" type="TextureRect" parent="."]
+modulate = Color( 1, 1, 1, 0.392157 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 2 )
+stretch_mode = 4
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ShootTween" type="Tween" parent="."]
+
+[node name="ReloadTween" type="Tween" parent="."]
+
+[node name="ShootSound" type="AudioStreamPlayer" parent="."]
+
+[node name="ReloadSound" type="AudioStreamPlayer" parent="."]

@@ -2,13 +2,13 @@ extends KinematicBody
 
 var mouse_sensitivity = 1
 
-var speed = 8
-var ground_acceleration = 8
-var air_acceleration = 2
+export var speed = 8
+export var ground_acceleration = 8
+export var air_acceleration = 2
 var acceleration = ground_acceleration
-var jump = 4.5
-var gravity = 9.8
-var stick_amount = 10
+export var jump_height = 4.5
+export var gravity = 9.8
+export var stick_amount = 10
 
 var direction = Vector3()
 var velocity = Vector3()
@@ -16,10 +16,13 @@ var movement = Vector3()
 var gravity_vec = Vector3()
 var grounded = true
 
+func _ready():
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+
 func _input(event):
 	if event is InputEventMouseMotion:
 		rotation_degrees.y -= event.relative.x * mouse_sensitivity / 10
-		$Camera.rotation_degrees.x = clamp($Camera.rotation_degrees.x - event.relative.y * mouse_sensitivity / 10, -90, 90)
+		$Head.rotation_degrees.x = clamp($Head.rotation_degrees.x - event.relative.y * mouse_sensitivity / 10, -90, 90)
 
 	direction = Vector3()
 	direction.z = -Input.get_action_strength("ui_up") + Input.get_action_strength("ui_down")
@@ -41,7 +44,7 @@ func _physics_process(delta):
 	
 	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
 		grounded = false
-		gravity_vec = Vector3.UP * jump
+		gravity_vec = Vector3.UP * jump_height
 	
 	velocity = velocity.linear_interpolate(direction * speed, acceleration * delta)
 	movement.z = velocity.z + gravity_vec.z
