@@ -1,6 +1,6 @@
 extends RayCast
 
-export var fire_rate = 0.2
+export var fire_rate = 0.1
 export var weapon_sway = 8.0
 export var max_ammo = 12
 
