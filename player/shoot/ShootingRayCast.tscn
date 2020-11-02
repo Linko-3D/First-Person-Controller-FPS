@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://player/shoot/ShootRayCast.gd" type="Script" id=1]
+[ext_resource path="res://player/shoot/ShootingRayCast.gd" type="Script" id=1]
 [ext_resource path="res://player/shoot/crosshair.png" type="Texture" id=2]
 
 [sub_resource type="CylinderMesh" id=1]
@@ -27,6 +27,9 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.08, 0.05, -0.35 )
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.03, 0 )
 mesh = SubResource( 1 )
 material/0 = null
+
+[node name="ShellPosition" type="Position3D" parent="Shoulder/Hand"]
+transform = Transform( 0.965926, -0.258819, 0, 0.258819, 0.965926, 0, 0, 0, 1, 0, 0.03, 0 )
 
 [node name="Crosshair" type="TextureRect" parent="."]
 modulate = Color( 1, 1, 1, 0.392157 )
