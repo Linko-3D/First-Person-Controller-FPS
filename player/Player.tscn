@@ -1,7 +1,9 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://player/Player.gd" type="Script" id=1]
-[ext_resource path="res://player/shoot/ShootingRayCast.tscn" type="PackedScene" id=2]
+[ext_resource path="res://player/abilities/shoot/ShootingRayCast.tscn" type="PackedScene" id=2]
+[ext_resource path="res://player/abilities/grab/GrabRayCast.tscn" type="PackedScene" id=3]
+[ext_resource path="res://player/abilities/hook/HookRayCast.tscn" type="PackedScene" id=4]
 
 [sub_resource type="CapsuleShape" id=1]
 radius = 0.5
@@ -33,11 +35,16 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0 )
 
 [node name="Camera" type="Camera" parent="Head"]
 cull_mask = 2147483649
+current = true
 
-[node name="Direction" type="MeshInstance" parent="Head/Camera"]
+[node name="Direction" type="MeshInstance" parent="Head"]
 transform = Transform( 1, 0, 0, 0, -1.62921e-07, 1, 0, -1, -1.62921e-07, 0, 0, -0.5 )
 layers = 2
 mesh = SubResource( 3 )
 material/0 = null
 
-[node name="ShootRayCast" parent="Head/Camera" instance=ExtResource( 2 )]
+[node name="ShootRayCast" parent="Head" instance=ExtResource( 2 )]
+
+[node name="GrabRayCast" parent="Head" instance=ExtResource( 3 )]
+
+[node name="HookRayCast" parent="Head" instance=ExtResource( 4 )]
