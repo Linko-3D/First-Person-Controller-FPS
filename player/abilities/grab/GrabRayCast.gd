@@ -8,7 +8,8 @@ var object_grabbed = null
 var grabbed = false
 
 func _physics_process(delta):
-	if Input.is_key_pressed(KEY_E):
+	if Input.is_key_pressed(KEY_E) and $Timer.is_stopped():
+		$Timer.start()
 		if object_grabbed:
 			object_grabbed = false
 		else:

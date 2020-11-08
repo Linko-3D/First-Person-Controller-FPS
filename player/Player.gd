@@ -29,8 +29,15 @@ func _input(event):
 		$Head.rotation_degrees.x = clamp($Head.rotation_degrees.x - event.relative.y * mouse_sensitivity / 10, -90, 90)
 	
 	direction = Vector3()
-	direction.z = -int(Input.is_key_pressed(KEY_W)) + int(Input.is_key_pressed(KEY_S))
-	direction.x = -int(Input.is_key_pressed(KEY_A)) + int(Input.is_key_pressed(KEY_D))
+	if Input.is_key_pressed(KEY_W) or Input.is_key_pressed(KEY_Z) or Input.is_key_pressed(KEY_UP):
+		direction.z = -1
+	if Input.is_key_pressed(KEY_S) or Input.is_key_pressed(KEY_DOWN):
+		direction.z = 1
+	if Input.is_key_pressed(KEY_A) or Input.is_key_pressed(KEY_Q) or Input.is_key_pressed(KEY_LEFT):
+		direction.x = -1
+	if Input.is_key_pressed(KEY_D) or Input.is_key_pressed(KEY_RIGHT):
+		direction.x = 1
+	
 	direction = direction.normalized().rotated(Vector3.UP, rotation.y)
 	
 	if Input.is_key_pressed(KEY_SHIFT):

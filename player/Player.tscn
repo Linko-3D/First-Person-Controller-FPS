@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://player/Player.gd" type="Script" id=1]
 [ext_resource path="res://player/abilities/shoot/ShootingRayCast.tscn" type="PackedScene" id=2]
 [ext_resource path="res://player/abilities/grab/GrabRayCast.tscn" type="PackedScene" id=3]
 [ext_resource path="res://player/abilities/hook/HookRayCast.tscn" type="PackedScene" id=4]
+[ext_resource path="res://player/abilities/spawn_object/SpawnObject.tscn" type="PackedScene" id=5]
 
 [sub_resource type="CapsuleShape" id=1]
 radius = 0.5
@@ -48,3 +49,5 @@ material/0 = null
 [node name="GrabRayCast" parent="Head" instance=ExtResource( 3 )]
 
 [node name="HookRayCast" parent="Head" instance=ExtResource( 4 )]
+
+[node name="SpawnObject" parent="Head" instance=ExtResource( 5 )]

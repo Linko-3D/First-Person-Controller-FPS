@@ -54,10 +54,15 @@ func _input(event):
 						get_tree().get_root().add_child(impact_instance)
 						impact_instance.global_transform.origin = get_collision_point()
 						impact_instance.look_at(get_collision_point() - get_collision_normal(), Vector3.UP)
-					
+						
 						if get_collider() is RigidBody:
 							get_collider().apply_central_impulse(-get_collision_normal() * 50)
 							impact_instance.hide_bullet()
+						
+						if get_collider().is_in_group("Destructible"):
+							get_collider().queue_free()
+							impact_instance.hide_bullet()
+				
 				yield(get_tree().create_timer(0.1), "timeout")
 				$Shoulder/Hand/Nozzle/ShootLight.hide()
 	
