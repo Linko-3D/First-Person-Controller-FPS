@@ -1,3 +1,5 @@
+# Spawn an object with middle click
+
 extends RayCast
 
 export (PackedScene) var object
@@ -7,10 +9,10 @@ var distance = 0
 
 func _input(event):
 	if event is InputEventMouseButton:
-		if event.button_index == 3 and event.is_pressed():
+		if event.button_index == BUTTON_MIDDLE and event.is_pressed():
 			if is_colliding() and object:
 				distance = global_transform.origin - get_collision_point()
-				if distance.length() >= 2:
+				if distance.length() >= 2.5:
 					var object_instance = object.instance()
 					get_tree().get_root().add_child(object_instance)
 
@@ -19,4 +21,3 @@ func _input(event):
 					snap.z = stepify(get_collision_point().z + get_collision_normal().z / 10, 1)
 
 					object_instance.global_transform.origin = snap
-					print(snap)

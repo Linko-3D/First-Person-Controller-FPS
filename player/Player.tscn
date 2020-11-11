@@ -4,7 +4,7 @@
 [ext_resource path="res://player/abilities/shoot/ShootingRayCast.tscn" type="PackedScene" id=2]
 [ext_resource path="res://player/abilities/grab/GrabRayCast.tscn" type="PackedScene" id=3]
 [ext_resource path="res://player/abilities/hook/HookRayCast.tscn" type="PackedScene" id=4]
-[ext_resource path="res://player/abilities/spawn_object/SpawnObject.tscn" type="PackedScene" id=5]
+[ext_resource path="res://player/abilities/spawn_object/SpawnObjectRaycast.tscn" type="PackedScene" id=5]
 
 [sub_resource type="CapsuleShape" id=1]
 radius = 0.5
