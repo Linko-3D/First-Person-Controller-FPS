@@ -6,7 +6,7 @@
 [ext_resource path="res://player/abilities/shoot/Shell.tscn" type="PackedScene" id=4]
 [ext_resource path="res://player/sounds/shoot.wav" type="AudioStream" id=5]
 [ext_resource path="res://player/sounds/empty.wav" type="AudioStream" id=6]
-[ext_resource path="res://player/sounds/shell.wav" type="AudioStream" id=7]
+[ext_resource path="res://player/sounds/shell_impact.wav" type="AudioStream" id=7]
 [ext_resource path="res://player/sounds/reload.wav" type="AudioStream" id=8]
 
 [sub_resource type="CubeMesh" id=1]
@@ -74,5 +74,3 @@ __meta__ = {
 [node name="ShootTween" type="Tween" parent="."]
 
 [node name="ReloadTween" type="Tween" parent="."]
-
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]

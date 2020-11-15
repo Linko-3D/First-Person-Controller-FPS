@@ -15,13 +15,13 @@ func _ready():
 func _input(event):
 	if event is InputEventMouseButton:
 		if event.button_index == BUTTON_RIGHT and event.pressed and $Timer.is_stopped():
-			if is_colliding() and get_collider() is StaticBody:
+			if is_colliding() and get_collider() is StaticBody or get_collider() is CSGPrimitive:
 				destination = get_collision_point()
 				hold = true
 				$Timer.start()
 		else:
 			hold = false
-				
+		
 
 func _physics_process(delta):
 	if hold:

@@ -16,7 +16,6 @@ export (Resource) var reload
 export (Resource) var empty
 export (Resource) var shell_impact
 
-
 var mouse_relative_x = 0
 var mouse_relative_y = 0
 
@@ -57,41 +56,61 @@ func _input(event):
 
 func shoot():
 	play_sound(shoot, 0, 0)
-	play_sound(shell_impact, -10, 0.75)
 	current_ammo -= 1
 	print(current_ammo)
 	$FireRate.start()
 	$Shoulder/Hand/Nozzle/ShootLight.show()
 	
 	# Recoil animation:
-	tween($ShootTween, $Shoulder/Hand, "rotation_degrees:x", 0, 20, 0.075, Tween.TRANS_BACK, Tween.EASE_IN_OUT, 0, true)
-	tween($ShootTween, $Shoulder/Hand, "translation:z", hand_position, hand_position + 0.1, 0.075, Tween.TRANS_BACK, Tween.EASE_IN_OUT, 0, true)
+	tween($ShootTween, $Shoulder/Hand, "rotation_degrees:x", 0, 20, 0.1, Tween.TRANS_BACK, Tween.EASE_IN_OUT, 0, true)
+	tween($ShootTween, $Shoulder/Hand, "translation:z", hand_position, hand_position + 0.1, 0.1, Tween.TRANS_BACK, Tween.EASE_IN_OUT, 0, true)
 	
 	# Camera shake:
-	tween($ShootTween, camera_node, "rotation_degrees:x", 0, 1, 0.075, 0, 2, 0, true)
+	tween($ShootTween, camera_node, "rotation_degrees:x", 0, 5, 0.1, 0, 2, 0, true)
 	
-	if shell:
-		var shell_instance = shell.instance()
-		get_tree().get_root().add_child(shell_instance)
-		shell_instance.global_transform = $Shoulder/Hand/Shell.global_transform
-		shell_instance.linear_velocity = $Shoulder/Hand/Shell.global_transform.basis.x * 5
+	spawn_shell()
 	
 	if is_colliding():
-		if impact:
-			var impact_instance = impact.instance()
-			get_tree().get_root().add_child(impact_instance)
-			impact_instance.global_transform.origin = get_collision_point()
-			impact_instance.look_at(get_collision_point() - get_collision_normal(), Vector3.UP)
+		spawn_impact()
 			
-			if get_collider() is RigidBody:
-				get_collider().apply_central_impulse(-get_collision_normal() * 100)
-				impact_instance.hide_bullet()
-			
-			if get_collider().is_in_group("Destructible"):
-				get_collider().queue_free()
-				impact_instance.hide_bullet()
 	yield(get_tree().create_timer(0.1), "timeout")
 	$Shoulder/Hand/Nozzle/ShootLight.hide()
+	yield(get_tree().create_timer(0.5), "timeout")
+
+func spawn_shell():
+	var shell_instance = shell.instance()
+	get_tree().get_root().add_child(shell_instance)
+	shell_instance.global_transform = $Shoulder/Hand/Shell.global_transform
+	shell_instance.linear_velocity = $Shoulder/Hand/Shell.global_transform.basis.x * 5
+	shell_instance.get_node("ImpactSound").pitch_scale = rand_range(0.95, 1.05)
+	yield(get_tree().create_timer(0.75), "timeout")
+	shell_instance.get_node("ImpactSound").play()
+	yield(get_tree().create_timer(10), "timeout")
+	shell_instance.queue_free()
+
+func spawn_impact():
+	var impact_instance = impact.instance()
+	
+	get_tree().get_root().add_child(impact_instance)
+	impact_instance.global_transform.origin = get_collision_point()
+	impact_instance.look_at(get_collision_point() - get_collision_normal(), Vector3.UP)
+	impact_instance.get_node("Particles").emitting = true
+	impact_instance.get_node("ImpactSound").pitch_scale = rand_range(0.95, 1.05)
+	impact_instance.get_node("ImpactSound").play()
+	
+	if get_collider() is RigidBody:
+		get_collider().apply_central_impulse(-get_collision_normal() * 100)
+		impact_instance.get_node("Bullet").hide()
+		
+	if get_collider() is KinematicBody:
+		impact_instance.get_node("Bullet").hide()
+	
+	if get_collider().is_in_group("Destructible"):
+		get_collider().queue_free()
+		impact_instance.get_node("Bullet").hide()
+	
+	yield(get_tree().create_timer(10), "timeout")
+	impact_instance.queue_free()
 
 func _physics_process(delta):
 	$Shoulder.rotation_degrees.x = lerp($Shoulder.rotation_degrees.x, mouse_relative_y / 4, weapon_sway * delta)

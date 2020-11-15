@@ -1,4 +1,4 @@
-# Grab ability with E (works on RigidBodies only), throw with the left click
+# Grab ability with E (works on rigid bodies only), throw with the left click
 
 extends RayCast
 
@@ -8,8 +8,6 @@ export var push_force = 5
 var object_grabbed = null
 
 func _physics_process(delta):
-
-
 	if object_grabbed:
 		object_grabbed.global_transform = $GrabbingPosition.global_transform
 		

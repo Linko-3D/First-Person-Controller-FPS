@@ -2,12 +2,12 @@
 
 importer="wav"
 type="AudioStreamSample"
-path="res://.import/shell.wav-f9b14b38a82b80d56d660a30b362f799.sample"
+path="res://.import/shell_impact.wav-3776bd61711bfabdff42daf6c0114e31.sample"
 
 [deps]
 
-source_file="res://player/sounds/shell.wav"
-dest_files=[ "res://.import/shell.wav-f9b14b38a82b80d56d660a30b362f799.sample" ]
+source_file="res://player/sounds/shell_impact.wav"
+dest_files=[ "res://.import/shell_impact.wav-3776bd61711bfabdff42daf6c0114e31.sample" ]
 
 [params]
 
