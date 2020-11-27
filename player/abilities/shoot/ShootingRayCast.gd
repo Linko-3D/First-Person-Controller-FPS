@@ -64,7 +64,7 @@ func shoot():
 		for i in 5: # Add an echo effect when shooting by delaying the sound and reducing the volume
 			play_sound(shoot_sound, volume, delay)
 			delay += 0.3
-			volume -= 20
+			volume -= 25
 	else:
 		play_sound(shoot_sound, 0, 0)
 	
@@ -134,8 +134,8 @@ func _physics_process(delta):
 			$Shoulder/Hand/Orientation.look_at(get_collision_point(), Vector3.UP)
 			
 			$Shoulder/Hand/Weapon.rotation_degrees = lerp($Shoulder/Hand/Weapon.rotation_degrees, $Shoulder/Hand/Orientation.rotation_degrees, 10 * delta)
-	else:
-		$Shoulder/Hand/Weapon.rotation_degrees = Vector3()
+		else:
+			$Shoulder/Hand/Weapon.rotation_degrees = lerp($Shoulder/Hand/Weapon.rotation_degrees, Vector3(), 10 * delta)
 	
 	# Weapon bobbing when walking:
 	if player.direction and player.is_on_floor():
