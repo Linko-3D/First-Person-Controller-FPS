@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://player/abilities/laser/Laser.gd" type="Script" id=1]
+[ext_resource path="res://player/abilities/laser/Dot.tscn" type="PackedScene" id=2]
+
+[node name="Laser" type="RayCast"]
+enabled = true
+cast_to = Vector3( 0, 0, -100 )
+script = ExtResource( 1 )
+dot = ExtResource( 2 )

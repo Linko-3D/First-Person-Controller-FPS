@@ -12,13 +12,13 @@ emission_on_uv2 = false
 [sub_resource type="ParticlesMaterial" id=2]
 direction = Vector3( 0, 0, 1 )
 spread = 15.0
-initial_velocity = 50.0
+initial_velocity = 25.0
 initial_velocity_random = 0.5
 scale_random = 0.1
 
 [sub_resource type="SphereMesh" id=3]
-radius = 0.01
-height = 0.02
+radius = 0.005
+height = 0.01
 radial_segments = 4
 rings = 1
 
@@ -34,7 +34,7 @@ rings = 1
 [node name="Particles" type="Particles" parent="."]
 material_override = SubResource( 1 )
 emitting = false
-amount = 64
+amount = 32
 lifetime = 0.1
 one_shot = true
 explosiveness = 1.0

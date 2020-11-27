@@ -1,0 +1,30 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://player/abilities/footstep/FootstepSound.gd" type="Script" id=1]
+[ext_resource path="res://player/sounds/footsteps/footstep1.wav" type="AudioStream" id=2]
+[ext_resource path="res://player/sounds/footsteps/footstep9.wav" type="AudioStream" id=3]
+[ext_resource path="res://player/sounds/footsteps/footstep6.wav" type="AudioStream" id=4]
+[ext_resource path="res://player/sounds/footsteps/footstep2.wav" type="AudioStream" id=5]
+[ext_resource path="res://player/sounds/footsteps/footstep10.wav" type="AudioStream" id=6]
+[ext_resource path="res://player/sounds/footsteps/footstep5.wav" type="AudioStream" id=7]
+[ext_resource path="res://player/sounds/footsteps/footstep3.wav" type="AudioStream" id=8]
+[ext_resource path="res://player/sounds/footsteps/footstep7.wav" type="AudioStream" id=9]
+[ext_resource path="res://player/sounds/footsteps/footstep8.wav" type="AudioStream" id=10]
+[ext_resource path="res://player/sounds/footsteps/footstep4.wav" type="AudioStream" id=11]
+
+[node name="FootstepSound" type="Spatial"]
+script = ExtResource( 1 )
+footstep_sound1 = ExtResource( 2 )
+footstep_sound2 = ExtResource( 5 )
+footstep_sound3 = ExtResource( 8 )
+footstep_sound4 = ExtResource( 11 )
+footstep_sound5 = ExtResource( 7 )
+footstep_sound6 = ExtResource( 4 )
+footstep_sound7 = ExtResource( 9 )
+footstep_sound8 = ExtResource( 10 )
+footstep_sound9 = ExtResource( 3 )
+footstep_sound10 = ExtResource( 6 )
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.4
+one_shot = true

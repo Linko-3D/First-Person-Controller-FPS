@@ -2,7 +2,7 @@
 
 extends RayCast
 
-export var pull_force = 5
+var pull_force = 5
 
 var player
 var destination
@@ -15,19 +15,14 @@ func _ready():
 func _input(event):
 	if event is InputEventMouseButton:
 		if event.button_index == BUTTON_RIGHT and event.pressed and $Timer.is_stopped():
-			if is_colliding() and get_collider() is StaticBody or get_collider() is CSGPrimitive:
+			if get_collider() is StaticBody or get_collider() is CSGPrimitive:
 				destination = get_collision_point()
 				hold = true
-				$Timer.start()
 		else:
 			hold = false
-		
 
 func _physics_process(delta):
 	if hold:
+		$Timer.start()
 		vector = (destination - player.global_transform.origin)
 		player.move_and_slide(vector * pull_force)
-
-
-func _on_Timer_timeout():
-	pass # Replace with function body.

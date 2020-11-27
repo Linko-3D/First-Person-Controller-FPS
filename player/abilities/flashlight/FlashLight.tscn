@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://player/abilities/flashlight/FlashLight.gd" type="Script" id=1]
+[ext_resource path="res://player/sounds/light_on.wav" type="AudioStream" id=2]
+[ext_resource path="res://player/sounds/light_off.wav" type="AudioStream" id=3]
+
+[node name="FlashLight" type="SpotLight"]
+visible = false
+shadow_enabled = true
+spot_range = 15.0
+spot_attenuation = 0.000667012
+spot_angle = 30.0
+script = ExtResource( 1 )
+light_on_sound = ExtResource( 2 )
+light_off_sound = ExtResource( 3 )
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
