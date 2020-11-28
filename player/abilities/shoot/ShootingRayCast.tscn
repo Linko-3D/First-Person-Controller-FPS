@@ -27,7 +27,7 @@ empty_sound = ExtResource( 6 )
 shell_impact_sound = ExtResource( 7 )
 
 [node name="FireRate" type="Timer" parent="."]
-wait_time = 0.1
+wait_time = 0.2
 one_shot = true
 
 [node name="Shoulder" type="Position3D" parent="."]
