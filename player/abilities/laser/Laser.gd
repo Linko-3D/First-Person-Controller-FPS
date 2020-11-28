@@ -16,10 +16,11 @@ func _process(delta):
 	
 	if is_colliding():
 		dot_instance.show()
-		if ShootRayCast.get_node("ReloadTween"):
-			if not ShootRayCast.get_node("ReloadTween").is_active():
-				dot_instance.show()
-			else:
-				dot_instance.hide()
-	else:
-		dot_instance.hide()
+		if ShootRayCast:
+			if ShootRayCast.get_node("ReloadTween"):
+				if not ShootRayCast.get_node("ReloadTween").is_active():
+					dot_instance.show()
+				else:
+					dot_instance.hide()
+		else:
+			dot_instance.hide()
