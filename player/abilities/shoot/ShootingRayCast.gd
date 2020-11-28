@@ -63,8 +63,8 @@ func shoot():
 		var volume = 0
 		for i in 5: # Add an echo effect when shooting by delaying the sound and reducing the volume
 			play_sound(shoot_sound, volume, delay)
-			delay += 0.3
-			volume -= 25
+			delay += 0.25
+			volume -= 20
 	else:
 		play_sound(shoot_sound, 0, 0)
 	
