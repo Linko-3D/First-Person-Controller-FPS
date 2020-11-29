@@ -13,14 +13,10 @@ func _ready():
 
 func _process(delta):
 	dot_instance.global_transform.origin = get_collision_point()
-	
 	if is_colliding():
 		dot_instance.show()
 		if ShootRayCast:
-			if ShootRayCast.get_node("ReloadTween"):
-				if not ShootRayCast.get_node("ReloadTween").is_active():
-					dot_instance.show()
-				else:
-					dot_instance.hide()
-		else:
-			dot_instance.hide()
+			if ShootRayCast.get_node("ReloadTween").is_active(): # If not reloading
+				dot_instance.hide()
+	else:
+		dot_instance.hide()
