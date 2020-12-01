@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://player/abilities/shoot/crosshair/Line.tscn" type="PackedScene" id=1]
+[ext_resource path="res://player/abilities/shoot/crosshair/Crosshair.gd" type="Script" id=2]
+
+[sub_resource type="StreamTexture" id=1]
+load_path = "res://.import/ref2.png-9357ac475e7d7c2e29beec6c5350ce1a.stex"
+
+[node name="Crosshair" type="Position2D"]
+script = ExtResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="."]
+visible = false
+texture = SubResource( 1 )
+
+[node name="Line1" parent="." instance=ExtResource( 1 )]
+position = Vector2( -47.5, 0 )
+
+[node name="Line2" parent="." instance=ExtResource( 1 )]
+position = Vector2( 0, -47.5 )
+rotation = 1.5708
+
+[node name="Line3" parent="." instance=ExtResource( 1 )]
+position = Vector2( 47.5, 0 )
+
+[node name="Line4" parent="." instance=ExtResource( 1 )]
+position = Vector2( 0, 47.5 )
+rotation = 1.5708
+
+[node name="Tween" type="Tween" parent="."]
