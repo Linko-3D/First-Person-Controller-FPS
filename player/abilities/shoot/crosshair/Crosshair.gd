@@ -7,6 +7,8 @@ var speed = 0.1
 var base_position = 47.5
 var end_position = base_position + 34
 
+var wide_crosshair = true
+
 var player = null
 var movement = Vector3()
 
@@ -22,16 +24,18 @@ func _process(delta):
 		movement.z = stepify(player.velocity.z, 10)
 		
 		if player.direction == Vector3() and player.is_on_floor():
-				if $Line1.position.x == -end_position and not $Tween.is_active():
+				if wide_crosshair and not $Tween.is_active():
 					$Tween.interpolate_property($Line1, "position:x", -end_position, -base_position, speed, 0, 2, speed)
 					$Tween.interpolate_property($Line2, "position:y", -end_position, -base_position, speed, 0, 2, speed)
 					$Tween.interpolate_property($Line3, "position:x", end_position, base_position, speed, 0, 2, speed)
 					$Tween.interpolate_property($Line4, "position:y", end_position, base_position, speed, 0, 2, speed)
 					$Tween.start()
+					wide_crosshair = false
 		else:
-			if $Line1.position.x == -base_position and not $Tween.is_active():
+			if not wide_crosshair and not $Tween.is_active():
 				$Tween.interpolate_property($Line1, "position:x", -base_position, -end_position, speed, 0, 2, 0)
 				$Tween.interpolate_property($Line2, "position:y", -base_position, -end_position, speed, 0, 2, 0)
 				$Tween.interpolate_property($Line3, "position:x", base_position, end_position, speed, 0, 2, 0)
 				$Tween.interpolate_property($Line4, "position:y", base_position, end_position, speed, 0, 2, 0)
 				$Tween.start()
+				wide_crosshair = true
