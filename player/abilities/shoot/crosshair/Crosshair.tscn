@@ -7,17 +7,17 @@
 script = ExtResource( 2 )
 
 [node name="Line1" parent="." instance=ExtResource( 1 )]
-position = Vector2( -10, 0 )
+position = Vector2( -20, 0 )
 
 [node name="Line2" parent="." instance=ExtResource( 1 )]
-position = Vector2( 0, -10 )
+position = Vector2( 0, -20 )
 rotation = 1.5708
 
 [node name="Line3" parent="." instance=ExtResource( 1 )]
-position = Vector2( 10, 0 )
+position = Vector2( 20, 0 )
 
 [node name="Line4" parent="." instance=ExtResource( 1 )]
-position = Vector2( 0, 10 )
+position = Vector2( 0, 20 )
 rotation = 1.5708
 
 [node name="Tween" type="Tween" parent="."]
