@@ -2,10 +2,9 @@ extends Position2D
 
 var animated = true
 
-
 var speed = 0.1
-var base_position = 47.5
-var end_position = base_position + 34
+var base_position = 10
+var end_position = base_position + 10
 
 var wide_crosshair = true
 
