@@ -1,8 +1,9 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://player/abilities/flashlight/FlashLight.gd" type="Script" id=1]
+[ext_resource path="res://player/addons/flashlight/FlashLight.gd" type="Script" id=1]
 [ext_resource path="res://player/sounds/light_on.wav" type="AudioStream" id=2]
 [ext_resource path="res://player/sounds/light_off.wav" type="AudioStream" id=3]
+
 
 [node name="FlashLight" type="SpotLight"]
 visible = false

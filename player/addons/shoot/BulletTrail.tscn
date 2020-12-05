@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=2]
+
+[sub_resource type="CapsuleMesh" id=1]
+radius = 0.005
+mid_height = 10.0
+radial_segments = 8
+rings = 1
+
+[node name="BulletTrail" type="Position3D"]
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+mesh = SubResource( 1 )
+material/0 = null

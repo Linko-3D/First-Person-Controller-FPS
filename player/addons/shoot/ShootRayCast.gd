@@ -4,6 +4,7 @@ extends RayCast
 
 export (PackedScene) var impact
 export (PackedScene) var shell
+export (PackedScene) var bullet_trail
 
 export (Resource) var shoot_sound
 export (Resource) var reload_sound
@@ -14,7 +15,7 @@ var weapon_sway = 8.0
 var max_ammo = 12
 var shooting_echo = true
 
-var current_ammo = max_ammo
+var ammo = max_ammo
 
 var mouse_relative_x = 0
 var mouse_relative_y = 0
@@ -42,7 +43,7 @@ func _input(event):
 	if event is InputEventMouseButton:
 		if event.button_index == BUTTON_LEFT and event.pressed: # Shooting
 			if can_shoot and $FireRate.time_left == 0 and not $ReloadTween.is_active():
-				if current_ammo > 0:
+				if ammo > 0:
 					shoot()
 					$FireRate.start()
 				else:
@@ -50,14 +51,20 @@ func _input(event):
 					$FireRate.start()
 	
 	if Input.is_key_pressed(KEY_R): # Reloading
-		if current_ammo < max_ammo:
+		if ammo < max_ammo:
 			if not $ShootTween.is_active() and not $ReloadTween.is_active():
 				tween($ReloadTween, $Shoulder/Hand, "rotation_degrees:x", 0, 360, 1, Tween.TRANS_BACK, Tween.EASE_IN_OUT, 0, false)
-				current_ammo = max_ammo
+				ammo = max_ammo
 				play_sound(reload_sound, 0, 0)
-				print(current_ammo)
+				print(ammo)
 
 func shoot():
+	if is_colliding():
+		spawn_impact()
+		spawn_bullet_trail()
+		
+	spawn_shell()
+	
 	if shooting_echo:
 		var delay = 0
 		var volume = 0
@@ -68,8 +75,8 @@ func shoot():
 	else:
 		play_sound(shoot_sound, 0, 0)
 	
-	current_ammo -= 1
-	print(current_ammo)
+	ammo -= 1
+	print(ammo)
 	
 	$Shoulder/Hand/Nozzle/ShootLight.show()
 	
@@ -80,11 +87,6 @@ func shoot():
 	$ShootTween.interpolate_property(camera_node, "rotation_degrees:x", 0, 1, 0.1, 0, 2, 0)
 	$ShootTween.interpolate_property(camera_node, "rotation_degrees:x", 1, 0, 0.1 * 2, 0, 2, 0.1)
 	
-	spawn_shell()
-	
-	if is_colliding():
-		spawn_impact()
-		
 	yield(get_tree().create_timer(0.1), "timeout")
 	$Shoulder/Hand/Nozzle/ShootLight.hide()
 	yield(get_tree().create_timer(0.5), "timeout")
@@ -122,6 +124,16 @@ func spawn_impact():
 	
 	yield(get_tree().create_timer(60), "timeout")
 	impact_instance.queue_free()
+
+func spawn_bullet_trail():
+	var distance = ($Shoulder/Hand/Nozzle.global_transform.origin - get_collision_point()).length()
+	var bullet_trail_instance = bullet_trail.instance()
+	bullet_trail_instance.rotation = global_transform.basis.get_euler()
+	get_tree().get_root().add_child(bullet_trail_instance)
+	if distance >= 10:
+		bullet_trail_instance.global_transform.origin = ( $Shoulder/Hand/Nozzle.global_transform.origin + get_collision_point() ) /2
+	yield(get_tree().create_timer(0.01), "timeout")
+	bullet_trail_instance.queue_free()
 
 func _physics_process(delta):
 	# Weapon sway:

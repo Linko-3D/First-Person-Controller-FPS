@@ -1,13 +1,13 @@
 [gd_scene load_steps=11 format=2]
 
-[ext_resource path="res://player/abilities/shoot/crosshair/Crosshair.tscn" type="PackedScene" id=1]
-[ext_resource path="res://player/abilities/shoot/ShootingRayCast.gd" type="Script" id=2]
-[ext_resource path="res://player/abilities/shoot/Impact.tscn" type="PackedScene" id=3]
-[ext_resource path="res://player/abilities/shoot/Shell.tscn" type="PackedScene" id=4]
-[ext_resource path="res://player/sounds/shoot.wav" type="AudioStream" id=5]
-[ext_resource path="res://player/sounds/empty.wav" type="AudioStream" id=6]
-[ext_resource path="res://player/sounds/shell_impact.wav" type="AudioStream" id=7]
-[ext_resource path="res://player/sounds/reload.wav" type="AudioStream" id=8]
+[ext_resource path="res://player/addons/shoot/ShootRayCast.gd" type="Script" id=1]
+[ext_resource path="res://player/addons/shoot/Impact.tscn" type="PackedScene" id=2]
+[ext_resource path="res://player/addons/shoot/Shell.tscn" type="PackedScene" id=3]
+[ext_resource path="res://player/sounds/shoot.wav" type="AudioStream" id=4]
+[ext_resource path="res://player/sounds/shell_impact.wav" type="AudioStream" id=5]
+[ext_resource path="res://player/sounds/reload.wav" type="AudioStream" id=6]
+[ext_resource path="res://player/sounds/empty.wav" type="AudioStream" id=7]
+[ext_resource path="res://player/addons/shoot/BulletTrail.tscn" type="PackedScene" id=8]
 
 [sub_resource type="CubeMesh" id=1]
 size = Vector3( 0.03, 0.04, 0.3 )
@@ -18,13 +18,14 @@ size = Vector3( 0.03, 0.1, 0.05 )
 [node name="ShootRayCast" type="RayCast"]
 enabled = true
 cast_to = Vector3( 0, 0, -100 )
-script = ExtResource( 2 )
-impact = ExtResource( 3 )
-shell = ExtResource( 4 )
-shoot_sound = ExtResource( 5 )
-reload_sound = ExtResource( 8 )
-empty_sound = ExtResource( 6 )
-shell_impact_sound = ExtResource( 7 )
+script = ExtResource( 1 )
+impact = ExtResource( 2 )
+shell = ExtResource( 3 )
+bullet_trail = ExtResource( 8 )
+shoot_sound = ExtResource( 4 )
+reload_sound = ExtResource( 6 )
+empty_sound = ExtResource( 7 )
+shell_impact_sound = ExtResource( 5 )
 
 [node name="FireRate" type="Timer" parent="."]
 wait_time = 0.2
@@ -70,6 +71,3 @@ omni_range = 4.0
 [node name="BobbingTween" type="Tween" parent="."]
 
 [node name="BobbingTween2" type="Tween" parent="."]
-
-[node name="Crosshair" parent="." instance=ExtResource( 1 )]
-position = Vector2( 281.867, 232.764 )
