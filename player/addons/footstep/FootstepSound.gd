@@ -30,12 +30,15 @@ func _process(delta):
 				if player.crouch_speed != 1:
 					$Timer.wait_time = timer_speed / player.crouch_multiplier
 					play_sound(-35)
+					rpc("play_sound_remotely", -35)
 				elif player.sprint_speed != 1:
 					$Timer.wait_time = timer_speed / player.sprint_multiplier
 					play_sound(-15)
+					rpc("play_sound_remotely", -15)
 				else:
 					$Timer.wait_time = timer_speed
 					play_sound(-25)
+					rpc("play_sound_remotely", -25)
 				$Timer.start()
 	
 	if player.is_on_floor() and not player.grounded: # Sound when landing
@@ -43,12 +46,16 @@ func _process(delta):
 		play_sound(volume)
 
 func play_sound(volume): # To avoid the sound from clipping, we generate a new audio node each time then we delete it
-	var audio_node = AudioStreamPlayer.new()
+	var audio_node = AudioStreamPlayer3D.new()
 	var sound = randi() % footstep_sounds.size() # Pick a random sound
 	audio_node.stream = footstep_sounds[sound]
-	audio_node.volume_db = volume
+	audio_node.unit_db = volume
+	audio_node.unit_size = 10
 	audio_node.pitch_scale = rand_range(0.95, 1.05)
 	add_child(audio_node)
 	audio_node.play()
 	yield(get_tree().create_timer(2), "timeout")
 	audio_node.queue_free()
+
+remote func play_sound_remotely(volume_value):
+	play_sound(volume_value)

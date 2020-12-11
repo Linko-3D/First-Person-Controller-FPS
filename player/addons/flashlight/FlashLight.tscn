@@ -4,7 +4,6 @@
 [ext_resource path="res://player/sounds/light_on.wav" type="AudioStream" id=2]
 [ext_resource path="res://player/sounds/light_off.wav" type="AudioStream" id=3]
 
-
 [node name="FlashLight" type="SpotLight"]
 visible = false
 shadow_enabled = true

@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://player/addons/shoot/ShootRayCast.gd" type="Script" id=1]
 [ext_resource path="res://player/addons/shoot/Impact.tscn" type="PackedScene" id=2]
@@ -7,12 +7,30 @@
 [ext_resource path="res://player/sounds/shell_impact.wav" type="AudioStream" id=5]
 [ext_resource path="res://player/sounds/reload.wav" type="AudioStream" id=6]
 [ext_resource path="res://player/sounds/empty.wav" type="AudioStream" id=7]
-[ext_resource path="res://player/addons/shoot/BulletTrail.tscn" type="PackedScene" id=8]
 
-[sub_resource type="CubeMesh" id=1]
+[sub_resource type="CapsuleMesh" id=1]
+radius = 0.05
+mid_height = 5.0
+radial_segments = 8
+rings = 1
+
+[sub_resource type="PackedScene" id=2]
+_bundled = {
+"conn_count": 0,
+"conns": PoolIntArray(  ),
+"editable_instances": [  ],
+"names": PoolStringArray( "BulletTrail", "Position3D", "MeshInstance", "cast_shadow", "mesh", "material/0" ),
+"node_count": 2,
+"node_paths": [  ],
+"nodes": PoolIntArray( -1, -1, 1, 0, -1, 0, 0, 0, 0, 2, 2, -1, 3, 3, 0, 4, 1, 5, 2, 0 ),
+"variants": [ 0, SubResource( 1 ), null ],
+"version": 2
+}
+
+[sub_resource type="CubeMesh" id=3]
 size = Vector3( 0.03, 0.04, 0.3 )
 
-[sub_resource type="CubeMesh" id=2]
+[sub_resource type="CubeMesh" id=4]
 size = Vector3( 0.03, 0.1, 0.05 )
 
 [node name="ShootRayCast" type="RayCast"]
@@ -21,7 +39,7 @@ cast_to = Vector3( 0, 0, -100 )
 script = ExtResource( 1 )
 impact = ExtResource( 2 )
 shell = ExtResource( 3 )
-bullet_trail = ExtResource( 8 )
+bullet_trail = SubResource( 2 )
 shoot_sound = ExtResource( 4 )
 reload_sound = ExtResource( 6 )
 empty_sound = ExtResource( 7 )
@@ -40,13 +58,13 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.08, 0.05, -0.35 )
 [node name="Weapon" type="MeshInstance" parent="Shoulder/Hand"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03, -0.015 )
 cast_shadow = 0
-mesh = SubResource( 1 )
+mesh = SubResource( 3 )
 material/0 = null
 
 [node name="Weapon" type="MeshInstance" parent="Shoulder/Hand/Weapon"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.057, 0.08 )
 cast_shadow = 0
-mesh = SubResource( 2 )
+mesh = SubResource( 4 )
 material/0 = null
 
 [node name="Shell" type="Position3D" parent="Shoulder/Hand"]
@@ -63,6 +81,9 @@ shadow_enabled = true
 omni_range = 4.0
 
 [node name="Orientation" type="Position3D" parent="Shoulder/Hand"]
+
+[node name="BulletTrailPosition" type="Position3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20 )
 
 [node name="ShootTween" type="Tween" parent="."]
 

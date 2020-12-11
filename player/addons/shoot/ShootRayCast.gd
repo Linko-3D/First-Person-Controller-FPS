@@ -13,7 +13,7 @@ export (Resource) var shell_impact_sound
 
 var weapon_sway = 8.0
 var max_ammo = 12
-var shooting_echo = true
+var shooting_echo = false
 
 var ammo = max_ammo
 
@@ -25,7 +25,11 @@ var hand_position
 var player
 var camera_node
 
+var collision_point = Vector3()
+
 var can_shoot = true
+
+var can_control = true
 
 func _ready():
 	$Shoulder/Hand/Nozzle/ShootLight.hide()
@@ -34,8 +38,16 @@ func _ready():
 	camera_node = get_tree().get_root().find_node("Camera", true, false)
 	
 	randomize()
+	
+	yield(get_tree(), "idle_frame") 
+	if get_tree().get_network_unique_id(): # If we play in multiplayer
+		if not is_network_master(): # If we aren't this player in multiplayer
+			can_control = false
 
 func _input(event):
+	if not can_control:
+		return
+	
 	if event is InputEventMouseMotion: # Getting the mouse movement for the weapon sway in the physics process
 		mouse_relative_x = event.relative.x
 		mouse_relative_y = event.relative.y
@@ -44,7 +56,9 @@ func _input(event):
 		if event.button_index == BUTTON_LEFT and event.pressed: # Shooting
 			if can_shoot and $FireRate.time_left == 0 and not $ReloadTween.is_active():
 				if ammo > 0:
+					collision_point = get_collision_point()
 					shoot()
+					rpc("shoot_remotely", collision_point)
 					$FireRate.start()
 				else:
 					play_sound(empty_sound, 0, 0)
@@ -61,7 +75,6 @@ func _input(event):
 func shoot():
 	if is_colliding():
 		spawn_impact()
-		spawn_bullet_trail()
 		
 	spawn_shell()
 	
@@ -91,6 +104,9 @@ func shoot():
 	$Shoulder/Hand/Nozzle/ShootLight.hide()
 	yield(get_tree().create_timer(0.5), "timeout")
 
+remote func shoot_remotely(collision_point_value):
+	collision_point = collision_point_value
+	shoot()
 func spawn_shell():
 	var shell_instance = shell.instance()
 	get_tree().get_root().add_child(shell_instance)
@@ -105,8 +121,8 @@ func spawn_shell():
 func spawn_impact():
 	var impact_instance = impact.instance()
 	get_tree().get_root().add_child(impact_instance)
-	impact_instance.global_transform.origin = get_collision_point()
-	impact_instance.look_at(get_collision_point() - get_collision_normal(), Vector3.UP)
+	impact_instance.global_transform.origin = collision_point
+	impact_instance.look_at(collision_point - get_collision_normal(), Vector3.UP)
 	impact_instance.get_node("Particles").emitting = true
 	impact_instance.get_node("ImpactSound").pitch_scale = rand_range(0.95, 1.05)
 	impact_instance.get_node("ImpactSound").play()
@@ -124,16 +140,6 @@ func spawn_impact():
 	
 	yield(get_tree().create_timer(60), "timeout")
 	impact_instance.queue_free()
-
-func spawn_bullet_trail():
-	var distance = ($Shoulder/Hand/Nozzle.global_transform.origin - get_collision_point()).length()
-	var bullet_trail_instance = bullet_trail.instance()
-	bullet_trail_instance.rotation = global_transform.basis.get_euler()
-	get_tree().get_root().add_child(bullet_trail_instance)
-	if distance >= 10:
-		bullet_trail_instance.global_transform.origin = ( $Shoulder/Hand/Nozzle.global_transform.origin + get_collision_point() ) /2
-	yield(get_tree().create_timer(0.01), "timeout")
-	bullet_trail_instance.queue_free()
 
 func _physics_process(delta):
 	# Weapon sway:
@@ -178,9 +184,10 @@ func tween(tween_node, object, property, initial_val, final_val, duration, trans
 	tween_node.start()
 
 func play_sound(sound, dB, delay):
-	var audio_node = AudioStreamPlayer.new()
+	var audio_node = AudioStreamPlayer3D.new()
 	audio_node.stream = sound
-	audio_node.volume_db = dB
+	audio_node.unit_db = dB
+	audio_node.unit_size = 100
 	audio_node.pitch_scale = rand_range(0.95, 1.05)
 	add_child(audio_node)
 	yield(get_tree().create_timer(delay), "timeout")

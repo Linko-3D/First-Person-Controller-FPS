@@ -24,10 +24,25 @@ var sprint_speed = 1
 var crouch_speed = 1
 var crouch_animation_speed = 1
 
+var can_control = true
+
 func _ready():
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+#	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+
+	yield(get_tree(), "idle_frame") 
+	if get_tree().get_network_unique_id(): # If we play in multiplayer
+		if not is_network_master(): # If we aren't this player in multiplayer
+			can_control = false
+			$Head/Camera.current = false
 
 func _input(event):
+	if not can_control:
+		return
+	
+	# TMP
+	if Input.is_action_just_pressed("ui_cancel"):
+		get_tree().quit()
+	
 	if event is InputEventMouseMotion:
 		rotation_degrees.y -= event.relative.x * mouse_sensitivity / 10
 		$Head.rotation_degrees.x = clamp($Head.rotation_degrees.x - event.relative.y * mouse_sensitivity / 10, -90, 90)
@@ -58,6 +73,10 @@ func _input(event):
 		crouch(false)
 	
 func _physics_process(delta):
+	print(get_tree().get_network_unique_id())
+	if not can_control:
+		return
+	
 	if is_on_floor():
 		gravity_vec = -get_floor_normal() * stick_amount # The gravity is in the direction of the ground to climb it more easily
 		acceleration = ground_acceleration
@@ -79,6 +98,8 @@ func _physics_process(delta):
 	movement.x = velocity.x + gravity_vec.x
 	movement.y = gravity_vec.y
 	move_and_slide(movement, Vector3.UP)
+	
+	rpc_unreliable("transforms_data", transform, $Head.transform) # If this is in multiplayer send our transforms
 
 func crouch(crouched):
 	if crouched:
@@ -89,3 +110,7 @@ func crouch(crouched):
 		$CollisionShape.shape.height = 1
 		$MeshInstance.mesh.mid_height = 1
 		$Head.translation.y = 0.8
+
+remote func transforms_data(data, head_data):
+	transform = data
+	$Head.transform = head_data

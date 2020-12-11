@@ -13,7 +13,12 @@ var movement = Vector3()
 
 func _ready():
 	player = get_tree().get_root().find_node("Player", true, false)
-
+	
+	yield(get_tree(), "idle_frame") 
+	if get_tree().get_network_unique_id(): # If we play in multiplayer
+		if not is_network_master(): # If we aren't this player in multiplayer
+			queue_free()
+			
 func _process(delta):
 	position = OS.get_window_size() / 2
 	
