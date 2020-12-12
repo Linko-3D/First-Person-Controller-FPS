@@ -1,0 +1,82 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://player/abilities/shoot/crosshair.png" type="Texture" id=1]
+[ext_resource path="res://player/abilities/shoot/ShootingRayCast.gd" type="Script" id=2]
+[ext_resource path="res://player/abilities/shoot/Impact.tscn" type="PackedScene" id=3]
+[ext_resource path="res://player/abilities/shoot/Shell.tscn" type="PackedScene" id=4]
+[ext_resource path="res://player/sounds/shoot.wav" type="AudioStream" id=5]
+[ext_resource path="res://player/sounds/empty.wav" type="AudioStream" id=6]
+[ext_resource path="res://player/sounds/shell_impact.wav" type="AudioStream" id=7]
+[ext_resource path="res://player/sounds/reload.wav" type="AudioStream" id=8]
+
+[sub_resource type="CubeMesh" id=1]
+size = Vector3( 0.03, 0.04, 0.3 )
+
+[sub_resource type="CubeMesh" id=2]
+size = Vector3( 0.03, 0.1, 0.05 )
+
+[node name="ShootRayCast" type="RayCast"]
+enabled = true
+cast_to = Vector3( 0, 0, -100 )
+script = ExtResource( 2 )
+impact = ExtResource( 3 )
+shell = ExtResource( 4 )
+shoot_sound = ExtResource( 5 )
+reload_sound = ExtResource( 8 )
+empty_sound = ExtResource( 6 )
+shell_impact_sound = ExtResource( 7 )
+
+[node name="FireRate" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
+
+[node name="Shoulder" type="Position3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2, -0.2, 0 )
+
+[node name="Hand" type="Position3D" parent="Shoulder"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.08, 0.05, -0.35 )
+
+[node name="Weapon" type="MeshInstance" parent="Shoulder/Hand"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03, -0.015 )
+cast_shadow = 0
+mesh = SubResource( 1 )
+material/0 = null
+
+[node name="Weapon" type="MeshInstance" parent="Shoulder/Hand/Weapon"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.057, 0.08 )
+cast_shadow = 0
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="Shell" type="Position3D" parent="Shoulder/Hand"]
+transform = Transform( 0.965926, -0.258819, 0, 0.258819, 0.965926, 0, 0, 0, 1, 0, 0.03, 0 )
+
+[node name="Nozzle" type="Position3D" parent="Shoulder/Hand"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03, -0.200479 )
+
+[node name="ShootLight" type="OmniLight" parent="Shoulder/Hand/Nozzle"]
+visible = false
+light_energy = 0.5
+light_indirect_energy = 0.5
+shadow_enabled = true
+omni_range = 4.0
+
+[node name="Orientation" type="Position3D" parent="Shoulder/Hand"]
+
+[node name="Crosshair" type="TextureRect" parent="."]
+modulate = Color( 1, 1, 1, 0.392157 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 1 )
+stretch_mode = 4
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ShootTween" type="Tween" parent="."]
+
+[node name="ReloadTween" type="Tween" parent="."]
+
+[node name="BobbingTween" type="Tween" parent="."]
+
+[node name="BobbingTween2" type="Tween" parent="."]

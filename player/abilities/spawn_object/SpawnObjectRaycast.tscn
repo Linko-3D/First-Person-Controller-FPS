@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://player/abilities/spawn_object/SpawnObjectRaycast.gd" type="Script" id=1]
+[ext_resource path="res://player/abilities/spawn_object/Object.tscn" type="PackedScene" id=2]
+
+[node name="SpawnObjectRaycast" type="RayCast"]
+enabled = true
+cast_to = Vector3( 0, 0, -10 )
+script = ExtResource( 1 )
+object = ExtResource( 2 )
