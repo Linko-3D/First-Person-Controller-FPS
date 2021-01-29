@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://player/weapons/AK-47_magazine.obj" type="ArrayMesh" id=1]
+
+[sub_resource type="SpatialMaterial" id=4]
+albedo_color = Color( 0.227451, 0.219608, 0.219608, 1 )
+
+[sub_resource type="SpatialMaterial" id=5]
+albedo_color = Color( 0.235294, 0.223529, 0.223529, 1 )
+
+[sub_resource type="BoxShape" id=3]
+extents = Vector3( 0.03, 0.1, 0.08 )
+
+[node name="AK-47_Magazine" type="RigidBody"]
+mass = 5.0
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+mesh = ExtResource( 1 )
+material/0 = SubResource( 4 )
+material/1 = SubResource( 5 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+shape = SubResource( 3 )
