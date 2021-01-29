@@ -11,6 +11,6 @@ func _input(event):
 
 func spawn_object():
 	var object_instance = object.instance()
-	object_instance.global_transform = global_transform
-	object_instance.linear_velocity = global_transform.basis.z * -force
+	object_instance.global_transform = $Position3D.global_transform
+	object_instance.linear_velocity =global_transform.basis.z * -force
 	get_tree().get_root().add_child(object_instance)
