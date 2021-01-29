@@ -13,6 +13,8 @@ extents = Vector3( 0.03, 0.1, 0.08 )
 
 [node name="AK-47_Magazine" type="RigidBody"]
 mass = 5.0
+continuous_cd = true
+can_sleep = false
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
 mesh = ExtResource( 1 )

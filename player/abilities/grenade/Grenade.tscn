@@ -14,6 +14,7 @@ height = 0.2
 [node name="Grenade" type="RigidBody"]
 mass = 20.0
 continuous_cd = true
+can_sleep = false
 script = ExtResource( 1 )
 grenade = ExtResource( 2 )
 

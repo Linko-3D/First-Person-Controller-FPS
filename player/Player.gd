@@ -1,15 +1,5 @@
 extends KinematicBody
 
-# TODO impact sound ricochet
-# https://www.fesliyanstudios.com/
-
-# Credits:
-# https://soundbible.com/1998-Gun-Fire.html
-# https://soundbible.com/2072-Shell-Falling.html
-# Weapon: https://sketchfab.com/3d-models/low-poly-ak-47-type-2-a7260926fb0a40f8bba5f651b03d23f1
-# M1 Garand https://sketchfab.com/3d-models/low-poly-m1-garand-30724a9a60bd4e1da53f40f4b06ea07e
-
-
 var mouse_sensitivity = 1
 var direction = Vector3()
 var gravity_vec = Vector3()
