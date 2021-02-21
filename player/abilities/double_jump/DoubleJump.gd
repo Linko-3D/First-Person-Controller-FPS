@@ -10,10 +10,11 @@ func _ready():
 	player = get_tree().get_root().find_node("Player", true, false)
 
 func _input(event):
-	if Input.is_key_pressed(KEY_SPACE) and can_jump and jumps_remaining > 0:
-		player.jump()
-		can_jump = false
-		jumps_remaining -= 1
+	if Input.is_key_pressed(KEY_SPACE) or Input.is_joy_button_pressed(0, JOY_XBOX_A):
+		if can_jump and jumps_remaining > 0:
+			player.jump()
+			can_jump = false
+			jumps_remaining -= 1
 
 func _physics_process(delta):
 	if not player.is_on_floor() and $Timer.is_stopped() and not can_jump:

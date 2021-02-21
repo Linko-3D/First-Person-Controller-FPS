@@ -9,10 +9,11 @@ func _ready():
 	hide()
 
 func _input(event):
-	if Input.is_key_pressed(KEY_F) and $Timer.is_stopped():
-		visible = !visible
-		$Timer.start()
-		play_sound()
+	if Input.is_key_pressed(KEY_F) or Input.is_joy_button_pressed(0, JOY_L):
+		if $Timer.is_stopped():
+			visible = !visible
+			$Timer.start()
+			play_sound()
 
 func play_sound():
 	var audio_node = AudioStreamPlayer.new()

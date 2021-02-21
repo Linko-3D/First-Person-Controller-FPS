@@ -1,0 +1,87 @@
+[gd_scene format=2]
+
+[node name="Visual" type="Position2D"]
+
+[node name="PositionTopLeft" type="Position2D" parent="."]
+position = Vector2( -10, -10 )
+rotation = 0.785398
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="ColorRect" type="ColorRect" parent="PositionTopLeft"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -7.0
+margin_top = -2.0
+margin_right = 7.0
+margin_bottom = 2.0
+color = Color( 0.784314, 0.235294, 0.392157, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PositionTopRight" type="Position2D" parent="."]
+position = Vector2( 10, -10 )
+rotation = -0.785398
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="ColorRect" type="ColorRect" parent="PositionTopRight"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -7.0
+margin_top = -2.0
+margin_right = 7.0
+margin_bottom = 2.0
+color = Color( 0.784314, 0.235294, 0.392157, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PositionBotLeft" type="Position2D" parent="."]
+position = Vector2( -10, 10 )
+rotation = -0.785398
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="ColorRect" type="ColorRect" parent="PositionBotLeft"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -7.0
+margin_top = -2.0
+margin_right = 7.0
+margin_bottom = 2.0
+color = Color( 0.784314, 0.235294, 0.392157, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PositionBotRight" type="Position2D" parent="."]
+position = Vector2( 10.529, 10 )
+rotation = 0.785398
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="ColorRect" type="ColorRect" parent="PositionBotRight"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -7.0
+margin_top = -2.0
+margin_right = 7.0
+margin_bottom = 2.0
+color = Color( 0.784314, 0.235294, 0.392157, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}

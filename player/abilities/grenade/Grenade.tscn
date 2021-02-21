@@ -5,11 +5,11 @@
 
 [sub_resource type="CapsuleMesh" id=1]
 radius = 0.1
-mid_height = 0.2
+mid_height = 0.1
 
 [sub_resource type="CapsuleShape" id=2]
 radius = 0.1
-height = 0.2
+height = 0.1
 
 [node name="Grenade" type="RigidBody"]
 mass = 20.0
@@ -32,12 +32,12 @@ light_color = Color( 1, 0, 0, 1 )
 omni_range = 1.0
 
 [node name="LightTimer" type="Timer" parent="."]
-wait_time = 0.1
+wait_time = 0.2
 one_shot = true
 autostart = true
 
 [node name="LifetimeTimer" type="Timer" parent="."]
-wait_time = 1.5
+wait_time = 2.4
 one_shot = true
 autostart = true
 [connection signal="timeout" from="LightTimer" to="." method="_on_LightTimer_timeout"]

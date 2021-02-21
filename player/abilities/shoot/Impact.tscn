@@ -58,12 +58,14 @@ material/0 = SubResource( 5 )
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
 material_override = SubResource( 6 )
-
-[node name="DebrisPosition3D" type="Position3D" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.0459025 )
+cast_shadow = 0
 
 [node name="ImpactSound" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource( 1 )
 autoplay = true
+
+[node name="Position3D" type="Position3D" parent="."]
+
+[node name="Position3D2" type="Position3D" parent="Position3D"]
 
 [node name="ColorTween" type="Tween" parent="."]

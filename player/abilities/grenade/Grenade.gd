@@ -10,6 +10,10 @@ func _ready():
 	material.emission_enabled = true
 	$MeshInstance.set_surface_material(0, material)
 
+func _process(delta):
+	if $LifetimeTimer.time_left <= 1:
+		$LightTimer.wait_time = 0.1
+
 func _on_LifetimeTimer_timeout():
 	var grenade_instance = grenade.instance()
 	grenade_instance.global_transform = global_transform

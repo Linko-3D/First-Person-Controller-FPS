@@ -1,6 +1,7 @@
 extends Position3D
 
 export (PackedScene) var debris
+var color = Color(1, 1, 1)
 
 func _ready():
 	var material = SpatialMaterial.new()
@@ -18,7 +19,7 @@ func _ready():
 	$ColorTween.interpolate_property($Bullet, "scale", Vector3(2, 2, 2), Vector3(1, 1, 1), 0.4, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
 	$ColorTween.start()
 	yield(get_tree(), "idle_frame")
-	for i in 3:
+	for i in 5:
 		spawn_debris(rand_range(1, 5))
 	
 func hide_bullet():
@@ -26,7 +27,10 @@ func hide_bullet():
 	$Bullet.hide()
 
 func spawn_debris(throw_force):
+	$Position3D.rotation_degrees.z = rand_range(0, 360)
+	$Position3D/Position3D2.rotation_degrees.x = rand_range(0, 10)
 	var debris_instance = debris.instance()
+	debris_instance.color = color
 	get_tree().get_root().add_child(debris_instance)
-	debris_instance.global_transform = $DebrisPosition3D.global_transform
-	debris_instance.linear_velocity = global_transform.basis.z * throw_force
+	debris_instance.global_transform = $Position3D/Position3D2.global_transform
+	debris_instance.linear_velocity = $Position3D/Position3D2.global_transform.basis.z * throw_force

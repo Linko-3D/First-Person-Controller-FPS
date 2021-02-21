@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://player/abilities/shoot/Shoot.gd" type="Script" id=1]
 [ext_resource path="res://player/abilities/shoot/empty.wav" type="AudioStream" id=2]
@@ -9,46 +9,52 @@
 [ext_resource path="res://player/abilities/shoot/Shell.tscn" type="PackedScene" id=7]
 [ext_resource path="res://player/abilities/shoot/AK-47_Magazine.tscn" type="PackedScene" id=8]
 [ext_resource path="res://player/abilities/shoot/reload.wav" type="AudioStream" id=9]
+[ext_resource path="res://font/Roboto-Regular.ttf" type="DynamicFontData" id=11]
 
-[sub_resource type="SpatialMaterial" id=1]
+[sub_resource type="SpatialMaterial" id=13]
 albedo_color = Color( 0.247059, 0.239216, 0.239216, 1 )
 
-[sub_resource type="SpatialMaterial" id=2]
+[sub_resource type="SpatialMaterial" id=14]
 albedo_color = Color( 0.360784, 0.32549, 0.254902, 1 )
 
-[sub_resource type="SpatialMaterial" id=3]
+[sub_resource type="SpatialMaterial" id=15]
 albedo_color = Color( 0.388235, 0.317647, 0.223529, 1 )
 
-[sub_resource type="SpatialMaterial" id=4]
+[sub_resource type="SpatialMaterial" id=16]
 albedo_color = Color( 0.247059, 0.258824, 0.223529, 1 )
 
-[sub_resource type="SpatialMaterial" id=5]
+[sub_resource type="SpatialMaterial" id=17]
 albedo_color = Color( 0.286275, 0.266667, 0.266667, 1 )
 
-[sub_resource type="SpatialMaterial" id=6]
+[sub_resource type="SpatialMaterial" id=18]
 albedo_color = Color( 0.227451, 0.219608, 0.219608, 1 )
 
-[sub_resource type="SpatialMaterial" id=7]
+[sub_resource type="SpatialMaterial" id=19]
 albedo_color = Color( 0.301961, 0.298039, 0.290196, 1 )
 
-[sub_resource type="SpatialMaterial" id=8]
+[sub_resource type="SpatialMaterial" id=20]
 albedo_color = Color( 0.235294, 0.223529, 0.223529, 1 )
 
-[sub_resource type="SpatialMaterial" id=9]
+[sub_resource type="SpatialMaterial" id=21]
 albedo_color = Color( 0.27451, 0.266667, 0.266667, 1 )
 
-[sub_resource type="SpatialMaterial" id=10]
+[sub_resource type="SpatialMaterial" id=22]
 albedo_color = Color( 0.270588, 0.266667, 0.266667, 1 )
 
-[sub_resource type="SpatialMaterial" id=11]
+[sub_resource type="SpatialMaterial" id=23]
 albedo_color = Color( 0.313726, 0.258824, 0.243137, 1 )
+
+[sub_resource type="DynamicFont" id=12]
+size = 30
+outline_color = Color( 0.682353, 0.172549, 0.145098, 1 )
+font_data = ExtResource( 11 )
 
 [node name="Shoot" type="Spatial"]
 script = ExtResource( 1 )
 impact = ExtResource( 4 )
-muzzle_flash = ExtResource( 6 )
+muzzle_flash_mesh = ExtResource( 6 )
 shell_mesh = ExtResource( 7 )
-magazine = ExtResource( 8 )
+magazine_mesh = ExtResource( 8 )
 shoot_sound = ExtResource( 5 )
 reload_sound = ExtResource( 9 )
 empty_sound = ExtResource( 2 )
@@ -59,61 +65,58 @@ empty_sound = ExtResource( 2 )
 enabled = true
 cast_to = Vector3( 0, 0, -100 )
 
-[node name="Shoulder" type="Position3D" parent="."]
+[node name="JumpFall" type="Position3D" parent="."]
 
-[node name="Hand" type="Position3D" parent="Shoulder"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.15, -0.15, -0.2 )
+[node name="Aim" type="Position3D" parent="JumpFall"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.15, -0.1, -0.2 )
 
-[node name="Weapon" type="Position3D" parent="Shoulder/Hand"]
+[node name="SwayBobbingIdle" type="Position3D" parent="JumpFall/Aim"]
 
-[node name="WeaponModel" type="MeshInstance" parent="Shoulder/Hand/Weapon"]
+[node name="OrientationWalkRun" type="Position3D" parent="JumpFall/Aim/SwayBobbingIdle"]
+
+[node name="LookAt" type="Position3D" parent="JumpFall/Aim/SwayBobbingIdle/OrientationWalkRun"]
+
+[node name="Shoot" type="Position3D" parent="JumpFall/Aim/SwayBobbingIdle/OrientationWalkRun/LookAt"]
+
+[node name="Direction" type="Position3D" parent="JumpFall/Aim/SwayBobbingIdle/OrientationWalkRun/LookAt/Shoot"]
+
+[node name="Reload" type="Position3D" parent="JumpFall/Aim/SwayBobbingIdle/OrientationWalkRun/LookAt/Shoot"]
+
+[node name="WeaponModel" type="MeshInstance" parent="JumpFall/Aim/SwayBobbingIdle/OrientationWalkRun/LookAt/Shoot/Reload"]
 mesh = ExtResource( 3 )
-material/0 = SubResource( 1 )
-material/1 = SubResource( 2 )
-material/2 = SubResource( 3 )
-material/3 = SubResource( 4 )
-material/4 = SubResource( 5 )
-material/5 = SubResource( 6 )
-material/6 = SubResource( 7 )
-material/7 = SubResource( 8 )
-material/8 = SubResource( 9 )
-material/9 = SubResource( 10 )
-material/10 = SubResource( 11 )
+material/0 = SubResource( 13 )
+material/1 = SubResource( 14 )
+material/2 = SubResource( 15 )
+material/3 = SubResource( 16 )
+material/4 = SubResource( 17 )
+material/5 = SubResource( 18 )
+material/6 = SubResource( 19 )
+material/7 = SubResource( 20 )
+material/8 = SubResource( 21 )
+material/9 = SubResource( 22 )
+material/10 = SubResource( 23 )
 
-[node name="Muzzle" type="Position3D" parent="Shoulder/Hand/Weapon/WeaponModel"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0727332, -0.614556 )
+[node name="Muzzle" type="Position3D" parent="JumpFall/Aim/SwayBobbingIdle/OrientationWalkRun/LookAt/Shoot/Reload/WeaponModel"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.000613324, -0.681391 )
 
-[node name="Shell" type="Position3D" parent="Shoulder/Hand/Weapon/WeaponModel"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0452856, 0.0983432, -0.188937 )
+[node name="Shell" type="Position3D" parent="JumpFall/Aim/SwayBobbingIdle/OrientationWalkRun/LookAt/Shoot/Reload/WeaponModel"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0452856, 0.0195128, -0.188937 )
 
-[node name="AmmoPosition" type="Position3D" parent="Shoulder/Hand/Weapon/WeaponModel"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0754753, -0.228281 )
-
-[node name="BackgroundText" type="ColorRect" parent="."]
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = -108.0
-margin_top = -108.0
-margin_right = -92.0
-margin_bottom = -96.0
-color = Color( 0, 0, 0, 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="Magazine" type="Position3D" parent="JumpFall/Aim/SwayBobbingIdle/OrientationWalkRun/LookAt/Shoot/Reload/WeaponModel"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.115179, -0.186946 )
 
 [node name="AmmoText" type="Label" parent="."]
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -108.0
-margin_top = -108.0
-margin_right = -92.0
-margin_bottom = -94.0
+margin_left = -241.0
+margin_top = -141.0
+margin_right = -190.0
+margin_bottom = -102.0
+custom_fonts/font = SubResource( 12 )
+custom_colors/font_color = Color( 1, 1, 1, 0.784314 )
 text = "30"
-align = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -128,6 +131,12 @@ __meta__ = {
 
 [node name="LandingTween" type="Tween" parent="."]
 
+[node name="AmmoTextTween" type="Tween" parent="."]
+
+[node name="AimTween" type="Tween" parent="."]
+
+[node name="OrientationWalkRunTween" type="Tween" parent="."]
+
 [node name="FireRate" type="Timer" parent="."]
 wait_time = 0.1
 one_shot = true
@@ -135,3 +144,9 @@ one_shot = true
 [node name="RecoilTimer" type="Timer" parent="."]
 wait_time = 0.2
 one_shot = true
+
+[node name="MagazineTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+[connection signal="timeout" from="RecoilTimer" to="." method="_on_RecoilTimer_timeout"]
+[connection signal="timeout" from="MagazineTimer" to="." method="_on_MagazineTimer_timeout"]

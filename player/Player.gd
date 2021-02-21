@@ -22,6 +22,9 @@ var can_jump = false
 
 var can_slide = false
 
+var slow = false
+var slide = false
+
 func _ready():
 	$Head/DirectionIndicator.hide()
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -30,9 +33,6 @@ func _input(event):
 	if event is InputEventMouseMotion:
 		rotation_degrees.y -= event.relative.x * mouse_sensitivity / 10
 		$Head.rotation_degrees.x = clamp($Head.rotation_degrees.x - event.relative.y * mouse_sensitivity / 10, -70, 80)
-	
-	direction = Vector3()
-	walk()
 
 func walk():
 	if not is_crouched:
@@ -40,30 +40,53 @@ func walk():
 		head_angle = 0.2
 	else:
 		head_angle = 0
+	
 	camera_height = -0.1
 	if Input.is_key_pressed(KEY_W) or Input.is_key_pressed(KEY_Z) or Input.is_key_pressed(KEY_UP):
-		direction.z = -1
-		if Input.is_key_pressed(KEY_SHIFT) and is_on_floor() and not Input.is_mouse_button_pressed(BUTTON_LEFT) and not Input.is_mouse_button_pressed(BUTTON_RIGHT) and not $CrouchTween.is_active():
-			if is_crouched:
-				crouching_animation(false)
-			speed_multiplier = 2
-			camera_height = -0.3
-			head_angle = 0.6
-	elif Input.is_key_pressed(KEY_S) or Input.is_key_pressed(KEY_DOWN):
-		direction.z = 1
+		direction.z += -1
+	
+	if Input.is_key_pressed(KEY_S) or Input.is_key_pressed(KEY_DOWN):
+		direction.z += 1
 	
 	if Input.is_key_pressed(KEY_A) or Input.is_key_pressed(KEY_Q) or Input.is_key_pressed(KEY_LEFT):
-		direction.x = -1
-	elif Input.is_key_pressed(KEY_D) or Input.is_key_pressed(KEY_RIGHT):
-		direction.x = 1
+		direction.x += -1
+	if Input.is_key_pressed(KEY_D) or Input.is_key_pressed(KEY_RIGHT):
+		direction.x += 1
+	
+	if Input.get_joy_axis(0, 1) < -0.25 or Input.get_joy_axis(0, 1) > 0.25:
+		direction.z += Input.get_joy_axis(0, 1)
+	if Input.get_joy_axis(0, 0) < -0.25 or Input.get_joy_axis(0, 0) > 0.25:
+		direction.x += Input.get_joy_axis(0, 0)
+	
+	if Input.is_mouse_button_pressed(BUTTON_RIGHT) or Input.get_joy_axis(0, 6) >= 0.6:
+		slow = true
+	else:
+		slow = false
+	
+	if direction.z < -0.25:
+		if Input.is_key_pressed(KEY_SHIFT) or Input.is_joy_button_pressed(0, JOY_L3):
+			if is_on_floor() and not Input.is_mouse_button_pressed(BUTTON_LEFT) and not Input.get_joy_axis(0, 7) >= 0.5 and not slow and not $CrouchTween.is_active():
+				if is_crouched:
+					crouching_animation(false)
+				speed_multiplier = 2
+				camera_height = -0.3
+				head_angle = 0.6
 	
 	direction = direction.normalized()
-	if direction.z < 0:
-		direction.z = direction.z * speed_multiplier
+	
+	direction.z = direction.z * speed_multiplier
 	direction = direction.rotated(Vector3.UP, rotation.y)
-
+	
 func _physics_process(delta):
-	# To enable
+	if Input.get_joy_axis(0, 2) < -0.25 or Input.get_joy_axis(0, 2) > 0.25:
+		rotation_degrees.y -= Input.get_joy_axis(0, 2) * mouse_sensitivity * 3
+	if Input.get_joy_axis(0, 3) < -0.25 or Input.get_joy_axis(0, 3) > 0.25:
+		$Head.rotation_degrees.x = clamp($Head.rotation_degrees.x - Input.get_joy_axis(0, 3)* mouse_sensitivity * 3, -80, 80)
+	
+	if not slide:
+		direction = Vector3()
+		walk()
+	
 	if speed_multiplier == 2:
 		$Head/Movements/Camera.fov = lerp($Head/Movements/Camera.fov, 80, 5 * delta)
 	else:
@@ -74,7 +97,8 @@ func _physics_process(delta):
 			var amplitude = 0.5 * speed_multiplier
 			head_angle = -head_angle
 			var animation_speed = clamp(0.25 / speed_multiplier, 0.25/1.6, 0.25)
-			#bobbing
+			
+#			Head bobbing
 			$CameraTween.interpolate_property($Head/Movements, "rotation_degrees", Vector3(), Vector3(-amplitude, 0, head_angle), animation_speed, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
 			$CameraTween.interpolate_property($Head/Movements, "rotation_degrees", Vector3(-amplitude, 0, head_angle), Vector3(), animation_speed, Tween.TRANS_SINE, Tween.EASE_IN_OUT, animation_speed)
 			$CameraTween.start()
@@ -98,29 +122,37 @@ func _physics_process(delta):
 		else:
 			gravity_vec += Vector3.DOWN * gravity * delta
 	
-	if Input.is_key_pressed(KEY_SPACE):
+	if Input.is_key_pressed(KEY_SPACE) or Input.is_joy_button_pressed(0, JOY_XBOX_A):
 		if is_on_floor() and can_jump:
 			jump()
-			jump_animation()
+			jumping_animation()
 			if is_crouched:
 				crouching_animation(false)
 	
-	if Input.is_key_pressed(KEY_CONTROL) or Input.is_key_pressed(KEY_C):
-		if not $CrouchTween.is_active():
-			crouching_animation(!is_crouched)
-			if is_crouched:
-				speed_multiplier = 0.5
+	if Input.is_key_pressed(KEY_CONTROL) or Input.is_key_pressed(KEY_C) or Input.is_joy_button_pressed(0, JOY_XBOX_B):
+		if speed_multiplier != 2:
+			if not $CrouchTween.is_active():
+				crouching_animation(!is_crouched)
+		else:
+			if not slide:
+				slide = true
+				is_crouched = true
+				slide_animation()
+				$SlideTimer.start()
+	if is_crouched:
+		speed_multiplier = 0.5
 		
 	velocity = velocity.linear_interpolate(direction * speed, acceleration * delta)
 	movement.z = velocity.z + gravity_vec.z
 	movement.x = velocity.x + gravity_vec.x
 	movement.y = gravity_vec.y
 	movement = move_and_slide(movement, Vector3.UP)
-
-	if Input.is_mouse_button_pressed(BUTTON_RIGHT) and is_on_floor():
-		mouse_sensitivity = 0.5
-	else:
-		mouse_sensitivity = 1
+	
+	if is_on_floor():
+		if Input.is_mouse_button_pressed(BUTTON_RIGHT) or Input.get_joy_axis(0, 6) >= 0.6:
+			mouse_sensitivity = 0.5
+		else:
+			mouse_sensitivity = 1
 
 func jump():
 	on_ground = false
@@ -128,7 +160,7 @@ func jump():
 
 # Animations
 
-func jump_animation():
+func jumping_animation():
 	var animation_speed = 0.25
 
 	$CameraTween.interpolate_property($Head/Movements, "rotation_degrees:x", 0, -5, 0.2 , Tween.TRANS_SINE, Tween.EASE_IN_OUT)
@@ -140,7 +172,6 @@ func jump_animation():
 	$CameraTween.interpolate_property($Head/Movements, "translation:y", 0, -0.5, 0.2, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
 	$CameraTween.interpolate_property($Head/Movements, "translation:y", -0.5, 0, 0.4, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 0.2)
 	$CameraTween.start()
-
 
 func landing_animation():
 	$CameraTween.interpolate_property($Head/Movements, "translation:y", 0, -0.5, 0.15, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
@@ -178,6 +209,15 @@ func crouching_animation(crouching):
 		$CrouchTween.start()
 		$CameraTween.start()
 
-
+func slide_animation():
+	$CrouchTween.interpolate_property($Head, "translation:y", $Head.translation.y, 0.9/1.5, 0.2, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+	$CrouchTween.interpolate_property($CollisionShape, "shape:height", $CollisionShape.shape.height, 1/1.5, 0.2, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+	$CrouchTween.interpolate_property($MeshInstance, "mesh:mid_height", $MeshInstance.mesh.mid_height, 1/1.5, 0.2, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+	$CrouchTween.start()
+	
 func _on_JumpTimer_timeout():
 	can_jump = true
+
+func _on_SlideTimer_timeout():
+	slide = false
+	direction = Vector3()

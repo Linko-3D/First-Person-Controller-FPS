@@ -22,7 +22,7 @@ func _process(delta):
 	
 	$Position2D.show()
 	
-	if not player.is_on_floor() or player.speed_multiplier == 2:
+	if not player.is_on_floor() or player.speed_multiplier == 2 or player.slide:
 		$Position2D.hide()
 	
 	if shoot: # If the node Shoot is in the scene, hide when reloading and aiming
