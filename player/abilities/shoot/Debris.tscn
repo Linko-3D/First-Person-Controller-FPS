@@ -3,8 +3,8 @@
 [ext_resource path="res://player/abilities/shoot/Debris.gd" type="Script" id=1]
 
 [sub_resource type="SphereMesh" id=1]
-radius = 0.015
-height = 0.03
+radius = 0.01
+height = 0.02
 
 [node name="Debris" type="RigidBody"]
 script = ExtResource( 1 )
