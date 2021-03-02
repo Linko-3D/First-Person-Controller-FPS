@@ -160,7 +160,8 @@ func _process(delta):
 			if not player.speed_multiplier == 2 and not player.slide and not $ReloadTween.is_active() and orientation_walk_run.rotation_degrees.y < 5:
 				$FireRate.start()
 				if ammo > 0:
-					Input.start_joy_vibration(0, 0, 0.2, 0.1)
+					if Input.get_joy_axis(0, 7) >= 0.5:
+						Input.start_joy_vibration(0, 0, 0.2, 0.1)
 					ammo -= 1
 					$AmmoText.text = str(ammo)
 					$AmmoTextTween.stop_all()
