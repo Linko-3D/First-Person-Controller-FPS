@@ -10,20 +10,21 @@ var speed = 4
 var speed_multiplier = 1
 var gravity = 9.8
 var movement = Vector3()
-var jump_height = 4
-var camera_height = 0.1
+var jump_height = 4.5
+var camera_height # The height gets lower when running
 
 var on_ground = false
 var is_crouched = false
-var head_angle = 0.2
-var is_zoomed = false
+var head_bobbing_angle = 0.2
 
-var can_jump = false
+var can_jump = true
 
 var can_slide = false
 
 var slow = false
 var slide = false
+
+var animation_speed = 0.4 /2
 
 func _ready():
 	$Head/DirectionIndicator.hide()
@@ -37,9 +38,9 @@ func _input(event):
 func walk():
 	if not is_crouched:
 		speed_multiplier = 1
-		head_angle = 0.2
+		head_bobbing_angle = 0.2
 	else:
-		head_angle = 0
+		head_bobbing_angle = 0
 	
 	camera_height = -0.1
 	if Input.is_key_pressed(KEY_W) or Input.is_key_pressed(KEY_Z) or Input.is_key_pressed(KEY_UP):
@@ -70,7 +71,7 @@ func walk():
 					crouching_animation(false)
 				speed_multiplier = 2
 				camera_height = -0.3
-				head_angle = 0.6
+				head_bobbing_angle = 0.6
 	
 	direction = direction.normalized()
 	
@@ -78,10 +79,17 @@ func walk():
 	direction = direction.rotated(Vector3.UP, rotation.y)
 	
 func _physics_process(delta):
-	if Input.get_joy_axis(0, 2) < -0.25 or Input.get_joy_axis(0, 2) > 0.25:
-		rotation_degrees.y -= Input.get_joy_axis(0, 2) * mouse_sensitivity * 3
-	if Input.get_joy_axis(0, 3) < -0.25 or Input.get_joy_axis(0, 3) > 0.25:
-		$Head.rotation_degrees.x = clamp($Head.rotation_degrees.x - Input.get_joy_axis(0, 3)* mouse_sensitivity * 3, -80, 80)
+	# ici
+	# Look around with the right joystick
+	if Input.get_joy_axis(0, 2) < -0.25:
+		rotation_degrees.y += pow(Input.get_joy_axis(0, 2), 2) * mouse_sensitivity * 3
+	if Input.get_joy_axis(0, 2) > 0.25:
+		rotation_degrees.y -= pow(Input.get_joy_axis(0, 2), 2) * mouse_sensitivity * 3
+	
+	if Input.get_joy_axis(0, 3) < -0.25:
+		$Head.rotation_degrees.x = clamp($Head.rotation_degrees.x + pow(Input.get_joy_axis(0, 3), 2) * mouse_sensitivity * 3, -80, 80)
+	if Input.get_joy_axis(0, 3) > 0.25:
+		$Head.rotation_degrees.x = clamp($Head.rotation_degrees.x - pow(Input.get_joy_axis(0, 3), 2) * mouse_sensitivity * 3, -80, 80)
 	
 	if not slide:
 		direction = Vector3()
@@ -92,16 +100,15 @@ func _physics_process(delta):
 	else:
 		$Head/Movements/Camera.fov = lerp($Head/Movements/Camera.fov, 70, 5 * delta)
 	
+	animation_speed = 0.4 /2
+	if speed_multiplier == 2:
+		animation_speed = 0.27 /2
+	if speed_multiplier == 0.5:
+		animation_speed = 0.55 /2
+	
 	if direction != Vector3() and is_on_floor():
 		if not $CameraTween.is_active():
-			var amplitude = 0.5 * speed_multiplier
-			head_angle = -head_angle
-			var animation_speed = clamp(0.25 / speed_multiplier, 0.25/1.6, 0.25)
-			
-#			Head bobbing
-			$CameraTween.interpolate_property($Head/Movements, "rotation_degrees", Vector3(), Vector3(-amplitude, 0, head_angle), animation_speed, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
-			$CameraTween.interpolate_property($Head/Movements, "rotation_degrees", Vector3(-amplitude, 0, head_angle), Vector3(), animation_speed, Tween.TRANS_SINE, Tween.EASE_IN_OUT, animation_speed)
-			$CameraTween.start()
+			head_bobbing_animation()
 	
 	if direction != Vector3():
 		$Head/Movements.translation.y = lerp($Head/Movements.translation.y, camera_height, 10 * delta)
@@ -111,11 +118,9 @@ func _physics_process(delta):
 	if is_on_floor():
 		if not on_ground:
 			landing_animation()
-			$JumpTimer.start()
 		gravity_vec = -get_floor_normal() * stick_amount
 		on_ground = true
 	else:
-		can_jump = false
 		if on_ground:
 			gravity_vec = Vector3()
 			on_ground = false
@@ -124,10 +129,14 @@ func _physics_process(delta):
 	
 	if Input.is_key_pressed(KEY_SPACE) or Input.is_joy_button_pressed(0, JOY_XBOX_A):
 		if is_on_floor() and can_jump:
+			can_jump = false
 			jump()
 			jumping_animation()
 			if is_crouched:
 				crouching_animation(false)
+			
+	if is_on_floor() and not Input.is_key_pressed(KEY_SPACE) and not Input.is_joy_button_pressed(0, JOY_XBOX_A):
+		can_jump = true
 	
 	if Input.is_key_pressed(KEY_CONTROL) or Input.is_key_pressed(KEY_C) or Input.is_joy_button_pressed(0, JOY_XBOX_B):
 		if speed_multiplier != 2:
@@ -159,6 +168,13 @@ func jump():
 	gravity_vec = Vector3.UP * jump_height
 
 # Animations
+
+func head_bobbing_animation():
+	var amplitude = 0.5 * speed_multiplier
+	head_bobbing_angle = -head_bobbing_angle
+	$CameraTween.interpolate_property($Head/Movements, "rotation_degrees", Vector3(), Vector3(-amplitude, 0, head_bobbing_angle), animation_speed, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+	$CameraTween.interpolate_property($Head/Movements, "rotation_degrees", Vector3(-amplitude, 0, head_bobbing_angle), Vector3(), animation_speed, Tween.TRANS_SINE, Tween.EASE_IN_OUT, animation_speed)
+	$CameraTween.start()
 
 func jumping_animation():
 	var animation_speed = 0.25
@@ -214,9 +230,6 @@ func slide_animation():
 	$CrouchTween.interpolate_property($CollisionShape, "shape:height", $CollisionShape.shape.height, 1/1.5, 0.2, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
 	$CrouchTween.interpolate_property($MeshInstance, "mesh:mid_height", $MeshInstance.mesh.mid_height, 1/1.5, 0.2, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
 	$CrouchTween.start()
-	
-func _on_JumpTimer_timeout():
-	can_jump = true
 
 func _on_SlideTimer_timeout():
 	slide = false

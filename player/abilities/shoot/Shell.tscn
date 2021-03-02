@@ -9,12 +9,9 @@ bottom_radius = 0.01
 height = 0.05
 
 [sub_resource type="SpatialMaterial" id=2]
-albedo_color = Color( 0.890196, 0.137255, 0.137255, 1 )
-emission_enabled = true
-emission = Color( 1, 1, 1, 1 )
-emission_energy = 1.0
-emission_operator = 0
-emission_on_uv2 = false
+albedo_color = Color( 1, 1, 0, 1 )
+metallic = 1.0
+roughness = 0.1
 
 [node name="Shell" type="RigidBody"]
 script = ExtResource( 2 )
@@ -27,8 +24,6 @@ material/0 = SubResource( 2 )
 [node name="ImpactSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 1 )
 volume_db = -10.0
-
-[node name="ColorTween" type="Tween" parent="."]
 
 [node name="AudioTimer" type="Timer" parent="."]
 wait_time = 0.75

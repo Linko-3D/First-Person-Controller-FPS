@@ -4,6 +4,8 @@ export (PackedScene) var debris
 var color = Color(1, 1, 1)
 
 func _ready():
+	$ImpactSound.pitch_scale = rand_range(0.95, 1.05)
+	
 	var material = SpatialMaterial.new()
 	material.albedo_color = Color(0, 0, 0)
 	material.metallic = 1

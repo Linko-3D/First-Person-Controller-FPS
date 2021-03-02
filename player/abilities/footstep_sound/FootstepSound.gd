@@ -24,10 +24,16 @@ func _ready():
 	timer_speed = $Timer.wait_time
 
 func _process(delta):
+	var frequency = 0.4
+	if player.speed_multiplier == 2:
+		frequency = 0.27
+	if player.speed_multiplier == 0.5:
+		frequency = 0.55
+	
 	if $Timer.is_stopped():
 		if player.direction != Vector3() and player.is_on_floor(): # If we move on the floor play the sound and adjust the footstep rate
-			$Timer.wait_time = clamp(timer_speed / player.speed_multiplier, 0.5/1.6, 0.5)
-			play_sound(-20 / clamp(player.speed_multiplier, 0.5, 1.5))
+			$Timer.wait_time = frequency
+			play_sound(-20 / player.speed_multiplier)
 			$Timer.start()
 	
 	if player.is_on_floor() and not player.on_ground: # Sound when landing

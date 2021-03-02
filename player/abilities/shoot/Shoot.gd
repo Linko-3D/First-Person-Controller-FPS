@@ -24,6 +24,10 @@ var ammo = 30
 
 var accuracy = 1
 
+var singleshot = false
+
+var can_shoot = true
+
 onready var fall = $JumpFall
 onready var aim = $JumpFall/Aim
 onready var sway_bobbing = $JumpFall/Aim/SwayBobbingIdle
@@ -106,16 +110,20 @@ func _process(delta):
 	sway_bobbing.rotation_degrees.x = lerp(sway_bobbing.rotation_degrees.x, -mouse_relative_y / 10, weapon_sway * delta)
 	
 #	Weapon bobbing if walking, the player speed (walking, crouching, sprinting) is used for the animation speed
+	var animation_speed = 0.4
+	if player.speed_multiplier == 2:
+		animation_speed = 0.27
+	if player.speed_multiplier == 0.5:
+		animation_speed = 0.55
+	
 	if player.direction != Vector3():
 		if not $HBobbingTween.is_active():
-			var animation_speed = clamp(0.4 / player.speed_multiplier, 0.4/1.6, 0.4)
 			$HBobbingTween.interpolate_property(sway_bobbing, "translation:x", sway_bobbing.translation.x, -0.01 * player.speed_multiplier, animation_speed, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
 			$HBobbingTween.interpolate_property(sway_bobbing, "translation:x", -0.01 * player.speed_multiplier, 0, 0.4, Tween.TRANS_SINE, Tween.EASE_IN_OUT, animation_speed)
 			$HBobbingTween.start()
 		if not $VBobbingTween.is_active(): 
-			var animation_speed = clamp(0.25 / player.speed_multiplier, 0.25/1.6, 0.25)
-			$VBobbingTween.interpolate_property(sway_bobbing, "translation:y", sway_bobbing.translation.y, -0.01 * player.speed_multiplier, animation_speed, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
-			$VBobbingTween.interpolate_property(sway_bobbing, "translation:y", -0.01 * player.speed_multiplier, 0, animation_speed, Tween.TRANS_SINE, Tween.EASE_IN_OUT, animation_speed)
+			$VBobbingTween.interpolate_property(sway_bobbing, "translation:y", sway_bobbing.translation.y, -0.01 * player.speed_multiplier, animation_speed /2, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+			$VBobbingTween.interpolate_property(sway_bobbing, "translation:y", -0.01 * player.speed_multiplier, 0, animation_speed /2, Tween.TRANS_SINE, Tween.EASE_IN_OUT, animation_speed / 2)
 			$VBobbingTween.start()
 	
 #	If sprinting orient the weapon
@@ -143,12 +151,16 @@ func _process(delta):
 	$AmmoText.margin_top = get_viewport().size.y / 10 * -1
 	$AmmoText.margin_left = get_viewport().size.y / 10 * -1
 	
+	$AmmoLeftText.margin_top = $AmmoText.margin_top
+	$AmmoLeftText.margin_left = $AmmoText.margin_left + 50
+	
 #	Shoot
 	if Input.is_mouse_button_pressed(BUTTON_LEFT) or Input.get_joy_axis(0, 7) >= 0.5:
-		if $FireRate.is_stopped() and player.is_on_floor():
+		if $FireRate.is_stopped() and player.is_on_floor() and can_shoot:
 			if not player.speed_multiplier == 2 and not player.slide and not $ReloadTween.is_active() and orientation_walk_run.rotation_degrees.y < 5:
 				$FireRate.start()
 				if ammo > 0:
+					Input.start_joy_vibration(0, 0, 0.2, 0.1)
 					ammo -= 1
 					$AmmoText.text = str(ammo)
 					$AmmoTextTween.stop_all()
@@ -159,6 +171,12 @@ func _process(delta):
 						$AmmoText.modulate = Color(0.68, 0.17, 0.15)
 				else:
 					play_sound(empty_sound, 0, 0)
+
+	if singleshot:
+		if Input.is_mouse_button_pressed(BUTTON_LEFT):
+			can_shoot = false
+		else:
+			can_shoot = true
 
 func shoot():
 	shoot_animation()
@@ -181,7 +199,7 @@ func shoot():
 	
 	# Hit enemy feedback
 	if raycast.is_colliding():
-		if raycast.get_collider().is_in_group("Enemy"):
+		if raycast.get_collider().is_in_group("enemy"):
 			if feedback_hit:
 				feedback_hit.display()
 	
@@ -195,7 +213,6 @@ func shoot():
 			volume -= 15
 	else:
 		play_sound(shoot_sound, 0, 0)
-
 
 func spawn_muzzle_flash():
 	var muzzle_flash_instance = muzzle_flash_mesh.instance()
@@ -227,9 +244,6 @@ func spawn_impact():
 		
 		impact_instance.global_transform.origin = raycast.get_collision_point()
 		impact_instance.look_at(raycast.get_collision_point() - raycast.get_collision_normal(), Vector3.UP)
-		impact_instance.get_node("Particles").emitting = true
-		impact_instance.get_node("ImpactSound").pitch_scale = rand_range(0.95, 1.05)
-		
 
 		
 		if raycast.get_collider() is RigidBody:
@@ -241,7 +255,6 @@ func spawn_shell():
 	get_tree().get_root().add_child(shell_instance)
 	shell_instance.global_transform = shell.global_transform
 	shell_instance.linear_velocity = shell.global_transform.basis.x * 2.5
-	shell_instance.get_node("ImpactSound").pitch_scale = rand_range(0.95, 1.05)
 
 func spawn_magazine():
 	var magazine_instance = magazine_mesh.instance()

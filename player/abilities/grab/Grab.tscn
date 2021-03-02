@@ -5,6 +5,8 @@
 
 [sub_resource type="DynamicFont" id=1]
 size = 15
+outline_size = 1
+outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 2 )
 
 [node name="Grab" type="RayCast"]
@@ -55,7 +57,3 @@ valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="Timer" type="Timer" parent="."]
-wait_time = 0.25
-one_shot = true
