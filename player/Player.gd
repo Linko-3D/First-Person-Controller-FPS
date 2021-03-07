@@ -118,6 +118,7 @@ func _physics_process(delta):
 	if is_on_floor():
 		if not on_ground:
 			landing_animation()
+			Input.start_joy_vibration(0, 0, 0.5, 0.1)
 		gravity_vec = -get_floor_normal() * stick_amount
 		on_ground = true
 	else:

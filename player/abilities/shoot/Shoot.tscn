@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://player/abilities/shoot/Shoot.gd" type="Script" id=1]
 [ext_resource path="res://player/abilities/shoot/empty.wav" type="AudioStream" id=2]
@@ -50,12 +50,6 @@ outline_size = 1
 outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 11 )
 
-[sub_resource type="DynamicFont" id=13]
-size = 30
-outline_size = 1
-outline_color = Color( 0, 0, 0, 1 )
-font_data = ExtResource( 11 )
-
 [node name="Shoot" type="Spatial"]
 script = ExtResource( 1 )
 impact = ExtResource( 4 )
@@ -74,22 +68,24 @@ cast_to = Vector3( 0, 0, -100 )
 
 [node name="JumpFall" type="Position3D" parent="."]
 
-[node name="Aim" type="Position3D" parent="JumpFall"]
+[node name="MeleeAttack" type="Position3D" parent="JumpFall"]
+
+[node name="Aim" type="Position3D" parent="JumpFall/MeleeAttack"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.15, -0.1, -0.2 )
 
-[node name="SwayBobbingIdle" type="Position3D" parent="JumpFall/Aim"]
+[node name="SwayBobbingIdle" type="Position3D" parent="JumpFall/MeleeAttack/Aim"]
 
-[node name="OrientationWalkRun" type="Position3D" parent="JumpFall/Aim/SwayBobbingIdle"]
+[node name="OrientationWalkRun" type="Position3D" parent="JumpFall/MeleeAttack/Aim/SwayBobbingIdle"]
 
-[node name="LookAt" type="Position3D" parent="JumpFall/Aim/SwayBobbingIdle/OrientationWalkRun"]
+[node name="LookAt" type="Position3D" parent="JumpFall/MeleeAttack/Aim/SwayBobbingIdle/OrientationWalkRun"]
 
-[node name="Shoot" type="Position3D" parent="JumpFall/Aim/SwayBobbingIdle/OrientationWalkRun/LookAt"]
+[node name="Shoot" type="Position3D" parent="JumpFall/MeleeAttack/Aim/SwayBobbingIdle/OrientationWalkRun/LookAt"]
 
-[node name="Direction" type="Position3D" parent="JumpFall/Aim/SwayBobbingIdle/OrientationWalkRun/LookAt/Shoot"]
+[node name="Direction" type="Position3D" parent="JumpFall/MeleeAttack/Aim/SwayBobbingIdle/OrientationWalkRun/LookAt/Shoot"]
 
-[node name="Reload" type="Position3D" parent="JumpFall/Aim/SwayBobbingIdle/OrientationWalkRun/LookAt/Shoot"]
+[node name="Reload" type="Position3D" parent="JumpFall/MeleeAttack/Aim/SwayBobbingIdle/OrientationWalkRun/LookAt/Shoot"]
 
-[node name="WeaponModel" type="MeshInstance" parent="JumpFall/Aim/SwayBobbingIdle/OrientationWalkRun/LookAt/Shoot/Reload"]
+[node name="WeaponModel" type="MeshInstance" parent="JumpFall/MeleeAttack/Aim/SwayBobbingIdle/OrientationWalkRun/LookAt/Shoot/Reload"]
 mesh = ExtResource( 3 )
 material/0 = SubResource( 1 )
 material/1 = SubResource( 2 )
@@ -103,13 +99,13 @@ material/8 = SubResource( 9 )
 material/9 = SubResource( 10 )
 material/10 = SubResource( 11 )
 
-[node name="Muzzle" type="Position3D" parent="JumpFall/Aim/SwayBobbingIdle/OrientationWalkRun/LookAt/Shoot/Reload/WeaponModel"]
+[node name="Muzzle" type="Position3D" parent="JumpFall/MeleeAttack/Aim/SwayBobbingIdle/OrientationWalkRun/LookAt/Shoot/Reload/WeaponModel"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.000613324, -0.681391 )
 
-[node name="Shell" type="Position3D" parent="JumpFall/Aim/SwayBobbingIdle/OrientationWalkRun/LookAt/Shoot/Reload/WeaponModel"]
+[node name="Shell" type="Position3D" parent="JumpFall/MeleeAttack/Aim/SwayBobbingIdle/OrientationWalkRun/LookAt/Shoot/Reload/WeaponModel"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0452856, 0.0195128, -0.188937 )
 
-[node name="Magazine" type="Position3D" parent="JumpFall/Aim/SwayBobbingIdle/OrientationWalkRun/LookAt/Shoot/Reload/WeaponModel"]
+[node name="Magazine" type="Position3D" parent="JumpFall/MeleeAttack/Aim/SwayBobbingIdle/OrientationWalkRun/LookAt/Shoot/Reload/WeaponModel"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.115179, -0.186946 )
 
 [node name="WeaponTween" type="Tween" parent="."]
@@ -123,6 +119,8 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.115179, -0.186946 )
 [node name="LandingTween" type="Tween" parent="."]
 
 [node name="AmmoTextTween" type="Tween" parent="."]
+
+[node name="MeleeAttackTween" type="Tween" parent="."]
 
 [node name="AimTween" type="Tween" parent="."]
 
@@ -140,30 +138,51 @@ one_shot = true
 wait_time = 0.5
 one_shot = true
 
-[node name="AmmoText" type="Label" parent="."]
+[node name="DisplayAmmo" type="HBoxContainer" parent="."]
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -84.0
-margin_top = -36.0
-custom_fonts/font = SubResource( 12 )
-custom_colors/font_color = Color( 1, 1, 1, 0.784314 )
-text = "30"
+margin_left = -138.0
+margin_top = -83.0
+margin_right = -50.0
+margin_bottom = -47.0
+alignment = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="AmmoLeftText" type="Label" parent="."]
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = -34.0
-margin_top = -36.0
-custom_fonts/font = SubResource( 13 )
-custom_colors/font_color = Color( 0.301961, 0.301961, 0.301961, 1 )
+[node name="AmmoText" type="Label" parent="DisplayAmmo"]
+margin_right = 34.0
+margin_bottom = 36.0
+custom_fonts/font = SubResource( 12 )
+custom_colors/font_color = Color( 1, 1, 1, 0.784314 )
 text = "30"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Slash" type="Label" parent="DisplayAmmo"]
+margin_left = 38.0
+margin_right = 50.0
+margin_bottom = 36.0
+custom_fonts/font = SubResource( 12 )
+custom_colors/font_color = Color( 1, 1, 1, 0.784314 )
+text = "/"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ClipText" type="Label" parent="DisplayAmmo"]
+margin_left = 54.0
+margin_right = 88.0
+margin_bottom = 36.0
+custom_fonts/font = SubResource( 12 )
+custom_colors/font_color = Color( 1, 1, 1, 0.784314 )
+text = "90"
+align = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }

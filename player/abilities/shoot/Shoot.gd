@@ -1,5 +1,26 @@
 extends Spatial
 
+
+#var max_ammo = 30
+#var ammo = max_ammo
+#var clip = max_ammo * 2
+#
+#func _input(event):
+#	if Input.is_action_just_pressed("ui_down"):
+#		if ammo > 0:
+#			ammo -= 1
+#			print(ammo , "/", clip)
+#
+#	if Input.is_action_just_pressed("ui_accept") and clip > 0:
+#		var difference = max_ammo - ammo
+#		if difference > clip:
+#			ammo += clip
+#			clip = 0
+#		else:
+#			clip -= difference
+#			ammo = max_ammo
+#		print(ammo , "/", clip)
+
 export (PackedScene) var impact
 export (PackedScene) var muzzle_flash_mesh
 export (PackedScene) var shell_mesh
@@ -20,7 +41,8 @@ var mouse_relative_x = 0
 var mouse_relative_y = 0
 
 var max_ammo = 30
-var ammo = 30
+var ammo = max_ammo
+var clip = max_ammo * 3
 
 var accuracy = 1
 
@@ -29,18 +51,18 @@ var singleshot = false
 var can_shoot = true
 
 onready var fall = $JumpFall
-onready var aim = $JumpFall/Aim
-onready var sway_bobbing = $JumpFall/Aim/SwayBobbingIdle
-onready var orientation_walk_run = $JumpFall/Aim/SwayBobbingIdle/OrientationWalkRun
-onready var look_at = $JumpFall/Aim/SwayBobbingIdle/OrientationWalkRun/LookAt
-onready var direction = $JumpFall/Aim/SwayBobbingIdle/OrientationWalkRun/LookAt/Shoot/Direction
+onready var aim = $JumpFall/MeleeAttack/Aim
+onready var sway_bobbing = $JumpFall/MeleeAttack/Aim/SwayBobbingIdle
+onready var orientation_walk_run = $JumpFall/MeleeAttack/Aim/SwayBobbingIdle/OrientationWalkRun
+onready var look_at = $JumpFall/MeleeAttack/Aim/SwayBobbingIdle/OrientationWalkRun/LookAt
+onready var direction = $JumpFall/MeleeAttack/Aim/SwayBobbingIdle/OrientationWalkRun/LookAt/Shoot/Direction
 
-onready var shoot = $JumpFall/Aim/SwayBobbingIdle/OrientationWalkRun/LookAt/Shoot
-onready var reload = $JumpFall/Aim/SwayBobbingIdle/OrientationWalkRun/LookAt/Shoot/Reload
+onready var shoot = $JumpFall/MeleeAttack/Aim/SwayBobbingIdle/OrientationWalkRun/LookAt/Shoot
+onready var reload = $JumpFall/MeleeAttack/Aim/SwayBobbingIdle/OrientationWalkRun/LookAt/Shoot/Reload
 
-onready var shell = $JumpFall/Aim/SwayBobbingIdle/OrientationWalkRun/LookAt/Shoot/Reload/WeaponModel/Shell
-onready var magazine = $JumpFall/Aim/SwayBobbingIdle/OrientationWalkRun/LookAt/Shoot/Reload/WeaponModel/Magazine
-onready var muzzle = $JumpFall/Aim/SwayBobbingIdle/OrientationWalkRun/LookAt/Shoot/Reload/WeaponModel/Muzzle
+onready var shell = $JumpFall/MeleeAttack/Aim/SwayBobbingIdle/OrientationWalkRun/LookAt/Shoot/Reload/WeaponModel/Shell
+onready var magazine = $JumpFall/MeleeAttack/Aim/SwayBobbingIdle/OrientationWalkRun/LookAt/Shoot/Reload/WeaponModel/Magazine
+onready var muzzle = $JumpFall/MeleeAttack/Aim/SwayBobbingIdle/OrientationWalkRun/LookAt/Shoot/Reload/WeaponModel/Muzzle
 
 onready var raycast = $BulletSpread/RayCast
 
@@ -49,6 +71,10 @@ onready var camera = get_tree().get_root().find_node("Camera", true, false)
 onready var feedback_hit = get_tree().get_root().find_node("FeedbackHit", true, false)
 onready var grab = get_tree().get_root().find_node("Grab", true, false)
 
+func _ready():
+	$DisplayAmmo/AmmoText.text = str(ammo)
+	$DisplayAmmo/ClipText.text = str(clip)
+
 func _input(event):
 #	Getting the mouse movement for the weapon sway in the physics process
 	if event is InputEventMouseMotion:
@@ -56,12 +82,22 @@ func _input(event):
 		mouse_relative_y = clamp(event.relative.y, -50, 10)
 	
 #	Reload
-	if Input.is_key_pressed(KEY_R) or Input.is_joy_button_pressed(0, JOY_XBOX_X):
+	if (Input.is_key_pressed(KEY_R) or Input.is_joy_button_pressed(0, JOY_XBOX_X)) and ammo != max_ammo and clip > 0:
 		if not Input.is_mouse_button_pressed(BUTTON_LEFT) and not Input.get_joy_axis(0, 7) >= 0.5 and not player.slide:
-			if not $ReloadTween.is_active() and ammo != max_ammo:
-				ammo = max_ammo
-				$AmmoText.text = str(ammo)
-				$AmmoText.modulate = Color(1, 1, 1)
+			if not $ReloadTween.is_active():
+				# Math to calculate ammo and clip remaining
+				var difference = max_ammo - ammo
+				# If we have more ammo missing than in the clip, take all the ammo in the clip remaining
+				if difference > clip:
+					ammo += clip
+					clip = 0
+				else:
+					clip -= difference
+					ammo = max_ammo
+				
+				$DisplayAmmo/AmmoText.text = str(ammo)
+				$DisplayAmmo/ClipText.text = str(clip)
+				$DisplayAmmo/AmmoText.modulate = Color(1, 1, 1)
 				$MagazineTimer.start()
 				$ReloadTween.interpolate_property(reload, "rotation_degrees:x", 0, 360, 1, Tween.TRANS_BACK, Tween.EASE_IN_OUT, 0)
 				play_sound(reload_sound, 0, 0)
@@ -74,7 +110,12 @@ func _process(delta):
 		$LandingTween.interpolate_property(fall, "rotation_degrees:x", 0, max_rotation, 0.2, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 0)
 		$LandingTween.interpolate_property(fall, "rotation_degrees:x", max_rotation, 0, 0.2, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 0.2)
 		$LandingTween.start()
-	
+
+# ici
+#	Melee attack
+	if Input.is_key_pressed(KEY_V) or  Input.is_joy_button_pressed(0, JOY_R3):
+		print("attack")
+
 #	When aiming with the right-click the weapon is centered and the accuracy set to 2 for the bullet spread calculation
 	
 	if Input.is_mouse_button_pressed(BUTTON_RIGHT) or Input.get_joy_axis(0, 6) >= 0.6:
@@ -93,11 +134,11 @@ func _process(delta):
 		if accuracy == 1:
 			if player.direction == Vector3():
 				if aim.translation != Vector3(0.15, -0.1, -0.2):
-					$AimTween.interpolate_property(aim, "translation", aim.translation, Vector3(0.15, -0.1, -0.2), 0.3, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+					$AimTween.interpolate_property(aim, "translation", aim.translation, Vector3(0.15, -0.1, -0.2), 0.2, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
 					$AimTween.start()
 			else:
 				if aim.translation != Vector3(0.14, -0.12, -0.2): # If we walk or run the weapon is lower
-					$AimTween.interpolate_property(aim, "translation", aim.translation, Vector3(0.14, -0.12, -0.2), 0.3, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+					$AimTween.interpolate_property(aim, "translation", aim.translation, Vector3(0.14, -0.12, -0.2), 0.2, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
 					$AimTween.start()
 		else:
 			if aim.translation != Vector3(0, -0.06, -0.12):
@@ -127,15 +168,20 @@ func _process(delta):
 			$VBobbingTween.start()
 	
 #	If sprinting orient the weapon
-	if player.speed_multiplier == 2 and not $ReloadTween.is_active() and not player.get_node("CrouchTween").is_active():
+	if player.speed_multiplier == 2 and not $ReloadTween.is_active() and not $AimTween.is_active() and not player.get_node("CrouchTween").is_active():
 		$WeaponTween.stop_all() #Stop the shooting animation
 		if not $OrientationWalkRunTween.is_active() and orientation_walk_run.rotation_degrees != Vector3(-5, 35, 15):
 			$OrientationWalkRunTween.interpolate_property(orientation_walk_run, "rotation_degrees", orientation_walk_run.rotation_degrees, Vector3(-5, 35, 15), 0.4, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
 			$OrientationWalkRunTween.start()
+
 	else:
 		if not $OrientationWalkRunTween.is_active() and orientation_walk_run.rotation_degrees != Vector3():
-			$OrientationWalkRunTween.interpolate_property(orientation_walk_run, "rotation_degrees", orientation_walk_run.rotation_degrees, Vector3(), 0.2, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
-			$OrientationWalkRunTween.start()
+			if accuracy == 1:
+				$OrientationWalkRunTween.interpolate_property(orientation_walk_run, "rotation_degrees", orientation_walk_run.rotation_degrees, Vector3(), 0.2, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+				$OrientationWalkRunTween.start()
+			else:
+				$OrientationWalkRunTween.interpolate_property(orientation_walk_run, "rotation_degrees", orientation_walk_run.rotation_degrees, Vector3(), 0.05, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+				$OrientationWalkRunTween.start()
 	
 	# The weapon is oriented on the target if not running
 	if player.speed_multiplier != 2:
@@ -147,13 +193,6 @@ func _process(delta):
 	else:
 		look_at.rotation_degrees = lerp(look_at.rotation_degrees, Vector3(), 10 * delta)
 	
-#	Position the ammo text dynamically at any screen resolution
-	$AmmoText.margin_top = get_viewport().size.y / 10 * -1
-	$AmmoText.margin_left = get_viewport().size.y / 10 * -1
-	
-	$AmmoLeftText.margin_top = $AmmoText.margin_top
-	$AmmoLeftText.margin_left = $AmmoText.margin_left + 50
-	
 #	Shoot
 	if Input.is_mouse_button_pressed(BUTTON_LEFT) or Input.get_joy_axis(0, 7) >= 0.5:
 		if $FireRate.is_stopped() and player.is_on_floor() and can_shoot:
@@ -163,13 +202,10 @@ func _process(delta):
 					if Input.get_joy_axis(0, 7) >= 0.5:
 						Input.start_joy_vibration(0, 0, 0.2, 0.1)
 					ammo -= 1
-					$AmmoText.text = str(ammo)
-					$AmmoTextTween.stop_all()
-					$AmmoTextTween.interpolate_property($AmmoText.get_font("font"), "size", 35, 30, 0.15)
-					$AmmoTextTween.start()
+					$DisplayAmmo/AmmoText.text = str(ammo)
 					shoot()
 					if ammo <= 5:
-						$AmmoText.modulate = Color(0.68, 0.17, 0.15)
+						$DisplayAmmo/AmmoText.modulate = Color(0.68, 0.17, 0.15)
 				else:
 					play_sound(empty_sound, 0, 0)
 
