@@ -77,7 +77,7 @@ cast_to = Vector3( 0, 0, -100 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.15, -0.1, -0.2 )
 
 [node name="MeleeAttack" type="Position3D" parent="JumpFall/Aim"]
-transform = Transform( -0.0982352, 0.613804, 0.783323, 0.911053, -0.26124, 0.318959, 0.400414, 0.744982, -0.533546, 0.11, 0.1, -0.185 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 
 [node name="SwayBobbingIdle" type="Position3D" parent="JumpFall/Aim/MeleeAttack"]
 
