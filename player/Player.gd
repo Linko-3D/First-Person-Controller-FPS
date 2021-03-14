@@ -79,7 +79,6 @@ func walk():
 	direction = direction.rotated(Vector3.UP, rotation.y)
 	
 func _physics_process(delta):
-	# ici
 	# Look around with the right joystick
 	if Input.get_joy_axis(0, 2) < -0.25:
 		rotation_degrees.y += pow(Input.get_joy_axis(0, 2), 2) * mouse_sensitivity * 3

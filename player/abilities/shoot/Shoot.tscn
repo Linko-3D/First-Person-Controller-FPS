@@ -60,6 +60,11 @@ shoot_sound = ExtResource( 5 )
 reload_sound = ExtResource( 9 )
 empty_sound = ExtResource( 2 )
 
+[node name="MeleeAttackRayCast" type="RayCast" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.393804, 0.109223, 0 )
+enabled = true
+cast_to = Vector3( 0, 0, -0.7 )
+
 [node name="BulletSpread" type="Position3D" parent="."]
 
 [node name="RayCast" type="RayCast" parent="BulletSpread"]
@@ -68,24 +73,25 @@ cast_to = Vector3( 0, 0, -100 )
 
 [node name="JumpFall" type="Position3D" parent="."]
 
-[node name="MeleeAttack" type="Position3D" parent="JumpFall"]
-
-[node name="Aim" type="Position3D" parent="JumpFall/MeleeAttack"]
+[node name="Aim" type="Position3D" parent="JumpFall"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.15, -0.1, -0.2 )
 
-[node name="SwayBobbingIdle" type="Position3D" parent="JumpFall/MeleeAttack/Aim"]
+[node name="MeleeAttack" type="Position3D" parent="JumpFall/Aim"]
+transform = Transform( -0.0982352, 0.613804, 0.783323, 0.911053, -0.26124, 0.318959, 0.400414, 0.744982, -0.533546, 0.11, 0.1, -0.185 )
 
-[node name="OrientationWalkRun" type="Position3D" parent="JumpFall/MeleeAttack/Aim/SwayBobbingIdle"]
+[node name="SwayBobbingIdle" type="Position3D" parent="JumpFall/Aim/MeleeAttack"]
 
-[node name="LookAt" type="Position3D" parent="JumpFall/MeleeAttack/Aim/SwayBobbingIdle/OrientationWalkRun"]
+[node name="OrientationWalkRun" type="Position3D" parent="JumpFall/Aim/MeleeAttack/SwayBobbingIdle"]
 
-[node name="Shoot" type="Position3D" parent="JumpFall/MeleeAttack/Aim/SwayBobbingIdle/OrientationWalkRun/LookAt"]
+[node name="LookAt" type="Position3D" parent="JumpFall/Aim/MeleeAttack/SwayBobbingIdle/OrientationWalkRun"]
 
-[node name="Direction" type="Position3D" parent="JumpFall/MeleeAttack/Aim/SwayBobbingIdle/OrientationWalkRun/LookAt/Shoot"]
+[node name="Shoot" type="Position3D" parent="JumpFall/Aim/MeleeAttack/SwayBobbingIdle/OrientationWalkRun/LookAt"]
 
-[node name="Reload" type="Position3D" parent="JumpFall/MeleeAttack/Aim/SwayBobbingIdle/OrientationWalkRun/LookAt/Shoot"]
+[node name="Direction" type="Position3D" parent="JumpFall/Aim/MeleeAttack/SwayBobbingIdle/OrientationWalkRun/LookAt/Shoot"]
 
-[node name="WeaponModel" type="MeshInstance" parent="JumpFall/MeleeAttack/Aim/SwayBobbingIdle/OrientationWalkRun/LookAt/Shoot/Reload"]
+[node name="Reload" type="Position3D" parent="JumpFall/Aim/MeleeAttack/SwayBobbingIdle/OrientationWalkRun/LookAt/Shoot"]
+
+[node name="WeaponModel" type="MeshInstance" parent="JumpFall/Aim/MeleeAttack/SwayBobbingIdle/OrientationWalkRun/LookAt/Shoot/Reload"]
 mesh = ExtResource( 3 )
 material/0 = SubResource( 1 )
 material/1 = SubResource( 2 )
@@ -99,13 +105,13 @@ material/8 = SubResource( 9 )
 material/9 = SubResource( 10 )
 material/10 = SubResource( 11 )
 
-[node name="Muzzle" type="Position3D" parent="JumpFall/MeleeAttack/Aim/SwayBobbingIdle/OrientationWalkRun/LookAt/Shoot/Reload/WeaponModel"]
+[node name="Muzzle" type="Position3D" parent="JumpFall/Aim/MeleeAttack/SwayBobbingIdle/OrientationWalkRun/LookAt/Shoot/Reload/WeaponModel"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.000613324, -0.681391 )
 
-[node name="Shell" type="Position3D" parent="JumpFall/MeleeAttack/Aim/SwayBobbingIdle/OrientationWalkRun/LookAt/Shoot/Reload/WeaponModel"]
+[node name="Shell" type="Position3D" parent="JumpFall/Aim/MeleeAttack/SwayBobbingIdle/OrientationWalkRun/LookAt/Shoot/Reload/WeaponModel"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0452856, 0.0195128, -0.188937 )
 
-[node name="Magazine" type="Position3D" parent="JumpFall/MeleeAttack/Aim/SwayBobbingIdle/OrientationWalkRun/LookAt/Shoot/Reload/WeaponModel"]
+[node name="Magazine" type="Position3D" parent="JumpFall/Aim/MeleeAttack/SwayBobbingIdle/OrientationWalkRun/LookAt/Shoot/Reload/WeaponModel"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.115179, -0.186946 )
 
 [node name="WeaponTween" type="Tween" parent="."]
@@ -136,6 +142,10 @@ one_shot = true
 
 [node name="MagazineTimer" type="Timer" parent="."]
 wait_time = 0.5
+one_shot = true
+
+[node name="MeleeAttackTimer" type="Timer" parent="."]
+wait_time = 0.35
 one_shot = true
 
 [node name="DisplayAmmo" type="HBoxContainer" parent="."]
@@ -188,3 +198,4 @@ __meta__ = {
 }
 [connection signal="timeout" from="RecoilTimer" to="." method="_on_RecoilTimer_timeout"]
 [connection signal="timeout" from="MagazineTimer" to="." method="_on_MagazineTimer_timeout"]
+[connection signal="timeout" from="MeleeAttackTimer" to="." method="_on_MeleeAttackTimer_timeout"]

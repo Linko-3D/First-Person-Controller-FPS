@@ -8,6 +8,7 @@ onready var player = get_tree().get_root().find_node("Player", true ,false)
 onready var shoot = get_tree().get_root().find_node("Shoot", true ,false)
 onready var crosshair = get_tree().get_root().find_node("Crosshair", true ,false)
 onready var reload_tween = get_tree().get_root().find_node("ReloadTween", true, false)
+onready var melee_attack_tween = get_tree().get_root().find_node("MeleeAttackTween", true, false)
 onready var grab = get_tree().get_root().find_node("Grab", true, false)
 
 func _ready():
@@ -30,6 +31,8 @@ func _process(delta):
 	if crosshair:
 		if shoot:
 			if shoot.accuracy == 2:
+				return
+			if melee_attack_tween.is_active():
 				return
 	
 	if is_colliding():

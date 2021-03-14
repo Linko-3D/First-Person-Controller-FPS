@@ -18,7 +18,7 @@ margin_left = -7.0
 margin_top = -2.0
 margin_right = 7.0
 margin_bottom = 2.0
-color = Color( 0.784314, 0.235294, 0.392157, 1 )
+color = Color( 0.8, 0.2, 0.2, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -39,7 +39,7 @@ margin_left = -7.0
 margin_top = -2.0
 margin_right = 7.0
 margin_bottom = 2.0
-color = Color( 0.784314, 0.235294, 0.392157, 1 )
+color = Color( 0.8, 0.2, 0.2, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -60,7 +60,7 @@ margin_left = -7.0
 margin_top = -2.0
 margin_right = 7.0
 margin_bottom = 2.0
-color = Color( 0.784314, 0.235294, 0.392157, 1 )
+color = Color( 0.8, 0.2, 0.2, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -81,7 +81,7 @@ margin_left = -7.0
 margin_top = -2.0
 margin_right = 7.0
 margin_bottom = 2.0
-color = Color( 0.784314, 0.235294, 0.392157, 1 )
+color = Color( 0.8, 0.2, 0.2, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }

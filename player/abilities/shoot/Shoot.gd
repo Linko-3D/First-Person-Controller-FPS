@@ -51,18 +51,19 @@ var singleshot = false
 var can_shoot = true
 
 onready var fall = $JumpFall
-onready var aim = $JumpFall/MeleeAttack/Aim
-onready var sway_bobbing = $JumpFall/MeleeAttack/Aim/SwayBobbingIdle
-onready var orientation_walk_run = $JumpFall/MeleeAttack/Aim/SwayBobbingIdle/OrientationWalkRun
-onready var look_at = $JumpFall/MeleeAttack/Aim/SwayBobbingIdle/OrientationWalkRun/LookAt
-onready var direction = $JumpFall/MeleeAttack/Aim/SwayBobbingIdle/OrientationWalkRun/LookAt/Shoot/Direction
+onready var aim = $JumpFall/Aim
+onready var melee_attack = $JumpFall/Aim/MeleeAttack
+onready var sway_bobbing = $JumpFall/Aim/MeleeAttack/SwayBobbingIdle
+onready var orientation_walk_run = $JumpFall/Aim/MeleeAttack/SwayBobbingIdle/OrientationWalkRun
+onready var look_at = $JumpFall/Aim/MeleeAttack/SwayBobbingIdle/OrientationWalkRun/LookAt
+onready var direction = $JumpFall/Aim/MeleeAttack/SwayBobbingIdle/OrientationWalkRun/LookAt/Shoot/Direction
 
-onready var shoot = $JumpFall/MeleeAttack/Aim/SwayBobbingIdle/OrientationWalkRun/LookAt/Shoot
-onready var reload = $JumpFall/MeleeAttack/Aim/SwayBobbingIdle/OrientationWalkRun/LookAt/Shoot/Reload
+onready var shoot = $JumpFall/Aim/MeleeAttack/SwayBobbingIdle/OrientationWalkRun/LookAt/Shoot
+onready var reload = $JumpFall/Aim/MeleeAttack/SwayBobbingIdle/OrientationWalkRun/LookAt/Shoot/Reload
 
-onready var shell = $JumpFall/MeleeAttack/Aim/SwayBobbingIdle/OrientationWalkRun/LookAt/Shoot/Reload/WeaponModel/Shell
-onready var magazine = $JumpFall/MeleeAttack/Aim/SwayBobbingIdle/OrientationWalkRun/LookAt/Shoot/Reload/WeaponModel/Magazine
-onready var muzzle = $JumpFall/MeleeAttack/Aim/SwayBobbingIdle/OrientationWalkRun/LookAt/Shoot/Reload/WeaponModel/Muzzle
+onready var shell = $JumpFall/Aim/MeleeAttack/SwayBobbingIdle/OrientationWalkRun/LookAt/Shoot/Reload/WeaponModel/Shell
+onready var magazine = $JumpFall/Aim/MeleeAttack/SwayBobbingIdle/OrientationWalkRun/LookAt/Shoot/Reload/WeaponModel/Magazine
+onready var muzzle = $JumpFall/Aim/MeleeAttack/SwayBobbingIdle/OrientationWalkRun/LookAt/Shoot/Reload/WeaponModel/Muzzle
 
 onready var raycast = $BulletSpread/RayCast
 
@@ -74,7 +75,7 @@ onready var grab = get_tree().get_root().find_node("Grab", true, false)
 func _ready():
 	$DisplayAmmo/AmmoText.text = str(ammo)
 	$DisplayAmmo/ClipText.text = str(clip)
-
+	
 func _input(event):
 #	Getting the mouse movement for the weapon sway in the physics process
 	if event is InputEventMouseMotion:
@@ -84,7 +85,7 @@ func _input(event):
 #	Reload
 	if (Input.is_key_pressed(KEY_R) or Input.is_joy_button_pressed(0, JOY_XBOX_X)) and ammo != max_ammo and clip > 0:
 		if not Input.is_mouse_button_pressed(BUTTON_LEFT) and not Input.get_joy_axis(0, 7) >= 0.5 and not player.slide:
-			if not $ReloadTween.is_active():
+			if not $ReloadTween.is_active() and not $MeleeAttackTween.is_active():
 				# Math to calculate ammo and clip remaining
 				var difference = max_ammo - ammo
 				# If we have more ammo missing than in the clip, take all the ammo in the clip remaining
@@ -104,6 +105,36 @@ func _input(event):
 				$ReloadTween.start()
 
 func _process(delta):
+	var val = 20
+	if Input.is_key_pressed(KEY_I):
+		$JumpFall/Aim/MeleeAttack.rotation_degrees.x += val * delta
+	if Input.is_key_pressed(KEY_K):
+		$JumpFall/Aim/MeleeAttack.rotation_degrees.x += -val * delta
+	if Input.is_key_pressed(KEY_J):
+		$JumpFall/Aim/MeleeAttack.rotation_degrees.y += val * delta
+	if Input.is_key_pressed(KEY_L):
+		$JumpFall/Aim/MeleeAttack.rotation_degrees.y += -val * delta
+	if Input.is_key_pressed(KEY_P):
+		$JumpFall/Aim/MeleeAttack.rotation_degrees.z += val * delta
+	if Input.is_key_pressed(KEY_M):
+		$JumpFall/Aim/MeleeAttack.rotation_degrees.z += -val * delta
+	
+	if Input.is_key_pressed(KEY_KP_8):
+		$JumpFall/Aim/MeleeAttack.translation.z += -0.1 * delta
+	if Input.is_key_pressed(KEY_KP_2):
+		$JumpFall/Aim/MeleeAttack.translation.z += 0.1 * delta
+	if Input.is_key_pressed(KEY_KP_4):
+		$JumpFall/Aim/MeleeAttack.translation.x += -0.1 * delta
+	if Input.is_key_pressed(KEY_KP_6):
+		$JumpFall/Aim/MeleeAttack.translation.x += 0.1 * delta
+	if Input.is_key_pressed(KEY_KP_9):
+		$JumpFall/Aim/MeleeAttack.translation.y += 0.1 * delta
+	if Input.is_key_pressed(KEY_KP_3):
+		$JumpFall/Aim/MeleeAttack.translation.y += -0.1 * delta
+	
+#	print("trans: " , $JumpFall/Aim/MeleeAttack.translation)
+#	print($JumpFall/Aim/MeleeAttack.rotation_degrees)
+	
 #	Animation when falling on the ground
 	if player.is_on_floor() and not player.on_ground:
 		var max_rotation = clamp(player.gravity_vec.y * 2, -30, 0) # Use the impact velocity for the angle and clamp the value
@@ -111,15 +142,37 @@ func _process(delta):
 		$LandingTween.interpolate_property(fall, "rotation_degrees:x", max_rotation, 0, 0.2, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 0.2)
 		$LandingTween.start()
 
-# ici
 #	Melee attack
-	if Input.is_key_pressed(KEY_V) or  Input.is_joy_button_pressed(0, JOY_R3):
-		print("attack")
+	if player.is_on_floor() and not player.slide and player.speed_multiplier != 2 and accuracy == 1 and not $ReloadTween.is_active():
+		if Input.is_key_pressed(KEY_V) or Input.is_mouse_button_pressed(BUTTON_MIDDLE) or Input.is_joy_button_pressed(0, JOY_R3):
+			if not $MeleeAttackTween.is_active():
+				$MeleeAttackTimer.start()
+				# 0.08 puis 0.2 TODO puis 0.35 attack puis 0.8 going back (barely visible) et 1 orienté puis 1.3 en place
+				$MeleeAttackTween.interpolate_property(melee_attack, "translation", Vector3(), Vector3(0.015, -0.065, -0.04), 0.08, Tween.TRANS_SINE, Tween.EASE_IN)
+				$MeleeAttackTween.interpolate_property(melee_attack, "translation", Vector3(0.015, -0.065, -0.04), Vector3(0.04, -0.056, 0.03), 0.12, Tween.TRANS_SINE, Tween.EASE_OUT, 0.08)
+				# Hit
+				$MeleeAttackTween.interpolate_property(melee_attack, "translation", Vector3(0.04, -0.056, 0.03), Vector3(0.11, 0.1, -0.185), 0.15, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 0.2)
+				$MeleeAttackTween.interpolate_property(melee_attack, "translation", Vector3(0.11, 0.1, -0.185), Vector3(0.15, -0.4, 0), 0.45, Tween.TRANS_SINE, Tween.EASE_IN, 0.35)
+				$MeleeAttackTween.interpolate_property(melee_attack, "translation", Vector3(0.15, -0.4, 0), Vector3(), 0.2, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 0.8)
+				
+				$MeleeAttackTween.interpolate_property(melee_attack, "rotation_degrees", Vector3(), Vector3(20, 45, 15), 0.08, Tween.TRANS_SINE, Tween.EASE_IN)
+				$MeleeAttackTween.interpolate_property(melee_attack, "rotation_degrees", Vector3(20, 45, 15), Vector3(0, 90, 90), 0.12, Tween.TRANS_SINE, Tween.EASE_OUT, 0.08)
+				# Hit
+				$MeleeAttackTween.interpolate_property(melee_attack, "rotation_degrees", Vector3(0, 90, 90), Vector3(-18.6, 124.26, 106), 0.15, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 0.2)
+				$MeleeAttackTween.interpolate_property(melee_attack, "rotation_degrees", Vector3(-18.6, 124.26, 106), Vector3(34.5, 80, 35), 0.45, Tween.TRANS_SINE, Tween.EASE_IN, 0.35)
+				$MeleeAttackTween.interpolate_property(melee_attack, "rotation_degrees", Vector3(34.5, 80, 35), Vector3(), 0.2, Tween.TRANS_SINE, Tween.EASE_OUT, 0.8)
+
+				$MeleeAttackTween.interpolate_property(camera, "rotation_degrees", Vector3(), Vector3(-2, -5, 0), 0.25, Tween.TRANS_SINE, Tween.EASE_IN)
+				$MeleeAttackTween.interpolate_property(camera, "rotation_degrees", Vector3(-2, -5, 0), Vector3(2, 10, 0), 0.1, Tween.TRANS_SINE, Tween.EASE_OUT, 0.25)
+				$MeleeAttackTween.interpolate_property(camera, "rotation_degrees", Vector3(2, 10, 0), Vector3(-2, -2, 0), 0.4, Tween.TRANS_SINE, Tween.EASE_IN, 0.35)
+				$MeleeAttackTween.interpolate_property(camera, "rotation_degrees", Vector3(-2, -2, 0), Vector3(0, 0, 0), 0.25, Tween.TRANS_SINE, Tween.EASE_OUT, 0.75)
+				
+				$MeleeAttackTween.start()
 
 #	When aiming with the right-click the weapon is centered and the accuracy set to 2 for the bullet spread calculation
 	
 	if Input.is_mouse_button_pressed(BUTTON_RIGHT) or Input.get_joy_axis(0, 6) >= 0.6:
-		if player.is_on_floor() and not $ReloadTween.is_active() and not player.slide:
+		if player.is_on_floor() and not $ReloadTween.is_active() and not $MeleeAttackTween.is_active() and not player.slide:
 			accuracy = 2
 		else:
 			accuracy = 1
@@ -141,7 +194,7 @@ func _process(delta):
 					$AimTween.interpolate_property(aim, "translation", aim.translation, Vector3(0.14, -0.12, -0.2), 0.2, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
 					$AimTween.start()
 		else:
-			if aim.translation != Vector3(0, -0.06, -0.12):
+			if aim.translation != Vector3(0, -0.06, -0.12): # Aim
 				$AimTween.interpolate_property(aim, "translation", aim.translation, Vector3(0, -0.06, -0.12), 0.3)
 				$AimTween.start()
 	
@@ -168,7 +221,7 @@ func _process(delta):
 			$VBobbingTween.start()
 	
 #	If sprinting orient the weapon
-	if player.speed_multiplier == 2 and not $ReloadTween.is_active() and not $AimTween.is_active() and not player.get_node("CrouchTween").is_active():
+	if player.speed_multiplier == 2 and not $ReloadTween.is_active() and not $AimTween.is_active() and not $MeleeAttackTween.is_active() and not player.get_node("CrouchTween").is_active():
 		$WeaponTween.stop_all() #Stop the shooting animation
 		if not $OrientationWalkRunTween.is_active() and orientation_walk_run.rotation_degrees != Vector3(-5, 35, 15):
 			$OrientationWalkRunTween.interpolate_property(orientation_walk_run, "rotation_degrees", orientation_walk_run.rotation_degrees, Vector3(-5, 35, 15), 0.4, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
@@ -185,7 +238,7 @@ func _process(delta):
 	
 	# The weapon is oriented on the target if not running
 	if player.speed_multiplier != 2:
-		if raycast.is_colliding():
+		if raycast.is_colliding() and not $MeleeAttackTween.is_active():
 			direction.look_at(raycast.get_collision_point(), Vector3.UP)
 			look_at.rotation_degrees = lerp(look_at.rotation_degrees, direction.rotation_degrees, 10 * delta)
 		else:
@@ -196,7 +249,7 @@ func _process(delta):
 #	Shoot
 	if Input.is_mouse_button_pressed(BUTTON_LEFT) or Input.get_joy_axis(0, 7) >= 0.5:
 		if $FireRate.is_stopped() and player.is_on_floor() and can_shoot:
-			if not player.speed_multiplier == 2 and not player.slide and not $ReloadTween.is_active() and orientation_walk_run.rotation_degrees.y < 5:
+			if not player.speed_multiplier == 2 and not player.slide and not $ReloadTween.is_active() and not $MeleeAttackTween.is_active() and orientation_walk_run.rotation_degrees.y < 5:
 				$FireRate.start()
 				if ammo > 0:
 					if Input.get_joy_axis(0, 7) >= 0.5:
@@ -205,7 +258,7 @@ func _process(delta):
 					$DisplayAmmo/AmmoText.text = str(ammo)
 					shoot()
 					if ammo <= 5:
-						$DisplayAmmo/AmmoText.modulate = Color(0.68, 0.17, 0.15)
+						$DisplayAmmo/AmmoText.modulate = Color(0.8, 0.2, 0.2)
 				else:
 					play_sound(empty_sound, 0, 0)
 
@@ -223,7 +276,7 @@ func shoot():
 	if player.direction == Vector3():
 		recoil = $RecoilTimer.time_left * bullet_spread_angle / accuracy
 	else:
-		recoil = $RecoilTimer.time_left * bullet_spread_angle * 1.5 / accuracy
+		recoil = $RecoilTimer.time_left * bullet_spread_angle * 1.25 / accuracy
 	
 	$BulletSpread.rotation_degrees.z = rand_range(0, 360)
 	raycast.rotation_degrees.y = rand_range(-recoil, recoil)
@@ -346,3 +399,7 @@ func _on_RecoilTimer_timeout():
 
 func _on_MagazineTimer_timeout():
 	spawn_magazine()
+
+
+func _on_MeleeAttackTimer_timeout():
+	print("attack")

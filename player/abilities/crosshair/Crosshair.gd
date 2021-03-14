@@ -8,6 +8,7 @@ var wide_crosshair = false
 
 onready var player = get_tree().get_root().find_node("Player", true, false)
 onready var reload_tween = get_tree().get_root().find_node("ReloadTween", true, false)
+onready var melee_attack_tween = get_tree().get_root().find_node("MeleeAttackTween", true, false)
 onready var grab  = get_tree().get_root().find_node("Grab", true, false)
 onready var shoot  = get_tree().get_root().find_node("Shoot", true, false)
 
@@ -28,7 +29,10 @@ func _process(delta):
 	if shoot: # If the node Shoot is in the scene, hide when reloading and aiming
 		if reload_tween.is_active():
 			$Position2D.hide()
-	
+		
+		if melee_attack_tween.is_active():
+			$Position2D.hide()
+		
 		if shoot.accuracy == 1:
 			$Position2D/Lines.show()
 			$Position2D/CenterDot.hide()
@@ -41,36 +45,24 @@ func _process(delta):
 			$Position2D.hide()
 	
 	# Change color to red when pointing on an enemy
-	if is_colliding() and get_collider().is_in_group("Enemy"):
+	if is_colliding() and get_collider().is_in_group("enemy"):
 		red()
 	else:
 		white()
 	
-	# If we move the crosshair becomes wider
+	animate(delta)
+
+func animate(delta):
 	if player.direction != Vector3():
-		if not wide_crosshair:
-			animate(wide_crosshair)
+		$Position2D/Lines/Line1.position.x = lerp($Position2D/Lines/Line1.position.x, -end_position, 10 * delta)
+		$Position2D/Lines/Line2.position.y = lerp($Position2D/Lines/Line2.position.y, -end_position, 10 * delta)
+		$Position2D/Lines/Line3.position.x = lerp($Position2D/Lines/Line3.position.x, end_position, 10 * delta)
+		$Position2D/Lines/Line4.position.y = lerp($Position2D/Lines/Line4.position.y, end_position, 10 * delta)
 	else:
-		if wide_crosshair:
-			animate(wide_crosshair)
-	
-func animate(wide):
-	if not wide:
-		# if false make wider
-		$Tween.interpolate_property($Position2D/Lines/Line1, "position:x", $Position2D/Lines/Line1.position.x, -end_position, speed, 0, 2, 0)
-		$Tween.interpolate_property($Position2D/Lines/Line2, "position:y", $Position2D/Lines/Line2.position.y, -end_position, speed, 0, 2, 0)
-		$Tween.interpolate_property($Position2D/Lines/Line3, "position:x", $Position2D/Lines/Line3.position.x, end_position, speed, 0, 2, 0)
-		$Tween.interpolate_property($Position2D/Lines/Line4, "position:y", $Position2D/Lines/Line4.position.y, end_position, speed, 0, 2, 0)
-		$Tween.start()
-		wide_crosshair = true
-	else:
-		# if true make closer
-		$Tween.interpolate_property($Position2D/Lines/Line1, "position:x", $Position2D/Lines/Line1.position.x, -base_position, speed, 0, 2, 0)
-		$Tween.interpolate_property($Position2D/Lines/Line2, "position:y", $Position2D/Lines/Line2.position.y, -base_position, speed, 0, 2, 0)
-		$Tween.interpolate_property($Position2D/Lines/Line3, "position:x", $Position2D/Lines/Line3.position.x, base_position, speed, 0, 2, 0)
-		$Tween.interpolate_property($Position2D/Lines/Line4, "position:y", $Position2D/Lines/Line4.position.y, base_position, speed, 0, 2, 0)
-		$Tween.start()
-		wide_crosshair = false
+		$Position2D/Lines/Line1.position.x = lerp($Position2D/Lines/Line1.position.x, -base_position, 10 * delta)
+		$Position2D/Lines/Line2.position.y = lerp($Position2D/Lines/Line2.position.y, -base_position, 10 * delta)
+		$Position2D/Lines/Line3.position.x = lerp($Position2D/Lines/Line3.position.x, base_position, 10 * delta)
+		$Position2D/Lines/Line4.position.y = lerp($Position2D/Lines/Line4.position.y, base_position, 10 * delta)
 
 func white():
 	$Position2D/Lines/Line1.white()
