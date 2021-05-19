@@ -28,6 +28,9 @@ func hide_bullet():
 	yield(get_tree().create_timer(0.1), "timeout")
 	$Bullet.hide()
 
+func play_sound():
+	$ImpactSound.play()
+
 func spawn_debris(throw_force):
 	$Position3D.rotation_degrees.z = rand_range(0, 360)
 	$Position3D/Position3D2.rotation_degrees.x = rand_range(0, 10)

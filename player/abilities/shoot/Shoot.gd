@@ -1,40 +1,27 @@
 extends Spatial
 
-
-#var max_ammo = 30
-#var ammo = max_ammo
-#var clip = max_ammo * 2
-#
-#func _input(event):
-#	if Input.is_action_just_pressed("ui_down"):
-#		if ammo > 0:
-#			ammo -= 1
-#			print(ammo , "/", clip)
-#
-#	if Input.is_action_just_pressed("ui_accept") and clip > 0:
-#		var difference = max_ammo - ammo
-#		if difference > clip:
-#			ammo += clip
-#			clip = 0
-#		else:
-#			clip -= difference
-#			ammo = max_ammo
-#		print(ammo , "/", clip)
-
 export (PackedScene) var impact
 export (PackedScene) var muzzle_flash_mesh
 export (PackedScene) var shell_mesh
 export (PackedScene) var magazine_mesh
 
-export (Resource) var shoot_sound
+export (Resource) var rifle_shoot_sound
+export (Resource) var pistol_shoot_sound
 export (Resource) var reload_sound
 export (Resource) var empty_sound
+export (Resource) var bullet_impact_sound
+export (Resource) var melee_hit_sound
+
+export (Resource) var rifle_model
+export (Resource) var pistol_model
+
+onready var shoot_sound = rifle_shoot_sound
 
 var damage = 100
 
 var shooting_echo = true
 
-var bullet_spread_angle = 30
+var bullet_spread_angle = 15
 
 var weapon_sway = 5
 var mouse_relative_x = 0
@@ -52,20 +39,25 @@ var can_shoot = true
 
 onready var fall = $JumpFall
 onready var aim = $JumpFall/Aim
-onready var melee_attack = $JumpFall/Aim/MeleeAttack
-onready var sway_bobbing = $JumpFall/Aim/MeleeAttack/SwayBobbingIdle
-onready var orientation_walk_run = $JumpFall/Aim/MeleeAttack/SwayBobbingIdle/OrientationWalkRun
-onready var look_at = $JumpFall/Aim/MeleeAttack/SwayBobbingIdle/OrientationWalkRun/LookAt
-onready var direction = $JumpFall/Aim/MeleeAttack/SwayBobbingIdle/OrientationWalkRun/LookAt/Shoot/Direction
+onready var weapon_switch = $JumpFall/Aim/WeaponSwitch
+onready var melee_attack = $JumpFall/Aim/WeaponSwitch/MeleeAttack
+onready var slide = $JumpFall/Aim/WeaponSwitch/MeleeAttack/Slide
+onready var sway_bobbing = $JumpFall/Aim/WeaponSwitch/MeleeAttack/Slide/SwayBobbingIdle
+onready var orientation_walk_run = $JumpFall/Aim/WeaponSwitch/MeleeAttack/Slide/SwayBobbingIdle/OrientationWalkRun
+onready var look_at = $JumpFall/Aim/WeaponSwitch/MeleeAttack/Slide/SwayBobbingIdle/OrientationWalkRun/LookAt
+onready var direction = $JumpFall/Aim/WeaponSwitch/MeleeAttack/Slide/SwayBobbingIdle/OrientationWalkRun/LookAt/Shoot/Direction
 
-onready var shoot = $JumpFall/Aim/MeleeAttack/SwayBobbingIdle/OrientationWalkRun/LookAt/Shoot
-onready var reload = $JumpFall/Aim/MeleeAttack/SwayBobbingIdle/OrientationWalkRun/LookAt/Shoot/Reload
+onready var shoot = $JumpFall/Aim/WeaponSwitch/MeleeAttack/Slide/SwayBobbingIdle/OrientationWalkRun/LookAt/Shoot
+onready var reload = $JumpFall/Aim/WeaponSwitch/MeleeAttack/Slide/SwayBobbingIdle/OrientationWalkRun/LookAt/Shoot/Reload
 
-onready var shell = $JumpFall/Aim/MeleeAttack/SwayBobbingIdle/OrientationWalkRun/LookAt/Shoot/Reload/WeaponModel/Shell
-onready var magazine = $JumpFall/Aim/MeleeAttack/SwayBobbingIdle/OrientationWalkRun/LookAt/Shoot/Reload/WeaponModel/Magazine
-onready var muzzle = $JumpFall/Aim/MeleeAttack/SwayBobbingIdle/OrientationWalkRun/LookAt/Shoot/Reload/WeaponModel/Muzzle
+onready var shell = $JumpFall/Aim/WeaponSwitch/MeleeAttack/Slide/SwayBobbingIdle/OrientationWalkRun/LookAt/Shoot/Reload/WeaponModel/Shell
+onready var magazine = $JumpFall/Aim/WeaponSwitch/MeleeAttack/Slide/SwayBobbingIdle/OrientationWalkRun/LookAt/Shoot/Reload/WeaponModel/Magazine
+onready var muzzle = $JumpFall/Aim/WeaponSwitch/MeleeAttack/Slide/SwayBobbingIdle/OrientationWalkRun/LookAt/Shoot/Reload/WeaponModel/Muzzle
+
+onready var weapon_model = $JumpFall/Aim/WeaponSwitch/MeleeAttack/Slide/SwayBobbingIdle/OrientationWalkRun/LookAt/Shoot/Reload/WeaponModel
 
 onready var raycast = $BulletSpread/RayCast
+onready var raycast_melee = $MeleeAttackRayCast
 
 onready var player = get_tree().get_root().find_node("Player", true, false)
 onready var camera = get_tree().get_root().find_node("Camera", true, false)
@@ -77,6 +69,13 @@ func _ready():
 	$DisplayAmmo/ClipText.text = str(clip)
 	
 func _input(event):
+	if event is InputEventMouseButton:
+		if event.is_pressed():
+			if event.button_index == BUTTON_WHEEL_UP or event.button_index == BUTTON_WHEEL_DOWN or Input.is_joy_button_pressed(0, JOY_DPAD_LEFT):
+				if not $MeleeAttackTween.is_active() and player.speed_multiplier != 2 and player.is_on_floor() and not player.slide and not $WeaponSwitchTween.is_active() and accuracy == 1:
+					switch_animation()
+					$WeaponSwitchModelTimer.start()
+	
 #	Getting the mouse movement for the weapon sway in the physics process
 	if event is InputEventMouseMotion:
 		mouse_relative_x = clamp(event.relative.x, -50, 50)
@@ -96,9 +95,14 @@ func _input(event):
 					clip -= difference
 					ammo = max_ammo
 				
+				if ammo <= 5:
+					$DisplayAmmo/AmmoText.modulate = Color(0.8, 0.2, 0.2)
+				else:
+					$DisplayAmmo/AmmoText.modulate = Color(1, 1, 1)
+				
 				$DisplayAmmo/AmmoText.text = str(ammo)
 				$DisplayAmmo/ClipText.text = str(clip)
-				$DisplayAmmo/AmmoText.modulate = Color(1, 1, 1)
+
 				$MagazineTimer.start()
 				$ReloadTween.interpolate_property(reload, "rotation_degrees:x", 0, 360, 1, Tween.TRANS_BACK, Tween.EASE_IN_OUT, 0)
 				play_sound(reload_sound, 0, 0)
@@ -107,33 +111,33 @@ func _input(event):
 func _process(delta):
 	var val = 20
 	if Input.is_key_pressed(KEY_I):
-		$JumpFall/Aim/MeleeAttack.rotation_degrees.x += val * delta
+		$JumpFall/Aim/WeaponSwitch.rotation_degrees.x += val * delta
 	if Input.is_key_pressed(KEY_K):
-		$JumpFall/Aim/MeleeAttack.rotation_degrees.x += -val * delta
+		$JumpFall/Aim/WeaponSwitch.rotation_degrees.x += -val * delta
 	if Input.is_key_pressed(KEY_J):
-		$JumpFall/Aim/MeleeAttack.rotation_degrees.y += val * delta
+		$JumpFall/Aim/WeaponSwitch.rotation_degrees.y += val * delta
 	if Input.is_key_pressed(KEY_L):
-		$JumpFall/Aim/MeleeAttack.rotation_degrees.y += -val * delta
+		$JumpFall/Aim/WeaponSwitch.rotation_degrees.y += -val * delta
 	if Input.is_key_pressed(KEY_P):
-		$JumpFall/Aim/MeleeAttack.rotation_degrees.z += val * delta
+		$JumpFall/Aim/WeaponSwitch.rotation_degrees.z += val * delta
 	if Input.is_key_pressed(KEY_M):
-		$JumpFall/Aim/MeleeAttack.rotation_degrees.z += -val * delta
+		$JumpFall/Aim/WeaponSwitch.rotation_degrees.z += -val * delta
 	
 	if Input.is_key_pressed(KEY_KP_8):
-		$JumpFall/Aim/MeleeAttack.translation.z += -0.1 * delta
+		$JumpFall/Aim/WeaponSwitch.translation.z += -0.1 * delta
 	if Input.is_key_pressed(KEY_KP_2):
-		$JumpFall/Aim/MeleeAttack.translation.z += 0.1 * delta
+		$JumpFall/Aim/WeaponSwitch.translation.z += 0.1 * delta
 	if Input.is_key_pressed(KEY_KP_4):
-		$JumpFall/Aim/MeleeAttack.translation.x += -0.1 * delta
+		$JumpFall/Aim/WeaponSwitch.translation.x += -0.1 * delta
 	if Input.is_key_pressed(KEY_KP_6):
-		$JumpFall/Aim/MeleeAttack.translation.x += 0.1 * delta
+		$JumpFall/Aim/WeaponSwitch.translation.x += 0.1 * delta
 	if Input.is_key_pressed(KEY_KP_9):
-		$JumpFall/Aim/MeleeAttack.translation.y += 0.1 * delta
+		$JumpFall/Aim/WeaponSwitch.translation.y += 0.1 * delta
 	if Input.is_key_pressed(KEY_KP_3):
-		$JumpFall/Aim/MeleeAttack.translation.y += -0.1 * delta
+		$JumpFall/Aim/WeaponSwitch.translation.y += -0.1 * delta
 	
-#	print("trans: " , $JumpFall/Aim/MeleeAttack.translation)
-#	print($JumpFall/Aim/MeleeAttack.rotation_degrees)
+	print("trans: ", $JumpFall/Aim/WeaponSwitch.translation)
+	print("rot: ", $JumpFall/Aim/WeaponSwitch.rotation_degrees)
 	
 #	Animation when falling on the ground
 	if player.is_on_floor() and not player.on_ground:
@@ -141,39 +145,12 @@ func _process(delta):
 		$LandingTween.interpolate_property(fall, "rotation_degrees:x", 0, max_rotation, 0.2, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 0)
 		$LandingTween.interpolate_property(fall, "rotation_degrees:x", max_rotation, 0, 0.2, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 0.2)
 		$LandingTween.start()
-
-#	Melee attack
-	if player.is_on_floor() and not player.slide and player.speed_multiplier != 2 and accuracy == 1 and not $ReloadTween.is_active():
-		if Input.is_key_pressed(KEY_V) or Input.is_mouse_button_pressed(BUTTON_MIDDLE) or Input.is_joy_button_pressed(0, JOY_R3):
-			if not $MeleeAttackTween.is_active():
-				$MeleeAttackTimer.start()
-				# 0.08 puis 0.2 TODO puis 0.35 attack puis 0.8 going back (barely visible) et 1 orienté puis 1.3 en place
-				$MeleeAttackTween.interpolate_property(melee_attack, "translation", Vector3(), Vector3(0.015, -0.065, -0.04), 0.08, Tween.TRANS_SINE, Tween.EASE_IN)
-				$MeleeAttackTween.interpolate_property(melee_attack, "translation", Vector3(0.015, -0.065, -0.04), Vector3(0.04, -0.056, 0.03), 0.12, Tween.TRANS_SINE, Tween.EASE_OUT, 0.08)
-				# Hit
-				$MeleeAttackTween.interpolate_property(melee_attack, "translation", Vector3(0.04, -0.056, 0.03), Vector3(0.11, 0.1, -0.185), 0.15, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 0.2)
-				$MeleeAttackTween.interpolate_property(melee_attack, "translation", Vector3(0.11, 0.1, -0.185), Vector3(0.15, -0.4, 0), 0.45, Tween.TRANS_SINE, Tween.EASE_IN, 0.35)
-				$MeleeAttackTween.interpolate_property(melee_attack, "translation", Vector3(0.15, -0.4, 0), Vector3(), 0.2, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 0.8)
-				
-				$MeleeAttackTween.interpolate_property(melee_attack, "rotation_degrees", Vector3(), Vector3(20, 45, 15), 0.08, Tween.TRANS_SINE, Tween.EASE_IN)
-				$MeleeAttackTween.interpolate_property(melee_attack, "rotation_degrees", Vector3(20, 45, 15), Vector3(0, 90, 90), 0.12, Tween.TRANS_SINE, Tween.EASE_OUT, 0.08)
-				# Hit
-				$MeleeAttackTween.interpolate_property(melee_attack, "rotation_degrees", Vector3(0, 90, 90), Vector3(-18.6, 124.26, 106), 0.15, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 0.2)
-				$MeleeAttackTween.interpolate_property(melee_attack, "rotation_degrees", Vector3(-18.6, 124.26, 106), Vector3(34.5, 80, 35), 0.45, Tween.TRANS_SINE, Tween.EASE_IN, 0.35)
-				$MeleeAttackTween.interpolate_property(melee_attack, "rotation_degrees", Vector3(34.5, 80, 35), Vector3(), 0.2, Tween.TRANS_SINE, Tween.EASE_OUT, 0.8)
-
-				$MeleeAttackTween.interpolate_property(camera, "rotation_degrees", Vector3(), Vector3(-2, -5, 0), 0.25, Tween.TRANS_SINE, Tween.EASE_IN)
-				$MeleeAttackTween.interpolate_property(camera, "rotation_degrees", Vector3(-2, -5, 0), Vector3(2, 10, 0), 0.1, Tween.TRANS_SINE, Tween.EASE_OUT, 0.25)
-				$MeleeAttackTween.interpolate_property(camera, "rotation_degrees", Vector3(2, 10, 0), Vector3(-2, -2, 0), 0.4, Tween.TRANS_SINE, Tween.EASE_IN, 0.35)
-				$MeleeAttackTween.interpolate_property(camera, "rotation_degrees", Vector3(-2, -2, 0), Vector3(0, 0, 0), 0.25, Tween.TRANS_SINE, Tween.EASE_OUT, 0.75)
-				
-				$MeleeAttackTween.start()
-
+	
 #	When aiming with the right-click the weapon is centered and the accuracy set to 2 for the bullet spread calculation
 	
 	if Input.is_mouse_button_pressed(BUTTON_RIGHT) or Input.get_joy_axis(0, 6) >= 0.6:
 		if player.is_on_floor() and not $ReloadTween.is_active() and not $MeleeAttackTween.is_active() and not player.slide:
-			accuracy = 2
+			accuracy = 1.25
 		else:
 			accuracy = 1
 	else:
@@ -197,6 +174,47 @@ func _process(delta):
 			if aim.translation != Vector3(0, -0.06, -0.12): # Aim
 				$AimTween.interpolate_property(aim, "translation", aim.translation, Vector3(0, -0.06, -0.12), 0.3)
 				$AimTween.start()
+	
+	
+#	Melee attack
+	if player.is_on_floor() and not player.slide and player.speed_multiplier != 2 and accuracy == 1 and not $ReloadTween.is_active():
+		if Input.is_key_pressed(KEY_V) or Input.is_mouse_button_pressed(BUTTON_MIDDLE) or Input.is_joy_button_pressed(0, JOY_R3):
+			if not $MeleeAttackTween.is_active():
+				$MeleeAttackTimer.start()
+				# 0.08 puis 0.2 TODO puis 0.35 attack puis 0.8 going back (barely visible) et 1 orienté puis 1.3 en place
+				$MeleeAttackTween.interpolate_property(melee_attack, "translation", Vector3(), Vector3(0.015, -0.065, -0.04), 0.08, Tween.TRANS_SINE, Tween.EASE_IN)
+				$MeleeAttackTween.interpolate_property(melee_attack, "translation", Vector3(0.015, -0.065, -0.04), Vector3(0.04, -0.056, 0.03), 0.12, Tween.TRANS_SINE, Tween.EASE_OUT, 0.08)
+				# Hit
+				$MeleeAttackTween.interpolate_property(melee_attack, "translation", Vector3(0.04, -0.056, 0.03), Vector3(0.08, 0.1, -0.38), 0.15, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 0.2)
+				$MeleeAttackTween.interpolate_property(melee_attack, "translation", Vector3(0.08, 0.1, -0.38), Vector3(0.15, -0.4, 0), 0.45, Tween.TRANS_SINE, Tween.EASE_IN, 0.35)
+				$MeleeAttackTween.interpolate_property(melee_attack, "translation", Vector3(0.15, -0.4, 0), Vector3(), 0.2, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 0.8)
+				
+				$MeleeAttackTween.interpolate_property(melee_attack, "rotation_degrees", Vector3(), Vector3(20, 45, 15), 0.08, Tween.TRANS_SINE, Tween.EASE_IN)
+				$MeleeAttackTween.interpolate_property(melee_attack, "rotation_degrees", Vector3(20, 45, 15), Vector3(0, 90, 90), 0.12, Tween.TRANS_SINE, Tween.EASE_OUT, 0.08)
+				# Hit
+				$MeleeAttackTween.interpolate_property(melee_attack, "rotation_degrees", Vector3(0, 90, 90), Vector3(-19.6, 130, 105), 0.15, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 0.2)
+				$MeleeAttackTween.interpolate_property(melee_attack, "rotation_degrees", Vector3(-19.6, 130, 105), Vector3(34.5, 80, 35), 0.45, Tween.TRANS_SINE, Tween.EASE_IN, 0.35)
+				$MeleeAttackTween.interpolate_property(melee_attack, "rotation_degrees", Vector3(34.5, 80, 35), Vector3(), 0.2, Tween.TRANS_SINE, Tween.EASE_OUT, 0.8)
+
+				$MeleeAttackTween.interpolate_property(camera, "rotation_degrees", Vector3(), Vector3(-2, -5, 0), 0.25, Tween.TRANS_SINE, Tween.EASE_IN)
+				$MeleeAttackTween.interpolate_property(camera, "rotation_degrees", Vector3(-2, -5, 0), Vector3(2, 10, 0), 0.1, Tween.TRANS_SINE, Tween.EASE_OUT, 0.25)
+				$MeleeAttackTween.interpolate_property(camera, "rotation_degrees", Vector3(2, 10, 0), Vector3(-2, -2, 0), 0.4, Tween.TRANS_SINE, Tween.EASE_IN, 0.35)
+				$MeleeAttackTween.interpolate_property(camera, "rotation_degrees", Vector3(-2, -2, 0), Vector3(0, 0, 0), 0.25, Tween.TRANS_SINE, Tween.EASE_OUT, 0.75)
+				
+				$MeleeAttackTween.start()
+				
+#	Sliding weapon animation
+	if player.slide and not $MeleeAttackTween.is_active() and not $SlideTween.is_active():
+		$SlideTween.interpolate_property(slide, "translation", Vector3(), Vector3(-0.12, -0.15, -0.07), 0.2, Tween.TRANS_SINE, Tween.EASE_OUT)
+		$SlideTween.interpolate_property(slide, "rotation_degrees", Vector3(), Vector3(35, 81, 39), 0.2, Tween.TRANS_SINE, Tween.EASE_OUT)
+
+		$SlideTween.interpolate_property(slide, "translation", Vector3(-0.12, -0.15, -0.07), Vector3(-0.01, -0.14, 0), 0.2, Tween.TRANS_SINE, Tween.EASE_OUT, 0.2)
+		$SlideTween.interpolate_property(slide, "rotation_degrees", Vector3(35, 81, 39), Vector3(14.6, 62, 33), 0.2, Tween.TRANS_SINE, Tween.EASE_OUT, 0.2)
+
+		$SlideTween.interpolate_property(slide, "translation", Vector3(-0.01, -0.14, 0), Vector3(), 0.2, Tween.TRANS_SINE, Tween.EASE_OUT, 0.4)
+		$SlideTween.interpolate_property(slide, "rotation_degrees", Vector3(14.6, 62, 33), Vector3(), 0.2, Tween.TRANS_SINE, Tween.EASE_OUT, 0.4)
+		
+		$SlideTween.start()
 	
 #	Weapon sway
 	sway_bobbing.rotation_degrees.z = lerp(sway_bobbing.rotation_degrees.z, -mouse_relative_x / 10, weapon_sway * delta)
@@ -226,7 +244,7 @@ func _process(delta):
 		if not $OrientationWalkRunTween.is_active() and orientation_walk_run.rotation_degrees != Vector3(-5, 35, 15):
 			$OrientationWalkRunTween.interpolate_property(orientation_walk_run, "rotation_degrees", orientation_walk_run.rotation_degrees, Vector3(-5, 35, 15), 0.4, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
 			$OrientationWalkRunTween.start()
-
+	
 	else:
 		if not $OrientationWalkRunTween.is_active() and orientation_walk_run.rotation_degrees != Vector3():
 			if accuracy == 1:
@@ -236,19 +254,21 @@ func _process(delta):
 				$OrientationWalkRunTween.interpolate_property(orientation_walk_run, "rotation_degrees", orientation_walk_run.rotation_degrees, Vector3(), 0.05, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
 				$OrientationWalkRunTween.start()
 	
-	# The weapon is oriented on the target if not running
-	if player.speed_multiplier != 2:
-		if raycast.is_colliding() and not $MeleeAttackTween.is_active():
-			direction.look_at(raycast.get_collision_point(), Vector3.UP)
-			look_at.rotation_degrees = lerp(look_at.rotation_degrees, direction.rotation_degrees, 10 * delta)
-		else:
-			look_at.rotation_degrees = lerp(look_at.rotation_degrees, Vector3(), 10 * delta)
-	else:
-		look_at.rotation_degrees = lerp(look_at.rotation_degrees, Vector3(), 10 * delta)
+	# The weapon is oriented on the target if not running, the LookAt node use a lerp to the Direction node to have the smooth transition
+	# The direction node is a child of the Shoot node which gets oriented with recoil so the LookAt orients dynamically when shooting
+	# ici
+#	if player.speed_multiplier != 2:
+#		if raycast.is_colliding() and not $MeleeAttackTween.is_active() and not $SlideTween.is_active():
+#			direction.look_at(raycast.get_collision_point(), Vector3.UP)
+#			look_at.rotation_degrees = lerp(look_at.rotation_degrees, direction.rotation_degrees, 10 * delta)
+#		else:
+#			look_at.rotation_degrees = lerp(look_at.rotation_degrees, Vector3(), 10 * delta)
+#	else:
+#		look_at.rotation_degrees = lerp(look_at.rotation_degrees, Vector3(), 10 * delta)
 	
 #	Shoot
 	if Input.is_mouse_button_pressed(BUTTON_LEFT) or Input.get_joy_axis(0, 7) >= 0.5:
-		if $FireRate.is_stopped() and player.is_on_floor() and can_shoot:
+		if $FireRate.is_stopped() and not $WeaponSwitchTween.is_active() and player.is_on_floor() and can_shoot:
 			if not player.speed_multiplier == 2 and not player.slide and not $ReloadTween.is_active() and not $MeleeAttackTween.is_active() and orientation_walk_run.rotation_degrees.y < 5:
 				$FireRate.start()
 				if ammo > 0:
@@ -269,6 +289,7 @@ func _process(delta):
 			can_shoot = true
 
 func shoot():
+	
 	shoot_animation()
 	
 	# Calculate bullet spread amount
@@ -283,7 +304,7 @@ func shoot():
 	$RecoilTimer.start()
 	
 	# Spawn instances
-	spawn_impact()
+	spawn_impact(raycast, true, true)
 	spawn_muzzle_flash()
 	spawn_shell()
 	
@@ -296,11 +317,11 @@ func shoot():
 	# Adding echo
 	if shooting_echo:
 		var delay = 0
-		var volume = 0
+		var dB = 0
 		for i in 5: # Add an echo effect when shooting by delaying the sound and reducing the volume
-			play_sound(shoot_sound, volume, delay)
+			play_sound(shoot_sound, dB, delay)
 			delay += 0.5
-			volume -= 15
+			dB -= 15
 	else:
 		play_sound(shoot_sound, 0, 0)
 
@@ -309,9 +330,10 @@ func spawn_muzzle_flash():
 	get_tree().get_root().add_child(muzzle_flash_instance)
 	muzzle_flash_instance.global_transform = muzzle.global_transform
 
-func spawn_impact():
+func spawn_impact(raycast, bullet_visible, impact_sound):
 	if raycast.is_colliding():
 		
+		# Detect the mesh's color to generate impact particles of the same color
 		var color = Color(1, 1, 1)
 		
 		var collider = raycast.get_collider()
@@ -334,12 +356,17 @@ func spawn_impact():
 		
 		impact_instance.global_transform.origin = raycast.get_collision_point()
 		impact_instance.look_at(raycast.get_collision_point() - raycast.get_collision_normal(), Vector3.UP)
-
 		
 		if raycast.get_collider() is RigidBody:
 			raycast.get_collider().apply_central_impulse(-raycast.get_collision_normal() * damage)
 			impact_instance.hide_bullet()
 
+		if not bullet_visible:
+			impact_instance.hide_bullet()
+		
+		if impact_sound:
+			impact_instance.play_sound()
+		
 func spawn_shell():
 	var shell_instance = shell_mesh.instance()
 	get_tree().get_root().add_child(shell_instance)
@@ -373,17 +400,17 @@ func shoot_animation():
 	$WeaponTween.interpolate_property(shoot, "translation:z", -0.02 * strength, 0.01 * strength, 0.2, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 0.2)
 	$WeaponTween.interpolate_property(shoot, "translation:z", 0.01 * strength, 0, 0.6, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 0.4)
 
-	$WeaponTween.interpolate_property(shoot, "rotation_degrees:x", 0, -2, 0.1, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
-	$WeaponTween.interpolate_property(shoot, "rotation_degrees:x", -2, 3, 0.1, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 0.15)
-	$WeaponTween.interpolate_property(shoot, "rotation_degrees:x", 3, -1, 0.65, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 0.25)
-	$WeaponTween.interpolate_property(shoot, "rotation_degrees:x", -1, 0, 0.4, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 0.9)
+	$WeaponTween.interpolate_property(shoot, "rotation_degrees:x", 0, -2 * strength, 0.1, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+	$WeaponTween.interpolate_property(shoot, "rotation_degrees:x", -2 * strength, 3 * strength, 0.1, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 0.15)
+	$WeaponTween.interpolate_property(shoot, "rotation_degrees:x", 3 * strength, -1 * strength, 0.65, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 0.25)
+	$WeaponTween.interpolate_property(shoot, "rotation_degrees:x", -1 * strength, 0, 0.4, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 0.9)
 
 	$WeaponTween.interpolate_property(shoot, "rotation_degrees:z", 0, 5 * strength, 0.1, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 0.1)
 	$WeaponTween.interpolate_property(shoot, "rotation_degrees:z", 5 * strength, 0, 0.15, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 0.25)
 
 	# Camera shaking
 	$WeaponTween.interpolate_property(camera, "rotation_degrees:x", camera.rotation_degrees.x, 1 * strength, 0.1, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
-	$WeaponTween.interpolate_property(camera, "rotation_degrees:x", 1 * strength, -0.5 / accuracy, 0.6, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 0.1)
+	$WeaponTween.interpolate_property(camera, "rotation_degrees:x", 1 * strength, -0.5 * strength, 0.6, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 0.1)
 	$WeaponTween.interpolate_property(camera, "rotation_degrees:x", -0.5 * strength, 0, 0.2, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 0.7)
 	$WeaponTween.interpolate_property(camera, "rotation_degrees:z", 0, -2 * strength, 0.1, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
 	$WeaponTween.interpolate_property(camera, "rotation_degrees:z", -2 * strength, 1.5 * strength, 0.05, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 0.1)
@@ -394,12 +421,39 @@ func shoot_animation():
 
 	$WeaponTween.start()
 
+func switch_animation():
+	if not $WeaponSwitchTween.is_active():
+		$WeaponSwitchTween.interpolate_property(weapon_switch, "translation", Vector3(), Vector3(0, -0.25, -0.1), 0.3, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+		$WeaponSwitchTween.interpolate_property(weapon_switch, "rotation_degrees", Vector3(), Vector3(-30, 20, 10), 0.3, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+		
+		$WeaponSwitchTween.interpolate_property(weapon_switch, "translation", Vector3(0, -0.25, -0.1), Vector3(), 0.3, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 0.3)
+		$WeaponSwitchTween.interpolate_property(weapon_switch, "rotation_degrees", Vector3(-30, 20, 10), Vector3(), 0.3, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 0.3)
+		$WeaponSwitchTween.start()
+
 func _on_RecoilTimer_timeout():
 	raycast.rotation_degrees = Vector3()
 
 func _on_MagazineTimer_timeout():
 	spawn_magazine()
 
-
 func _on_MeleeAttackTimer_timeout():
-	print("attack")
+	spawn_impact(raycast_melee, false, false)
+	if raycast_melee.is_colliding():
+		play_sound(melee_hit_sound, 0, 0)
+		if raycast_melee.get_collider().is_in_group("enemy"):
+			if feedback_hit:
+				feedback_hit.display()
+
+
+func _on_WeaponSwitchModelTimer_timeout():
+	can_shoot = true
+	if weapon_model.mesh == rifle_model:
+		weapon_model.mesh = pistol_model
+		singleshot = true
+		shoot_sound = pistol_shoot_sound
+		damage = 100
+	else:
+		weapon_model.mesh = rifle_model
+		singleshot = false
+		shoot_sound = rifle_shoot_sound
+		damage = 100

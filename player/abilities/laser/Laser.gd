@@ -30,7 +30,7 @@ func _process(delta):
 	
 	if crosshair:
 		if shoot:
-			if shoot.accuracy == 2:
+			if shoot.accuracy != 1:
 				return
 			if melee_attack_tween.is_active():
 				return

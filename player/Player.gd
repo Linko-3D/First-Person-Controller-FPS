@@ -6,7 +6,7 @@ var gravity_vec = Vector3()
 var stick_amount = 10
 var velocity = Vector3()
 var acceleration = 10
-var speed = 4
+var speed = 5
 var speed_multiplier = 1
 var gravity = 9.8
 var movement = Vector3()
@@ -86,9 +86,9 @@ func _physics_process(delta):
 		rotation_degrees.y -= pow(Input.get_joy_axis(0, 2), 2) * mouse_sensitivity * 3
 	
 	if Input.get_joy_axis(0, 3) < -0.25:
-		$Head.rotation_degrees.x = clamp($Head.rotation_degrees.x + pow(Input.get_joy_axis(0, 3), 2) * mouse_sensitivity * 3, -80, 80)
+		$Head.rotation_degrees.x = clamp($Head.rotation_degrees.x + pow(Input.get_joy_axis(0, 3), 2) * mouse_sensitivity * 3, -70, 80)
 	if Input.get_joy_axis(0, 3) > 0.25:
-		$Head.rotation_degrees.x = clamp($Head.rotation_degrees.x - pow(Input.get_joy_axis(0, 3), 2) * mouse_sensitivity * 3, -80, 80)
+		$Head.rotation_degrees.x = clamp($Head.rotation_degrees.x - pow(Input.get_joy_axis(0, 3), 2) * mouse_sensitivity * 3, -70, 80)
 	
 	if not slide:
 		direction = Vector3()
@@ -230,6 +230,12 @@ func slide_animation():
 	$CrouchTween.interpolate_property($CollisionShape, "shape:height", $CollisionShape.shape.height, 1/1.5, 0.2, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
 	$CrouchTween.interpolate_property($MeshInstance, "mesh:mid_height", $MeshInstance.mesh.mid_height, 1/1.5, 0.2, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
 	$CrouchTween.start()
+	
+	$CameraTween.interpolate_property($Head/Movements, "rotation_degrees", Vector3(), Vector3(-5, 0, 5), 0.2, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+	$CameraTween.interpolate_property($Head/Movements, "rotation_degrees", Vector3(-5, 0, 5), Vector3(-5, 0, 5), 0.2, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 0.2)
+	$CameraTween.interpolate_property($Head/Movements, "rotation_degrees", Vector3(-5, 0, 5), Vector3(), 0.2, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 0.4)
+	$CameraTween.start()
+	
 
 func _on_SlideTimer_timeout():
 	slide = false

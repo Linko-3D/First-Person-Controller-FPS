@@ -1,6 +1,8 @@
 extends RigidBody
 
 export (PackedScene) var grenade
+export (Resource) var explosion_sound
+
 var material = SpatialMaterial.new()
 
 func _ready():
@@ -19,6 +21,9 @@ func _on_LifetimeTimer_timeout():
 	grenade_instance.global_transform = global_transform
 	
 	get_tree().get_root().add_child(grenade_instance)
+	
+	play_sound()
+	
 	queue_free()
 
 func _on_LightTimer_timeout():
@@ -28,3 +33,12 @@ func _on_LightTimer_timeout():
 	else:
 		material.emission_energy = 0.1
 	$LightTimer.start()
+
+func play_sound():
+	var audio_node = AudioStreamPlayer.new()
+	audio_node.stream = explosion_sound
+	audio_node.pitch_scale = rand_range(0.95, 1.05)
+	get_tree().get_root().add_child(audio_node)
+	audio_node.play()
+	yield(get_tree().create_timer(3.0), "timeout")
+	audio_node.queue_free()
