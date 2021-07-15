@@ -262,8 +262,10 @@ func shoot_animation():
 	$ShootTween.interpolate_property(weapon, "rotation_degrees:x", value, 0, 0.15, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 0.1)
 	
 	value = rand_range(-1, 1)
-	$ShootTween.interpolate_property(weapon, "rotation_degrees:z", 0, value, 0.1, Tween.TRANS_SINE, Tween.EASE_OUT)
-	$ShootTween.interpolate_property(weapon, "rotation_degrees:z", value, 0, 0.15, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 0.1)
+	$ShootTween.interpolate_property(weapon, "rotation_degrees:z", 0, value, 0.05, Tween.TRANS_SINE, Tween.EASE_OUT)
+	$ShootTween.interpolate_property(weapon, "rotation_degrees:z", value, 0, 0.05, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 0.05)
+	$ShootTween.interpolate_property(weapon, "rotation_degrees:z", 0, -value, 0.075, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 0.1)
+	$ShootTween.interpolate_property(weapon, "rotation_degrees:z", -value, 0, 0.075, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 0.175)
 	
 	value = rand_range(0.5, 1.5)
 	$ShootTween.interpolate_property(camera, "rotation_degrees:x", 0, 1, 0.05, Tween.TRANS_SINE, Tween.EASE_OUT)
@@ -317,11 +319,8 @@ func weapon_bobbing_animation():
 func switch_animation():
 	background_color_animation()
 #	var flash_color = Color(1, 0.95, 0.1, 0.5)
-	# ici
-	var background_start_color = Color(0, 0, 0, 0.25)
-	var background_end_color = Color(0, 0, 0, 0.5)
-	var apear_speed = 0.25
 	
+	var background_color_active = Color(0, 0, 0, 0.5)
 	var background_color_inactive = Color(0, 0, 0, 0)
 	
 	if weapon_selected > 4:
@@ -334,10 +333,7 @@ func switch_animation():
 	$SwitchAndAttackTween.start()
 	
 	if weapon_selected == 1:
-		$SelectionTween.stop_all()
-		$SelectionTween.interpolate_property($HUD/BackgroundColor/ColorRect1, "color", background_start_color, background_end_color, apear_speed)
-		$SelectionTween.start()
-		
+		$HUD/BackgroundColor/ColorRect1.color = background_color_active
 		$HUD/BackgroundColor/ColorRect2.color = background_color_inactive
 		$HUD/BackgroundColor/ColorRect3.color = background_color_inactive
 		$HUD/BackgroundColor/ColorRect4.color = background_color_inactive
@@ -346,18 +342,17 @@ func switch_animation():
 		weapon.mesh = rifle_model
 		shoot_sound = rifle_shoot_sound
 		singleshot = false
+		$HUD/AmmoText.show()
 		$HUD/DisplayAmmo.show()
+		$HUD/AmmoBackgroundColor.show()
 		
 		$Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/Weapon/ShellSpawn.translation.z = -0.2
 		$Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/Weapon/OmniLight.translation.z = -0.7
 		$Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/MagazineSpawn.translation = Vector3(0, -0.11, -0.18)
 	
 	if weapon_selected == 2:
-		$SelectionTween.stop_all()
-		$SelectionTween.interpolate_property($HUD/BackgroundColor/ColorRect2, "color", background_start_color, background_end_color, apear_speed)
-		$SelectionTween.start()
-		
 		$HUD/BackgroundColor/ColorRect1.color = background_color_inactive
+		$HUD/BackgroundColor/ColorRect2.color = background_color_active
 		$HUD/BackgroundColor/ColorRect3.color = background_color_inactive
 		$HUD/BackgroundColor/ColorRect4.color = background_color_inactive
 		
@@ -365,41 +360,41 @@ func switch_animation():
 		weapon.mesh = pistol_model
 		shoot_sound = pistol_shoot_sound
 		singleshot = true
+		$HUD/AmmoText.show()
 		$HUD/DisplayAmmo.show()
+		$HUD/AmmoBackgroundColor.show()
 		
 		$Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/Weapon/ShellSpawn.translation.z = -0.07
 		$Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/Weapon/OmniLight.translation.z = -0.2
 		$Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/MagazineSpawn.translation = Vector3(0, -0.06, -0.01)
 		
 	if weapon_selected == 3:
-		$SelectionTween.stop_all()
-		$SelectionTween.interpolate_property($HUD/BackgroundColor/ColorRect3, "color", background_start_color, background_end_color, apear_speed)
-		$SelectionTween.start()
-		
 		$HUD/BackgroundColor/ColorRect1.color = background_color_inactive
 		$HUD/BackgroundColor/ColorRect2.color = background_color_inactive
+		$HUD/BackgroundColor/ColorRect3.color = background_color_active
 		$HUD/BackgroundColor/ColorRect4.color = background_color_inactive
 		
 		weapon_position = -0.4
 		weapon.mesh = knife_model
+		$HUD/AmmoText.hide()
 		$HUD/DisplayAmmo.hide()
+		$HUD/AmmoBackgroundColor.hide()
 		
 		$Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/Weapon/ShellSpawn.translation.z = -0.07
 		$Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/Weapon/OmniLight.translation.z = -0.2
 		$Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/MagazineSpawn.translation = Vector3(0, -0.06, -0.01)
 
 	if weapon_selected == 4:
-		$SelectionTween.stop_all()
-		$SelectionTween.interpolate_property($HUD/BackgroundColor/ColorRect4, "color", background_start_color, background_end_color, apear_speed)
-		$SelectionTween.start()
-		
 		$HUD/BackgroundColor/ColorRect1.color = background_color_inactive
 		$HUD/BackgroundColor/ColorRect2.color = background_color_inactive
 		$HUD/BackgroundColor/ColorRect3.color = background_color_inactive
+		$HUD/BackgroundColor/ColorRect4.color = background_color_active
 		
 		weapon_position = -0.4
 		weapon.mesh = knife_model
+		$HUD/AmmoText.show()
 		$HUD/DisplayAmmo.show()
+		$HUD/AmmoBackgroundColor.show()
 		
 		$Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/Weapon/ShellSpawn.translation.z = -0.07
 		$Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/Weapon/OmniLight.translation.z = -0.2
@@ -417,17 +412,20 @@ func _on_ReloadTween_tween_all_completed():
 
 
 func background_color_animation():
-	$InterfaceTween.interpolate_property($HUD/DisplayAmmo/AmmoText, "modulate", Color(1, 0.5, 0, 0), Color(1, 0.5, 0, 1), 0.25)
-	$InterfaceTween.interpolate_property($HUD/DisplayAmmo/Slash, "modulate", Color(1, 0.5, 0, 0), Color(1, 0.5, 0, 1), 0.25)
-	$InterfaceTween.interpolate_property($HUD/DisplayAmmo/ClipText, "modulate", Color(1, 0.5, 0, 0), Color(1, 0.5, 0, 1), 0.25)
+	var animation_speed = 0.1
+	
+	$InterfaceTween.interpolate_property($HUD/AmmoText, "modulate", Color(1, 1, 1, 0), Color(1, 1, 1, 1), animation_speed)
+	$InterfaceTween.interpolate_property($HUD/DisplayAmmo/AmmoText, "modulate", Color(1, 1, 1, 0), Color(1, 1, 1, 1), animation_speed)
+	$InterfaceTween.interpolate_property($HUD/DisplayAmmo/Slash, "modulate", Color(1, 1, 1, 0), Color(1, 1, 1, 1), animation_speed)
+	$InterfaceTween.interpolate_property($HUD/DisplayAmmo/ClipText, "modulate", Color(1, 1, 1, 0), Color(1, 1, 1, 1), animation_speed)
 	$InterfaceTween.start()
 
 func ammunition_text_blink():
 	var animation_speed = 0.1
 	
 	if not $InterfaceTween.is_active():
-		$InterfaceTween.interpolate_property($HUD/DisplayAmmo/AmmoText, "modulate", Color(1, 0.5, 0, 1), Color(1, 0.5, 0, 0), animation_speed, 0, 2)
-		$InterfaceTween.interpolate_property($HUD/DisplayAmmo/AmmoText, "modulate", Color(1, 0.5, 0, 0), Color(1, 0.5, 0, 1), animation_speed, 0, 2, animation_speed)
-		$InterfaceTween.interpolate_property($HUD/DisplayAmmo/AmmoText, "modulate", Color(1, 0.5, 0, 1), Color(1, 0.5, 0, 0), animation_speed, 0, 2, animation_speed * 2)
-		$InterfaceTween.interpolate_property($HUD/DisplayAmmo/AmmoText, "modulate", Color(1, 0.5, 0, 0), Color(1, 0.5, 0, 1), animation_speed, 0, 2, animation_speed * 3)
+		$InterfaceTween.interpolate_property($HUD/DisplayAmmo/AmmoText, "modulate", Color(1, 1, 1, 1), Color(1, 1, 1, 0), animation_speed, 0, 2)
+		$InterfaceTween.interpolate_property($HUD/DisplayAmmo/AmmoText, "modulate", Color(1, 1, 1, 0), Color(1, 1, 1, 1), animation_speed, 0, 2, animation_speed)
+		$InterfaceTween.interpolate_property($HUD/DisplayAmmo/AmmoText, "modulate", Color(1, 1, 1, 1), Color(1, 1, 1, 0), animation_speed, 0, 2, animation_speed * 2)
+		$InterfaceTween.interpolate_property($HUD/DisplayAmmo/AmmoText, "modulate", Color(1, 1, 1, 0), Color(1, 1, 1, 1), animation_speed, 0, 2, animation_speed * 3)
 		$InterfaceTween.start()

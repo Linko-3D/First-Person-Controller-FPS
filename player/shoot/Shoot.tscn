@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://player/shoot/Shoot.gd" type="Script" id=1]
 [ext_resource path="res://player/shoot/AK-47.obj" type="ArrayMesh" id=2]
@@ -21,6 +21,15 @@ font_data = ExtResource( 6 )
 
 [sub_resource type="Theme" id=2]
 default_font = SubResource( 1 )
+
+[sub_resource type="DynamicFont" id=5]
+size = 25
+outline_size = 1
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 6 )
+
+[sub_resource type="Theme" id=6]
+default_font = SubResource( 5 )
 
 [sub_resource type="DynamicFont" id=3]
 size = 50
@@ -92,11 +101,38 @@ omni_range = 2.0
 [node name="LookAt" type="Position3D" parent="Position3D"]
 
 [node name="HUD" type="Control" parent="."]
+modulate = Color( 1, 0.5, 0, 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = -0.374634
 margin_right = -0.374634
 theme = SubResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AmmoBackgroundColor" type="ColorRect" parent="HUD"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -360.0
+margin_top = -64.0
+margin_right = -90.0
+margin_bottom = -4.0
+color = Color( 0, 0, 0, 0.5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AmmoBackgroundColor2" type="ColorRect" parent="HUD"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 90.0
+margin_top = -64.0
+margin_right = 305.0
+margin_bottom = -4.0
+color = Color( 0, 0, 0, 0.5 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -155,40 +191,65 @@ __meta__ = {
 }
 
 [node name="Weapon1" type="Label" parent="HUD/WeaponSelected"]
-modulate = Color( 1, 0.501961, 0, 1 )
 margin_right = 142.0
 margin_bottom = 31.0
 text = "1     AK-47"
 
 [node name="Weapon2" type="Label" parent="HUD/WeaponSelected"]
-modulate = Color( 1, 0.501961, 0, 1 )
 margin_top = 35.0
 margin_right = 142.0
 margin_bottom = 66.0
 text = "2     M1911"
 
 [node name="Weapon3" type="Label" parent="HUD/WeaponSelected"]
-modulate = Color( 1, 0.501961, 0, 1 )
 margin_top = 70.0
 margin_right = 142.0
 margin_bottom = 101.0
 text = "3     Knife"
 
 [node name="Weapon4" type="Label" parent="HUD/WeaponSelected"]
-modulate = Color( 1, 0.501961, 0, 1 )
 margin_top = 105.0
 margin_right = 142.0
 margin_bottom = 136.0
 text = "4     Grenade"
+
+[node name="HealthText" type="Label" parent="HUD"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 100.0
+margin_top = -79.0
+margin_right = 325.0
+margin_bottom = -9.0
+text = "Health"
+valign = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AmmoText" type="Label" parent="HUD"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -350.0
+margin_top = -40.0
+margin_right = -230.0
+margin_bottom = -9.0
+theme = SubResource( 6 )
+text = "Ammo     "
+valign = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="DisplayAmmo" type="HBoxContainer" parent="HUD"]
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -145.0
-margin_top = -70.0
-margin_right = -4.0
+margin_left = -349.0
+margin_top = -64.0
+margin_right = -100.0
 margin_bottom = -4.0
 theme = SubResource( 4 )
 alignment = 2
@@ -197,27 +258,39 @@ __meta__ = {
 }
 
 [node name="AmmoText" type="Label" parent="HUD/DisplayAmmo"]
-modulate = Color( 1, 0.501961, 0, 1 )
-margin_top = 3.0
-margin_right = 56.0
-margin_bottom = 63.0
+margin_left = 108.0
+margin_right = 164.0
+margin_bottom = 60.0
 text = "30"
 
 [node name="Slash" type="Label" parent="HUD/DisplayAmmo"]
-modulate = Color( 1, 0.501961, 0, 1 )
-margin_left = 60.0
-margin_top = 3.0
-margin_right = 81.0
-margin_bottom = 63.0
+margin_left = 168.0
+margin_right = 189.0
+margin_bottom = 60.0
 text = "/"
 
 [node name="ClipText" type="Label" parent="HUD/DisplayAmmo"]
-modulate = Color( 1, 0.501961, 0, 1 )
-margin_left = 85.0
-margin_top = 3.0
-margin_right = 141.0
-margin_bottom = 63.0
+margin_left = 193.0
+margin_right = 249.0
+margin_bottom = 60.0
 text = "90"
+
+[node name="DisplayHealth" type="HBoxContainer" parent="HUD"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 210.0
+margin_top = -64.0
+margin_right = 338.0
+margin_bottom = -4.0
+theme = SubResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Health" type="Label" parent="HUD/DisplayHealth"]
+margin_right = 84.0
+margin_bottom = 60.0
+text = "100"
 
 [node name="ShootTween" type="Tween" parent="."]
 
