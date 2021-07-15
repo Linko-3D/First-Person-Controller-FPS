@@ -146,7 +146,8 @@ func _process(delta):
 			else:
 				play_sound(empty_sound, 0, 0)
 				$FireRateTimer.start()
-				ammunition_text_blink()
+			
+			ammunition_text_blink()
 	
 	if singleshot:
 		if Input.is_mouse_button_pressed(BUTTON_LEFT) or Input.get_joy_axis(0, 7) >= 0.5:
@@ -186,8 +187,6 @@ func shoot():
 	
 	ammo -= 1
 	$HUD/DisplayAmmo/AmmoText.text = str(ammo)
-	if ammo <= max_ammo / 6:
-		ammunition_text_blink()
 
 func spawn_shell():
 	var shell_instance = shell.instance()
@@ -236,8 +235,7 @@ func calculate_ammo():
 		clip -= difference
 		ammo = max_ammo
 	
-	$HUD/DisplayAmmo/AmmoText.text = str(ammo)
-	$HUD/DisplayAmmo/ClipText.text = str(clip)
+	update_ammo_HUD()
 
 func shoot_animation():
 	randomize()
@@ -317,16 +315,31 @@ func weapon_bobbing_animation():
 		$VBobbingTween.start()
 
 func switch_animation():
+	$InterfaceTween.stop_all()
 	background_color_animation()
-#	var flash_color = Color(1, 0.95, 0.1, 0.5)
 	
 	var background_color_active = Color(0, 0, 0, 0.5)
 	var background_color_inactive = Color(0, 0, 0, 0)
 	
-	if weapon_selected > 4:
+	if weapon_selected > 2:
 		weapon_selected = 1
 	if weapon_selected < 1:
-		weapon_selected = 4
+		weapon_selected = 2
+	
+	if weapon_selected == 1:
+		weapon2_ammo = ammo
+		weapon2_clip = clip
+		
+		ammo = weapon1_ammo
+		clip = weapon1_clip 
+	if weapon_selected == 2:
+		weapon1_ammo = ammo
+		weapon1_clip = clip
+		
+		ammo = weapon2_ammo
+		clip = weapon2_clip
+		
+	update_ammo_HUD()
 	
 	$SwitchAndAttackTween.interpolate_property($Position3D/SwitchAndAttack, "translation", Vector3(0, -0.25, -0.1), Vector3(), 0.3, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
 	$SwitchAndAttackTween.interpolate_property($Position3D/SwitchAndAttack, "rotation_degrees", Vector3(-30, 20, 10), Vector3(), 0.3, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
@@ -336,7 +349,6 @@ func switch_animation():
 		$HUD/BackgroundColor/ColorRect1.color = background_color_active
 		$HUD/BackgroundColor/ColorRect2.color = background_color_inactive
 		$HUD/BackgroundColor/ColorRect3.color = background_color_inactive
-		$HUD/BackgroundColor/ColorRect4.color = background_color_inactive
 		
 		weapon_position = -0.2
 		weapon.mesh = rifle_model
@@ -354,7 +366,6 @@ func switch_animation():
 		$HUD/BackgroundColor/ColorRect1.color = background_color_inactive
 		$HUD/BackgroundColor/ColorRect2.color = background_color_active
 		$HUD/BackgroundColor/ColorRect3.color = background_color_inactive
-		$HUD/BackgroundColor/ColorRect4.color = background_color_inactive
 		
 		weapon_position = -0.3
 		weapon.mesh = pistol_model
@@ -372,29 +383,12 @@ func switch_animation():
 		$HUD/BackgroundColor/ColorRect1.color = background_color_inactive
 		$HUD/BackgroundColor/ColorRect2.color = background_color_inactive
 		$HUD/BackgroundColor/ColorRect3.color = background_color_active
-		$HUD/BackgroundColor/ColorRect4.color = background_color_inactive
 		
 		weapon_position = -0.4
 		weapon.mesh = knife_model
 		$HUD/AmmoText.hide()
 		$HUD/DisplayAmmo.hide()
 		$HUD/AmmoBackgroundColor.hide()
-		
-		$Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/Weapon/ShellSpawn.translation.z = -0.07
-		$Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/Weapon/OmniLight.translation.z = -0.2
-		$Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/MagazineSpawn.translation = Vector3(0, -0.06, -0.01)
-
-	if weapon_selected == 4:
-		$HUD/BackgroundColor/ColorRect1.color = background_color_inactive
-		$HUD/BackgroundColor/ColorRect2.color = background_color_inactive
-		$HUD/BackgroundColor/ColorRect3.color = background_color_inactive
-		$HUD/BackgroundColor/ColorRect4.color = background_color_active
-		
-		weapon_position = -0.4
-		weapon.mesh = knife_model
-		$HUD/AmmoText.show()
-		$HUD/DisplayAmmo.show()
-		$HUD/AmmoBackgroundColor.show()
 		
 		$Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/Weapon/ShellSpawn.translation.z = -0.07
 		$Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/Weapon/OmniLight.translation.z = -0.2
@@ -421,11 +415,15 @@ func background_color_animation():
 	$InterfaceTween.start()
 
 func ammunition_text_blink():
-	var animation_speed = 0.1
-	
-	if not $InterfaceTween.is_active():
+	if ammo <= max_ammo / 6:
+		var animation_speed = 0.1
+		$InterfaceTween.stop_all()
 		$InterfaceTween.interpolate_property($HUD/DisplayAmmo/AmmoText, "modulate", Color(1, 1, 1, 1), Color(1, 1, 1, 0), animation_speed, 0, 2)
 		$InterfaceTween.interpolate_property($HUD/DisplayAmmo/AmmoText, "modulate", Color(1, 1, 1, 0), Color(1, 1, 1, 1), animation_speed, 0, 2, animation_speed)
 		$InterfaceTween.interpolate_property($HUD/DisplayAmmo/AmmoText, "modulate", Color(1, 1, 1, 1), Color(1, 1, 1, 0), animation_speed, 0, 2, animation_speed * 2)
 		$InterfaceTween.interpolate_property($HUD/DisplayAmmo/AmmoText, "modulate", Color(1, 1, 1, 0), Color(1, 1, 1, 1), animation_speed, 0, 2, animation_speed * 3)
 		$InterfaceTween.start()
+
+func update_ammo_HUD():
+	$HUD/DisplayAmmo/AmmoText.text = str(ammo)
+	$HUD/DisplayAmmo/ClipText.text = str(clip)

@@ -143,37 +143,33 @@ anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = -150.0
-margin_top = -286.0
+margin_top = -251.0
 margin_right = -4.0
 margin_bottom = -150.0
+alignment = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="ColorRect1" type="ColorRect" parent="HUD/BackgroundColor"]
-margin_right = 146.0
-margin_bottom = 31.0
-rect_min_size = Vector2( 0, 31 )
-color = Color( 0, 0, 0, 0.501961 )
-
-[node name="ColorRect2" type="ColorRect" parent="HUD/BackgroundColor"]
 margin_top = 35.0
 margin_right = 146.0
 margin_bottom = 66.0
 rect_min_size = Vector2( 0, 31 )
-color = Color( 0, 0, 0, 0 )
+color = Color( 0, 0, 0, 0.501961 )
 
-[node name="ColorRect3" type="ColorRect" parent="HUD/BackgroundColor"]
+[node name="ColorRect2" type="ColorRect" parent="HUD/BackgroundColor"]
 margin_top = 70.0
 margin_right = 146.0
 margin_bottom = 101.0
 rect_min_size = Vector2( 0, 31 )
 color = Color( 0, 0, 0, 0 )
 
-[node name="ColorRect4" type="ColorRect" parent="HUD/BackgroundColor"]
-margin_top = 105.0
+[node name="ColorRect3" type="ColorRect" parent="HUD/BackgroundColor"]
+visible = false
+margin_top = 70.0
 margin_right = 146.0
-margin_bottom = 136.0
+margin_bottom = 101.0
 rect_min_size = Vector2( 0, 31 )
 color = Color( 0, 0, 0, 0 )
 
@@ -186,32 +182,29 @@ margin_left = -146.0
 margin_top = -286.0
 margin_right = -4.0
 margin_bottom = -150.0
+alignment = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Weapon1" type="Label" parent="HUD/WeaponSelected"]
-margin_right = 142.0
-margin_bottom = 31.0
-text = "1     AK-47"
-
-[node name="Weapon2" type="Label" parent="HUD/WeaponSelected"]
-margin_top = 35.0
-margin_right = 142.0
-margin_bottom = 66.0
-text = "2     M1911"
-
-[node name="Weapon3" type="Label" parent="HUD/WeaponSelected"]
 margin_top = 70.0
 margin_right = 142.0
 margin_bottom = 101.0
-text = "3     Knife"
+text = "1     AK-47"
 
-[node name="Weapon4" type="Label" parent="HUD/WeaponSelected"]
+[node name="Weapon2" type="Label" parent="HUD/WeaponSelected"]
 margin_top = 105.0
 margin_right = 142.0
 margin_bottom = 136.0
-text = "4     Grenade"
+text = "2     M1911"
+
+[node name="Weapon3" type="Label" parent="HUD/WeaponSelected"]
+visible = false
+margin_top = 105.0
+margin_right = 142.0
+margin_bottom = 136.0
+text = "3     Knife"
 
 [node name="HealthText" type="Label" parent="HUD"]
 anchor_top = 1.0
