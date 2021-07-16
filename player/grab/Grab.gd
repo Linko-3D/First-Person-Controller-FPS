@@ -7,7 +7,17 @@ var object_grabbed = null
 
 var can_use = true
 
+var text_visible = false
+
+func _ready():
+	$GrabText.modulate = Color(0.81, 0.5, 0.09, 0)
+
 func _physics_process(delta):
+	if not object_grabbed and $TextTimer.is_stopped() and get_collider() is RigidBody and get_collider().mass <= mass_limit:
+		grab_text_appears()
+	else:
+		grab_text_disappears()
+	
 	if object_grabbed:
 		var vector = $GrabPosition.global_transform.origin - object_grabbed.global_transform.origin
 		object_grabbed.linear_velocity = vector * 10
@@ -23,11 +33,10 @@ func _physics_process(delta):
 		if can_use:
 			can_use = false
 			if not object_grabbed:
-				if is_colliding():
-					if get_collider() is RigidBody and get_collider().mass <= mass_limit:
-						object_grabbed = get_collider()
-						object_grabbed.rotation_degrees.x = 0
-						object_grabbed.rotation_degrees.z = 0
+				if get_collider() is RigidBody and get_collider().mass <= mass_limit:
+					object_grabbed = get_collider()
+					object_grabbed.rotation_degrees.x = 0
+					object_grabbed.rotation_degrees.z = 0
 			else:
 				object_grabbed.set_mode(0)
 				release()
@@ -45,3 +54,20 @@ func release():
 	object_grabbed.axis_lock_angular_y = false
 	object_grabbed.axis_lock_angular_z = false
 	object_grabbed = null
+	$TextTimer.start()
+
+func grab_text_appears():
+	if not text_visible:
+		text_visible = true
+		var animation_speed = 0.25
+		$GrabTween.interpolate_property($GrabText, "margin_top", 45, 35, animation_speed, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+		$GrabTween.interpolate_property($GrabText, "modulate", Color(0.81, 0.5, 0.09, 0), Color(0.81, 0.5, 0.09, 1), animation_speed, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+		$GrabTween.start()
+
+func grab_text_disappears():
+	if text_visible:
+		text_visible = false
+		var animation_speed = 0.25
+		$GrabTween.interpolate_property($GrabText, "margin_top", 35, 45, animation_speed, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+		$GrabTween.interpolate_property($GrabText, "modulate", Color(0.81, 0.5, 0.09, 1), Color(0.81, 0.5, 0.09, 0), animation_speed, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+		$GrabTween.start()

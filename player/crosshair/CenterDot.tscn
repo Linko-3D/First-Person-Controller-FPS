@@ -7,47 +7,19 @@ margin_left = -1.0
 margin_top = -1.0
 margin_right = 1.0
 margin_bottom = 1.0
-color = Color( 0.811765, 0.501961, 0.0901961, 0.74902 )
+color = Color( 0.81, 0.5, 0.09, 0.5 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Inline2" type="ColorRect" parent="."]
-margin_left = -1.0
-margin_top = -2.0
-margin_right = 1.0
-margin_bottom = -1.0
-color = Color( 0, 0, 0, 0.74902 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Inline3" type="ColorRect" parent="."]
-margin_left = 1.0
-margin_top = -1.0
-margin_right = 2.0
-margin_bottom = 1.0
-color = Color( 0, 0, 0, 0.74902 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Inline4" type="ColorRect" parent="."]
-margin_left = -1.0
-margin_top = 1.0
-margin_right = 1.0
-margin_bottom = 2.0
-color = Color( 0, 0, 0, 0.74902 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Inline5" type="ColorRect" parent="."]
+[node name="ReferenceRect" type="ReferenceRect" parent="."]
 margin_left = -2.0
-margin_top = -1.0
-margin_right = -1.0
-margin_bottom = 1.0
-color = Color( 0, 0, 0, 0.74902 )
+margin_top = -2.0
+margin_right = 2.0
+margin_bottom = 2.0
+border_color = Color( 0, 0, 0, 0.5 )
+border_width = 2.0
+editor_only = false
 __meta__ = {
 "_edit_use_anchors_": false
 }

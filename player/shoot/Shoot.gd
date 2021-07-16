@@ -387,10 +387,10 @@ func _on_ReloadTween_tween_all_completed():
 func ammo_animation():
 	var animation_speed = 0.1
 	
-	$InterfaceTween.interpolate_property($HUD/AmmoText, "modulate", Color(1, 1, 1, 0.5), Color(1, 1, 1, 1), animation_speed)
-	$InterfaceTween.interpolate_property($HUD/DisplayAmmo/AmmoText, "modulate", Color(1, 1, 1, 0.5), Color(1, 1, 1, 1), animation_speed)
-	$InterfaceTween.interpolate_property($HUD/DisplayAmmo/Slash, "modulate", Color(1, 1, 1, 0.5), Color(1, 1, 1, 1), animation_speed)
-	$InterfaceTween.interpolate_property($HUD/DisplayAmmo/ClipText, "modulate", Color(1, 1, 1, 0.5), Color(1, 1, 1, 1), animation_speed)
+	$InterfaceTween.interpolate_property($HUD/AmmoText, "modulate", Color(1, 1, 1, 0.5), Color(1, 1, 1, 1), animation_speed, Tween.TRANS_SINE)
+	$InterfaceTween.interpolate_property($HUD/DisplayAmmo/AmmoText, "modulate", Color(1, 1, 1, 0.5), Color(1, 1, 1, 1), animation_speed, Tween.TRANS_SINE)
+	$InterfaceTween.interpolate_property($HUD/DisplayAmmo/Slash, "modulate", Color(1, 1, 1, 0.5), Color(1, 1, 1, 1), animation_speed, Tween.TRANS_SINE)
+	$InterfaceTween.interpolate_property($HUD/DisplayAmmo/ClipText, "modulate", Color(1, 1, 1, 0.5), Color(1, 1, 1, 1), animation_speed, Tween.TRANS_SINE)
 	$InterfaceTween.start()
 
 func update_ammo_HUD():

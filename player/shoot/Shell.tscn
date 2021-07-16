@@ -7,6 +7,7 @@
 top_radius = 0.01
 bottom_radius = 0.01
 height = 0.05
+radial_segments = 8
 
 [node name="Shell" type="RigidBody"]
 script = ExtResource( 1 )
