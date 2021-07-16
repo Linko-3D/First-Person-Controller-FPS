@@ -146,7 +146,7 @@ func _process(delta):
 			else:
 				play_sound(empty_sound, 0, 0)
 				$FireRateTimer.start()
-			ammunition_text_blink()
+			ammo_animation()
 			
 			
 	
@@ -316,8 +316,7 @@ func weapon_bobbing_animation():
 		$VBobbingTween.start()
 
 func switch_animation():
-	$InterfaceTween.stop_all()
-	background_color_animation()
+	ammo_animation()
 	
 	var background_color_active = Color(0, 0, 0, 0.5)
 	var background_color_inactive = Color(0, 0, 0, 0)
@@ -403,22 +402,15 @@ func _on_SpawnMagazineTimer_timeout():
 
 func _on_ReloadTween_tween_all_completed():
 	calculate_ammo()
-	background_color_animation()
+	ammo_animation()
 
-func background_color_animation():
+func ammo_animation():
 	var animation_speed = 0.1
 	
-	$InterfaceTween.interpolate_property($HUD/AmmoText, "modulate", Color(1, 1, 1, 0), Color(1, 1, 1, 1), animation_speed)
-	$InterfaceTween.interpolate_property($HUD/DisplayAmmo/AmmoText, "modulate", Color(1, 1, 1, 0), Color(1, 1, 1, 1), animation_speed)
-	$InterfaceTween.interpolate_property($HUD/DisplayAmmo/Slash, "modulate", Color(1, 1, 1, 0), Color(1, 1, 1, 1), animation_speed)
-	$InterfaceTween.interpolate_property($HUD/DisplayAmmo/ClipText, "modulate", Color(1, 1, 1, 0), Color(1, 1, 1, 1), animation_speed)
-	$InterfaceTween.start()
-
-func ammunition_text_blink():
-	var animation_speed = 0.05
-	
-	$InterfaceTween.interpolate_property($HUD/DisplayAmmo/AmmoText, "modulate", Color(1, 1, 1, 1), Color(1, 1, 1, 0.5), animation_speed, 0, 2)
-	$InterfaceTween.interpolate_property($HUD/DisplayAmmo/AmmoText, "modulate", Color(1, 1, 1, 0.5), Color(1, 1, 1, 1), animation_speed, 0, 2, animation_speed)
+	$InterfaceTween.interpolate_property($HUD/AmmoText, "modulate", Color(1, 1, 1, 0.5), Color(1, 1, 1, 1), animation_speed)
+	$InterfaceTween.interpolate_property($HUD/DisplayAmmo/AmmoText, "modulate", Color(1, 1, 1, 0.5), Color(1, 1, 1, 1), animation_speed)
+	$InterfaceTween.interpolate_property($HUD/DisplayAmmo/Slash, "modulate", Color(1, 1, 1, 0.5), Color(1, 1, 1, 1), animation_speed)
+	$InterfaceTween.interpolate_property($HUD/DisplayAmmo/ClipText, "modulate", Color(1, 1, 1, 0.5), Color(1, 1, 1, 1), animation_speed)
 	$InterfaceTween.start()
 
 func update_ammo_HUD():
