@@ -282,7 +282,7 @@ text = "100"
 
 [node name="VBobbingTween" type="Tween" parent="."]
 
-[node name="SwitchAndAttackTween" type="Tween" parent="."]
+[node name="SwitchWeaponTween" type="Tween" parent="."]
 
 [node name="InterfaceTween" type="Tween" parent="."]
 

@@ -17,12 +17,14 @@ onready var shoot_sound = rifle_shoot_sound
 
 var weapon1_ammo = 30
 var weapon1_clip = 90
+var weapon1_max_ammo = weapon1_ammo
 
 var weapon2_ammo = 20
 var weapon2_clip = 120
+var weapon2_max_ammo = weapon2_ammo
 
-var max_ammo = weapon1_ammo
-var ammo = max_ammo
+var ammo = weapon1_ammo
+var max_ammo = weapon1_max_ammo
 var clip = weapon1_clip
 
 var bullet_spread = 30
@@ -130,11 +132,8 @@ func _process(delta):
 		if player.is_on_floor() and player.player_speed >= 2:
 			weapon_bobbing_animation()
 	
-	if $ReloadTween.is_active() or $SwitchAndAttackTween.is_active():
+	if $ReloadTween.is_active() or $SwitchWeaponTween.is_active():
 		return
-		
-	if Input.is_key_pressed(KEY_V) or Input.is_mouse_button_pressed(BUTTON_MIDDLE) or Input.is_joy_button_pressed(0, JOY_R3):
-		attack_animation()
 	
 	if Input.is_mouse_button_pressed(BUTTON_LEFT) or Input.get_joy_axis(0, 7) >= 0.5:
 		if $FireRateTimer.is_stopped() and can_shoot and weapon_selected < 3:
@@ -146,7 +145,9 @@ func _process(delta):
 			else:
 				play_sound(empty_sound, 0, 0)
 				$FireRateTimer.start()
-			ammo_animation()
+			
+			if ammo <= max_ammo / 6:
+				ammo_animation()
 			
 			
 	
@@ -274,28 +275,6 @@ func shoot_animation():
 	$ShootTween.interpolate_property(camera, "rotation_degrees:y", value, 0, 0.05, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 0.05)
 	$ShootTween.start()
 
-func attack_animation():
-	$SwitchAndAttackTween.interpolate_property($Position3D/SwitchAndAttack, "translation", Vector3(), Vector3(0.015, -0.065, -0.04), 0.08, Tween.TRANS_SINE, Tween.EASE_IN)
-	$SwitchAndAttackTween.interpolate_property($Position3D/SwitchAndAttack, "translation", Vector3(0.015, -0.065, -0.04), Vector3(0.04, -0.056, 0.03), 0.12, Tween.TRANS_SINE, Tween.EASE_OUT, 0.08)
-	# Hit
-	$SwitchAndAttackTween.interpolate_property($Position3D/SwitchAndAttack, "translation", Vector3(0.04, -0.056, 0.03), Vector3(0.08, 0.1, -0.38), 0.15, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 0.2)
-	$SwitchAndAttackTween.interpolate_property($Position3D/SwitchAndAttack, "translation", Vector3(0.08, 0.1, -0.38), Vector3(0.15, -0.4, 0), 0.45, Tween.TRANS_SINE, Tween.EASE_IN, 0.35)
-	$SwitchAndAttackTween.interpolate_property($Position3D/SwitchAndAttack, "translation", Vector3(0.15, -0.4, 0), Vector3(), 0.2, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 0.8)
-	
-	$SwitchAndAttackTween.interpolate_property($Position3D/SwitchAndAttack, "rotation_degrees", Vector3(), Vector3(20, 45, 15), 0.08, Tween.TRANS_SINE, Tween.EASE_IN)
-	$SwitchAndAttackTween.interpolate_property($Position3D/SwitchAndAttack, "rotation_degrees", Vector3(20, 45, 15), Vector3(0, 90, 90), 0.12, Tween.TRANS_SINE, Tween.EASE_OUT, 0.08)
-	# Hit
-	$SwitchAndAttackTween.interpolate_property($Position3D/SwitchAndAttack, "rotation_degrees", Vector3(0, 90, 90), Vector3(-19.6, 130, 105), 0.15, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 0.2)
-	$SwitchAndAttackTween.interpolate_property($Position3D/SwitchAndAttack, "rotation_degrees", Vector3(-19.6, 130, 105), Vector3(34.5, 80, 35), 0.45, Tween.TRANS_SINE, Tween.EASE_IN, 0.35)
-	$SwitchAndAttackTween.interpolate_property($Position3D/SwitchAndAttack, "rotation_degrees", Vector3(34.5, 80, 35), Vector3(), 0.2, Tween.TRANS_SINE, Tween.EASE_OUT, 0.8)
-
-	$SwitchAndAttackTween.interpolate_property(camera, "rotation_degrees", Vector3(), Vector3(-2, -5, 0), 0.25, Tween.TRANS_SINE, Tween.EASE_IN)
-	$SwitchAndAttackTween.interpolate_property(camera, "rotation_degrees", Vector3(-2, -5, 0), Vector3(2, 10, 0), 0.1, Tween.TRANS_SINE, Tween.EASE_OUT, 0.25)
-	$SwitchAndAttackTween.interpolate_property(camera, "rotation_degrees", Vector3(2, 10, 0), Vector3(-2, -2, 0), 0.4, Tween.TRANS_SINE, Tween.EASE_IN, 0.35)
-	$SwitchAndAttackTween.interpolate_property(camera, "rotation_degrees", Vector3(-2, -2, 0), Vector3(0, 0, 0), 0.25, Tween.TRANS_SINE, Tween.EASE_OUT, 0.75)
-	
-	$SwitchAndAttackTween.start()
-
 func weapon_bobbing_animation():
 	var animation_speed = 1.0 / player.player_speed
 	var animation_value = player.player_speed / 600 # 0.01
@@ -332,18 +311,19 @@ func switch_animation():
 		
 		ammo = weapon1_ammo
 		clip = weapon1_clip 
+		max_ammo = weapon1_max_ammo
 	if weapon_selected == 2:
 		weapon1_ammo = ammo
 		weapon1_clip = clip
 		
 		ammo = weapon2_ammo
 		clip = weapon2_clip
-		
+		max_ammo = weapon2_max_ammo
 	update_ammo_HUD()
 	
-	$SwitchAndAttackTween.interpolate_property($Position3D/SwitchAndAttack, "translation", Vector3(0, -0.25, -0.1), Vector3(), 0.3, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
-	$SwitchAndAttackTween.interpolate_property($Position3D/SwitchAndAttack, "rotation_degrees", Vector3(-30, 20, 10), Vector3(), 0.3, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
-	$SwitchAndAttackTween.start()
+	$SwitchWeaponTween.interpolate_property($Position3D/SwitchAndAttack, "translation", Vector3(0, -0.25, -0.1), Vector3(), 0.3, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+	$SwitchWeaponTween.interpolate_property($Position3D/SwitchAndAttack, "rotation_degrees", Vector3(-30, 20, 10), Vector3(), 0.3, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+	$SwitchWeaponTween.start()
 	
 	if weapon_selected == 1:
 		$HUD/BackgroundColor/ColorRect1.color = background_color_active
