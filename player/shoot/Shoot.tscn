@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://player/shoot/Shoot.gd" type="Script" id=1]
 [ext_resource path="res://player/shoot/AK-47.obj" type="ArrayMesh" id=2]
@@ -15,25 +15,16 @@
 
 [sub_resource type="DynamicFont" id=1]
 size = 25
-outline_size = 1
+outline_size = 2
 outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 6 )
 
 [sub_resource type="Theme" id=2]
 default_font = SubResource( 1 )
 
-[sub_resource type="DynamicFont" id=5]
-size = 25
-outline_size = 1
-outline_color = Color( 0, 0, 0, 1 )
-font_data = ExtResource( 6 )
-
-[sub_resource type="Theme" id=6]
-default_font = SubResource( 5 )
-
 [sub_resource type="DynamicFont" id=3]
 size = 50
-outline_size = 1
+outline_size = 2
 outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 6 )
 
@@ -101,7 +92,7 @@ omni_range = 2.0
 [node name="LookAt" type="Position3D" parent="Position3D"]
 
 [node name="HUD" type="Control" parent="."]
-modulate = Color( 1, 0.5, 0, 1 )
+modulate = Color( 0.811765, 0.498039, 0.0901961, 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 theme = SubResource( 2 )
@@ -119,7 +110,7 @@ margin_left = -360.0
 margin_top = -64.0
 margin_right = -90.0
 margin_bottom = -4.0
-color = Color( 0, 0, 0, 0.5 )
+color = Color( 0, 0, 0, 0.25 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -131,7 +122,7 @@ margin_left = 90.0
 margin_top = -64.0
 margin_right = 305.0
 margin_bottom = -4.0
-color = Color( 0, 0, 0, 0.5 )
+color = Color( 0, 0, 0, 0.25 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -155,7 +146,7 @@ margin_top = 35.0
 margin_right = 125.0
 margin_bottom = 66.0
 rect_min_size = Vector2( 0, 31 )
-color = Color( 0, 0, 0, 0.501961 )
+color = Color( 0, 0, 0, 0.5 )
 
 [node name="ColorRect2" type="ColorRect" parent="HUD/BackgroundColor"]
 margin_top = 70.0
@@ -209,8 +200,8 @@ text = "3     Knife"
 anchor_top = 1.0
 anchor_bottom = 1.0
 margin_left = 100.0
-margin_top = -79.0
-margin_right = 325.0
+margin_top = -40.0
+margin_right = 173.0
 margin_bottom = -9.0
 text = "Health"
 valign = 2
@@ -227,7 +218,6 @@ margin_left = -350.0
 margin_top = -40.0
 margin_right = -230.0
 margin_bottom = -9.0
-theme = SubResource( 6 )
 text = "Ammo     "
 valign = 2
 __meta__ = {
