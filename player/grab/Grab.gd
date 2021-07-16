@@ -71,3 +71,4 @@ func grab_text_disappears():
 		$GrabTween.interpolate_property($GrabText, "margin_top", 35, 45, animation_speed, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
 		$GrabTween.interpolate_property($GrabText, "modulate", Color(0.81, 0.5, 0.09, 1), Color(0.81, 0.5, 0.09, 0), animation_speed, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
 		$GrabTween.start()
+		$TextTimer.start()
