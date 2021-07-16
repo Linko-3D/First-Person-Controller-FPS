@@ -79,15 +79,15 @@ func _process(delta):
 				weapon_selected = 2
 				switch_animation()
 				
-		if Input.is_key_pressed(KEY_3):
-			if weapon_selected != 3:
-				weapon_selected = 3
-				switch_animation()
-				
-		if Input.is_key_pressed(KEY_4):
-			if weapon_selected != 4:
-				weapon_selected = 4
-				switch_animation()
+#		if Input.is_key_pressed(KEY_3):
+#			if weapon_selected != 3:
+#				weapon_selected = 3
+#				switch_animation()
+#
+#		if Input.is_key_pressed(KEY_4):
+#			if weapon_selected != 4:
+#				weapon_selected = 4
+#				switch_animation()
 		
 		if can_switch_joy_dpad:
 			if Input.is_joy_button_pressed(0, JOY_DPAD_RIGHT) or Input.is_joy_button_pressed(0, JOY_DPAD_DOWN):
