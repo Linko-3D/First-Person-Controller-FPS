@@ -146,8 +146,9 @@ func _process(delta):
 			else:
 				play_sound(empty_sound, 0, 0)
 				$FireRateTimer.start()
-			
 			ammunition_text_blink()
+			
+			
 	
 	if singleshot:
 		if Input.is_mouse_button_pressed(BUTTON_LEFT) or Input.get_joy_axis(0, 7) >= 0.5:
@@ -404,7 +405,6 @@ func _on_ReloadTween_tween_all_completed():
 	calculate_ammo()
 	background_color_animation()
 
-
 func background_color_animation():
 	var animation_speed = 0.1
 	
@@ -415,14 +415,11 @@ func background_color_animation():
 	$InterfaceTween.start()
 
 func ammunition_text_blink():
-	if ammo <= max_ammo / 6:
-		var animation_speed = 0.1
-		$InterfaceTween.stop_all()
-		$InterfaceTween.interpolate_property($HUD/DisplayAmmo/AmmoText, "modulate", Color(1, 1, 1, 1), Color(1, 1, 1, 0), animation_speed, 0, 2)
-		$InterfaceTween.interpolate_property($HUD/DisplayAmmo/AmmoText, "modulate", Color(1, 1, 1, 0), Color(1, 1, 1, 1), animation_speed, 0, 2, animation_speed)
-		$InterfaceTween.interpolate_property($HUD/DisplayAmmo/AmmoText, "modulate", Color(1, 1, 1, 1), Color(1, 1, 1, 0), animation_speed, 0, 2, animation_speed * 2)
-		$InterfaceTween.interpolate_property($HUD/DisplayAmmo/AmmoText, "modulate", Color(1, 1, 1, 0), Color(1, 1, 1, 1), animation_speed, 0, 2, animation_speed * 3)
-		$InterfaceTween.start()
+	var animation_speed = 0.05
+	
+	$InterfaceTween.interpolate_property($HUD/DisplayAmmo/AmmoText, "modulate", Color(1, 1, 1, 1), Color(1, 1, 1, 0.5), animation_speed, 0, 2)
+	$InterfaceTween.interpolate_property($HUD/DisplayAmmo/AmmoText, "modulate", Color(1, 1, 1, 0.5), Color(1, 1, 1, 1), animation_speed, 0, 2, animation_speed)
+	$InterfaceTween.start()
 
 func update_ammo_HUD():
 	$HUD/DisplayAmmo/AmmoText.text = str(ammo)

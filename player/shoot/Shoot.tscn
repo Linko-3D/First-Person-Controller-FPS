@@ -141,7 +141,7 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -150.0
+margin_left = -129.0
 margin_top = -251.0
 margin_right = -4.0
 margin_bottom = -150.0
@@ -152,14 +152,14 @@ __meta__ = {
 
 [node name="ColorRect1" type="ColorRect" parent="HUD/BackgroundColor"]
 margin_top = 35.0
-margin_right = 146.0
+margin_right = 125.0
 margin_bottom = 66.0
 rect_min_size = Vector2( 0, 31 )
 color = Color( 0, 0, 0, 0.501961 )
 
 [node name="ColorRect2" type="ColorRect" parent="HUD/BackgroundColor"]
 margin_top = 70.0
-margin_right = 146.0
+margin_right = 125.0
 margin_bottom = 101.0
 rect_min_size = Vector2( 0, 31 )
 color = Color( 0, 0, 0, 0 )
@@ -177,7 +177,7 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -146.0
+margin_left = -126.0
 margin_top = -286.0
 margin_right = -4.0
 margin_bottom = -150.0
@@ -188,20 +188,20 @@ __meta__ = {
 
 [node name="Weapon1" type="Label" parent="HUD/WeaponSelected"]
 margin_top = 70.0
-margin_right = 142.0
+margin_right = 122.0
 margin_bottom = 101.0
 text = "1     AK-47"
 
 [node name="Weapon2" type="Label" parent="HUD/WeaponSelected"]
 margin_top = 105.0
-margin_right = 142.0
+margin_right = 122.0
 margin_bottom = 136.0
 text = "2     M1911"
 
 [node name="Weapon3" type="Label" parent="HUD/WeaponSelected"]
 visible = false
 margin_top = 105.0
-margin_right = 142.0
+margin_right = 122.0
 margin_bottom = 136.0
 text = "3     Knife"
 
