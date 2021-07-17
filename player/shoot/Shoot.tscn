@@ -14,14 +14,14 @@
 [ext_resource path="res://player/shoot/Knife.obj" type="ArrayMesh" id=12]
 [ext_resource path="res://player/Theme.tres" type="Theme" id=13]
 
-[sub_resource type="DynamicFont" id=3]
+[sub_resource type="DynamicFont" id=1]
 size = 50
 outline_size = 2
 outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 6 )
 
-[sub_resource type="Theme" id=4]
-default_font = SubResource( 3 )
+[sub_resource type="Theme" id=2]
+default_font = SubResource( 1 )
 
 [node name="Shoot" type="Spatial"]
 script = ExtResource( 1 )
@@ -225,7 +225,7 @@ margin_left = -349.0
 margin_top = -64.0
 margin_right = -100.0
 margin_bottom = -4.0
-theme = SubResource( 4 )
+theme = SubResource( 2 )
 alignment = 2
 __meta__ = {
 "_edit_use_anchors_": false
@@ -256,7 +256,7 @@ margin_left = 210.0
 margin_top = -64.0
 margin_right = 338.0
 margin_bottom = -4.0
-theme = SubResource( 4 )
+theme = SubResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -265,6 +265,22 @@ __meta__ = {
 margin_right = 84.0
 margin_bottom = 60.0
 text = "100"
+
+[node name="ReloadTip" type="Label" parent="HUD"]
+modulate = Color( 1, 1, 1, 0 )
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -135.0
+margin_top = 35.0
+margin_right = 136.0
+margin_bottom = 71.0
+text = "Reload"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="ShootTween" type="Tween" parent="."]
 
@@ -281,6 +297,8 @@ text = "100"
 [node name="BackgroundColorTween" type="Tween" parent="."]
 
 [node name="SelectionTween" type="Tween" parent="."]
+
+[node name="ReloadTipTween" type="Tween" parent="."]
 
 [node name="FireRateTimer" type="Timer" parent="."]
 wait_time = 0.1

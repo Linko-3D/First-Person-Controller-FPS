@@ -38,9 +38,11 @@ var mouse_relative_y = 0
 var singleshot = false
 var can_shoot = true
 var weapon_selected = 1
-var weapon_position = -0.2
+var weapon_position_z = -0.2
 
 var can_switch_joy_dpad = true
+
+var reload_tip_displayed = false
 
 onready var weapon = $Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/Weapon
 
@@ -124,10 +126,10 @@ func _process(delta):
 	
 	if round(player.player_speed) == 0:
 		$Position3D.translation.y = lerp($Position3D.translation.y, -0.1, 5 * delta)
-		$Position3D.translation.z = lerp($Position3D.translation.z, weapon_position, 5 * delta)
+		$Position3D.translation.z = lerp($Position3D.translation.z, weapon_position_z, 5 * delta)
 	else:
 		$Position3D.translation.y = lerp($Position3D.translation.y, -0.1 + -weapon_movement, 5 * delta)
-		$Position3D.translation.z = lerp($Position3D.translation.z, weapon_position + weapon_movement, 5 * delta)
+		$Position3D.translation.z = lerp($Position3D.translation.z, weapon_position_z + weapon_movement, 5 * delta)
 		
 		if player.is_on_floor() and player.player_speed >= 2:
 			weapon_bobbing_animation()
@@ -145,12 +147,13 @@ func _process(delta):
 			else:
 				play_sound(empty_sound, 0, 0)
 				$FireRateTimer.start()
+				
 			
 			if ammo <= max_ammo / 6:
 				ammo_animation()
 			
 			
-	
+	reload_tip()
 	if singleshot:
 		if Input.is_mouse_button_pressed(BUTTON_LEFT) or Input.get_joy_axis(0, 7) >= 0.5:
 			can_shoot = false
@@ -330,7 +333,7 @@ func switch_animation():
 		$HUD/BackgroundColor/ColorRect2.color = background_color_inactive
 		$HUD/BackgroundColor/ColorRect3.color = background_color_inactive
 		
-		weapon_position = -0.2
+		weapon_position_z = -0.2
 		weapon.mesh = rifle_model
 		shoot_sound = rifle_shoot_sound
 		singleshot = false
@@ -347,7 +350,7 @@ func switch_animation():
 		$HUD/BackgroundColor/ColorRect2.color = background_color_active
 		$HUD/BackgroundColor/ColorRect3.color = background_color_inactive
 		
-		weapon_position = -0.3
+		weapon_position_z = -0.3
 		weapon.mesh = pistol_model
 		shoot_sound = pistol_shoot_sound
 		singleshot = true
@@ -364,7 +367,7 @@ func switch_animation():
 		$HUD/BackgroundColor/ColorRect2.color = background_color_inactive
 		$HUD/BackgroundColor/ColorRect3.color = background_color_active
 		
-		weapon_position = -0.4
+		weapon_position_z = -0.4
 		weapon.mesh = knife_model
 		$HUD/AmmoText.hide()
 		$HUD/DisplayAmmo.hide()
@@ -396,3 +399,25 @@ func ammo_animation():
 func update_ammo_HUD():
 	$HUD/DisplayAmmo/AmmoText.text = str(ammo)
 	$HUD/DisplayAmmo/ClipText.text = str(clip)
+
+func reload_tip():
+	if clip > 0:
+		$HUD/ReloadTip.text = "Reload"
+	else:
+		$HUD/ReloadTip.text = "No ammo"
+	
+	if ammo == 0:
+		var animation_speed = 0.25
+		if Input.is_mouse_button_pressed(BUTTON_LEFT) or Input.get_joy_axis(0, 7) >= 0.5:
+			if reload_tip_displayed == false:
+				$ReloadTipTween.stop_all()
+				
+				$ReloadTipTween.interpolate_property($HUD/ReloadTip, "margin_top", 45, 35, animation_speed, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+				$ReloadTipTween.interpolate_property($HUD/ReloadTip, "modulate", Color(1, 1, 1, 0), Color(1, 1, 1, 1), animation_speed, Tween.TRANS_SINE)
+				reload_tip_displayed = true
+		else:
+			if reload_tip_displayed:
+				$ReloadTipTween.interpolate_property($HUD/ReloadTip, "margin_top", 35, 45, animation_speed, Tween.TRANS_SINE, Tween.EASE_IN_OUT, animation_speed)
+				$ReloadTipTween.interpolate_property($HUD/ReloadTip, "modulate", Color(1, 1, 1, 1), Color(1, 1, 1, 0), animation_speed, Tween.TRANS_SINE, Tween.EASE_IN_OUT, animation_speed)
+				reload_tip_displayed = false
+		$ReloadTipTween.start()
