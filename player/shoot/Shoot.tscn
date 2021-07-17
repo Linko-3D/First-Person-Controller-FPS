@@ -59,16 +59,6 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.11, -0.18 )
 [node name="Weapon" type="MeshInstance" parent="Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway"]
 mesh = ExtResource( 2 )
 material/0 = null
-material/1 = null
-material/2 = null
-material/3 = null
-material/4 = null
-material/5 = null
-material/6 = null
-material/7 = null
-material/8 = null
-material/9 = null
-material/10 = null
 
 [node name="ShellSpawn" type="Position3D" parent="Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/Weapon"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.025, 0.01, -0.2 )
@@ -98,11 +88,11 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -360.0
+margin_left = -360.667
 margin_top = -64.0
-margin_right = -90.0
+margin_right = -90.6674
 margin_bottom = -4.0
-color = Color( 0, 0, 0, 0.25 )
+color = Color( 0, 0, 0, 0.25098 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -114,7 +104,7 @@ margin_left = 90.0
 margin_top = -64.0
 margin_right = 305.0
 margin_bottom = -4.0
-color = Color( 0, 0, 0, 0.25 )
+color = Color( 0, 0, 0, 0.25098 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -138,14 +128,14 @@ margin_top = 35.0
 margin_right = 125.0
 margin_bottom = 66.0
 rect_min_size = Vector2( 0, 31 )
-color = Color( 0, 0, 0, 0.5 )
+color = Color( 0, 0, 0, 0.25 )
 
 [node name="ColorRect2" type="ColorRect" parent="HUD/BackgroundColor"]
 margin_top = 70.0
 margin_right = 125.0
 margin_bottom = 101.0
 rect_min_size = Vector2( 0, 31 )
-color = Color( 0, 0, 0, 0 )
+color = Color( 0, 0, 0, 0.1 )
 
 [node name="ColorRect3" type="ColorRect" parent="HUD/BackgroundColor"]
 visible = false
@@ -153,7 +143,7 @@ margin_top = 70.0
 margin_right = 146.0
 margin_bottom = 101.0
 rect_min_size = Vector2( 0, 31 )
-color = Color( 0, 0, 0, 0 )
+color = Color( 0, 0, 0, 0.25098 )
 
 [node name="WeaponSelected" type="VBoxContainer" parent="HUD"]
 anchor_left = 1.0
@@ -176,6 +166,7 @@ margin_bottom = 101.0
 text = "1     AK-47"
 
 [node name="Weapon2" type="Label" parent="HUD/WeaponSelected"]
+modulate = Color( 1, 1, 1, 0.501961 )
 margin_top = 105.0
 margin_right = 122.0
 margin_bottom = 136.0
@@ -183,6 +174,7 @@ text = "2     M1911"
 
 [node name="Weapon3" type="Label" parent="HUD/WeaponSelected"]
 visible = false
+modulate = Color( 1, 1, 1, 0.501961 )
 margin_top = 105.0
 margin_right = 122.0
 margin_bottom = 136.0

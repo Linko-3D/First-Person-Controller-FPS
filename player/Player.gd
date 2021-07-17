@@ -26,8 +26,7 @@ var can_jump = true
 var crouched = false
 var can_crouch = true
 
-# Useful data:
-
+# Data:
 var player_speed = 0
 var falling_velocity = 0
 

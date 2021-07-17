@@ -18,11 +18,12 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -173.0
-margin_top = 35.0
+margin_top = 80.0
 margin_right = 173.0
-margin_bottom = 150.0
+margin_bottom = 238.0
 theme = ExtResource( 2 )
 text = "[E] or [JOY_XBOX_Y] to grab"
+align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }

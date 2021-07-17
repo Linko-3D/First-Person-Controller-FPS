@@ -60,7 +60,7 @@ func grab_text_appears():
 	if not text_visible:
 		text_visible = true
 		var animation_speed = 0.25
-		$GrabTween.interpolate_property($GrabText, "margin_top", 45, 35, animation_speed, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+		$GrabTween.interpolate_property($GrabText, "margin_top", 90, 80, animation_speed, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
 		$GrabTween.interpolate_property($GrabText, "modulate", Color(0.81, 0.5, 0.09, 0), Color(0.81, 0.5, 0.09, 1), animation_speed, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
 		$GrabTween.start()
 
@@ -68,7 +68,7 @@ func grab_text_disappears():
 	if text_visible:
 		text_visible = false
 		var animation_speed = 0.25
-		$GrabTween.interpolate_property($GrabText, "margin_top", 35, 45, animation_speed, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+		$GrabTween.interpolate_property($GrabText, "margin_top", 80, 90, animation_speed, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
 		$GrabTween.interpolate_property($GrabText, "modulate", Color(0.81, 0.5, 0.09, 1), Color(0.81, 0.5, 0.09, 0), animation_speed, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
 		$GrabTween.start()
 		$TextTimer.start()

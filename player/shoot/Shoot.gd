@@ -255,7 +255,7 @@ func shoot_animation():
 	value = rand_range(-0.005, 0.005)
 	$ShootTween.interpolate_property(weapon, "translation:x", 0, value, 0.1, Tween.TRANS_SINE, Tween.EASE_OUT)
 	$ShootTween.interpolate_property(weapon, "translation:x",value, 0, 0.15, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 0.1)
-
+	
 	value = rand_range(0.005, 0.015)
 	$ShootTween.interpolate_property(weapon, "translation:y", 0, value, 0.075, Tween.TRANS_SINE, Tween.EASE_OUT)
 	$ShootTween.interpolate_property(weapon, "translation:y", value, 0, 0.05, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 0.075)
@@ -300,8 +300,11 @@ func weapon_bobbing_animation():
 func switch_animation():
 	ammo_animation()
 	
-	var background_color_active = Color(0, 0, 0, 0.5)
-	var background_color_inactive = Color(0, 0, 0, 0)
+	var background_color_active = Color(0, 0, 0, 0.25)
+	var background_color_inactive = Color(0, 0, 0, 0.1)
+	
+	var text_color_active = Color(1, 1, 1, 1)
+	var text_color_inactive = Color(1, 1, 1, 0.5)
 	
 	if weapon_selected > 2:
 		weapon_selected = 1
@@ -333,6 +336,9 @@ func switch_animation():
 		$HUD/BackgroundColor/ColorRect2.color = background_color_inactive
 		$HUD/BackgroundColor/ColorRect3.color = background_color_inactive
 		
+		$HUD/WeaponSelected/Weapon1.modulate = text_color_active
+		$HUD/WeaponSelected/Weapon2.modulate = text_color_inactive
+		
 		weapon_position_z = -0.2
 		weapon.mesh = rifle_model
 		shoot_sound = rifle_shoot_sound
@@ -349,6 +355,9 @@ func switch_animation():
 		$HUD/BackgroundColor/ColorRect1.color = background_color_inactive
 		$HUD/BackgroundColor/ColorRect2.color = background_color_active
 		$HUD/BackgroundColor/ColorRect3.color = background_color_inactive
+		
+		$HUD/WeaponSelected/Weapon1.modulate = text_color_inactive
+		$HUD/WeaponSelected/Weapon2.modulate = text_color_active
 		
 		weapon_position_z = -0.3
 		weapon.mesh = pistol_model
@@ -404,7 +413,7 @@ func reload_tip():
 	if clip > 0:
 		$HUD/ReloadTip.text = "Reload"
 	else:
-		$HUD/ReloadTip.text = "No ammo"
+		$HUD/ReloadTip.text = "Out of ammo"
 	
 	if ammo == 0:
 		var animation_speed = 0.25
