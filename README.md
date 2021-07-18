@@ -29,3 +29,7 @@ Here are all the abilities available:
 - Grab: allows grabbing a RigidBody under 50 kg with the E key or the Y button of an Xbox controller. You can drop it with the same key or throw it with the shoot key. The game displays a message when you can grab an object.
 
 - Minimap: it displays in the top left corner the player from the top.
+
+It has a royalty-free font used for the HUD of the FPS.
+
+It includes a pause singleton. Import Pause.gd in Project > Project Settings... and in the AutoLoad tab. This singleton will allow pausing the game with the escape key. You can then resume it with the left-click or leave it by pressing escape again.
