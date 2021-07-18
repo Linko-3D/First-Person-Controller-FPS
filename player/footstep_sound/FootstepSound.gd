@@ -20,16 +20,16 @@ func _process(delta):
 		if player.is_on_floor() and player.player_speed >= 2:
 			var animation_speed = 1.0 / (player.player_speed / 2)
 			if round(player.player_speed) > 3:
-				play_sound(-15)
+				play_sound(-20)
 			elif round(player.player_speed) == 3:
-				play_sound(-25)
+				play_sound(-30)
 			else:
-				play_sound(-35)
+				play_sound(-40)
 			$Timer.wait_time = animation_speed
 			$Timer.start()
 	
 	if player.is_on_floor() and player.snapped == false:
-		play_sound(-5)
+		play_sound(-10)
 
 func play_sound(volume): # To avoid the sound from clipping, we generate a new audio node each time then we delete it
 	var audio_node = AudioStreamPlayer.new()
