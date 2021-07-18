@@ -69,8 +69,6 @@ light_energy = 0.0
 shadow_enabled = true
 omni_range = 2.0
 
-[node name="MeleeAttack" type="Position3D" parent="Position3D/SwitchAndAttack"]
-
 [node name="LookAt" type="Position3D" parent="Position3D"]
 
 [node name="HUD" type="Control" parent="."]
