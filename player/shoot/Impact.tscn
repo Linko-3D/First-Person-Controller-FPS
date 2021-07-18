@@ -43,7 +43,6 @@ debris = ExtResource( 2 )
 [node name="Particles" type="Particles" parent="."]
 material_override = SubResource( 1 )
 emitting = false
-amount = 32
 lifetime = 0.1
 one_shot = true
 explosiveness = 1.0
