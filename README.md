@@ -1,5 +1,7 @@
 #  First Person Controller (FPS)
 
+YouTube video: https://youtu.be/I4yOLuOCBpA
+
 This is a First Person Controller inspired by Half Life 2 and Counter Strike Global Offensive. You can instance abilities as a child of the Camera node of the player (shooting, grabbing, etc).
 The basic Player script support snapping on slopes until an angle of 45 degrees. It works with QWERTY and AZERTY keyboards and joysticks. The character always run, you can use Shift or L2 to walk and Control or B from the joystick to crouch.
 Everything is animated using tweens allowing you to edit the animations easily.
