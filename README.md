@@ -1,6 +1,6 @@
 #  First Person Controller (FPS)
 
-YouTube video: https://youtu.be/I4yOLuOCBpA
+YouTube video: https://youtu.be/o2-Va100omc
 
 This is a First Person Controller inspired by Half Life 2 and Counter Strike Global Offensive. You can instance abilities as a child of the Camera node of the player (shooting, grabbing, etc).
 The basic Player script support snapping on slopes until an angle of 45 degrees. It works with QWERTY and AZERTY keyboards and joysticks. The character always run, you can use Shift or L2 to walk and Control or B from the joystick to crouch.
@@ -11,7 +11,7 @@ Everything is under MIT license apart for the 3D models and sounds, but they are
 - M1911 model by TastyTony: https://sketchfab.com/3d-models/low-poly-m1911-117f542d21954ae0a59afaedadcff338
 - Gun fire sound by GoodSoundForYou: https://soundbible.com/1998-Gun-Fire.html
 - Shell falling sound by Marcel: https://soundbible.com/2072-Shell-Falling.html
-
+2:52 PM 7/18/2021
 For additional resources you can download 400 low poly creative commons weapons here, you just need to credit TastyTony: https://sketchfab.com/TastyTony 
 
 Impact, footsteps and flashlight button: https://www.fesliyanstudios.com/
