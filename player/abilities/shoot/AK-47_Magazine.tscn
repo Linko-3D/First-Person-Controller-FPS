@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://player/abilities/shoot/AK-47_magazine.obj" type="ArrayMesh" id=1]
+
+[sub_resource type="BoxShape" id=1]
+extents = Vector3( 0.03, 0.1, 0.08 )
+
+[node name="AK-47_Magazine" type="RigidBody"]
+collision_mask = 2147483649
+mass = 5.0
+continuous_cd = true
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+mesh = ExtResource( 1 )
+material/0 = null
+material/1 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+shape = SubResource( 1 )

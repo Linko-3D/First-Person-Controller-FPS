@@ -1,0 +1,35 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://player/abilities/grab/Grab.gd" type="Script" id=1]
+[ext_resource path="res://player/Theme.tres" type="Theme" id=2]
+
+[node name="Grab" type="RayCast"]
+enabled = true
+cast_to = Vector3( 0, 0, -3 )
+script = ExtResource( 1 )
+
+[node name="GrabPosition" type="Position3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2 )
+
+[node name="GrabText" type="Label" parent="."]
+modulate = Color( 0.811765, 0.498039, 0.0901961, 1 )
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -173.0
+margin_top = 80.0
+margin_right = 173.0
+margin_bottom = 238.0
+theme = ExtResource( 2 )
+text = "[E] or [JOY_XBOX_Y] to grab"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GrabTween" type="Tween" parent="."]
+
+[node name="TextTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
