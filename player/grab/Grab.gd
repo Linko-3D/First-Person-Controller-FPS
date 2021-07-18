@@ -38,14 +38,12 @@ func _physics_process(delta):
 					object_grabbed.rotation_degrees.x = 0
 					object_grabbed.rotation_degrees.z = 0
 			else:
-				object_grabbed.set_mode(0)
 				release()
 	else:
 		can_use = true
 	
 	if Input.is_mouse_button_pressed(BUTTON_LEFT) or Input.get_joy_axis(0, 7) >= 0.6:
 		if object_grabbed:
-			object_grabbed.set_mode(0)
 			object_grabbed.linear_velocity = global_transform.basis.z * -throw_force
 			release()
 
