@@ -152,8 +152,8 @@ func _process(delta):
 			if ammo <= max_ammo / 6:
 				ammo_animation()
 			
-			
 	reload_tip()
+	
 	if singleshot:
 		if Input.is_mouse_button_pressed(BUTTON_LEFT) or Input.get_joy_axis(0, 7) >= 0.5:
 			can_shoot = false
@@ -166,6 +166,11 @@ func _process(delta):
 			$ReloadTween.start()
 			play_sound(reload_sound, -5, 0)
 			$SpawnMagazineTimer.start()
+			
+			if $HUD/ReloadTip.modulate == Color(1, 1, 1, 1):
+				$ReloadTipTween.interpolate_property($HUD/ReloadTip, "margin_top", 35, 45, 0.25, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+				$ReloadTipTween.interpolate_property($HUD/ReloadTip, "modulate", Color(1, 1, 1, 1), Color(1, 1, 1, 0), 0.25, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+				reload_tip_displayed = false
 		
 func shoot():
 	# Adding echo
@@ -415,8 +420,9 @@ func reload_tip():
 	else:
 		$HUD/ReloadTip.text = "Out of ammo"
 	
+	var animation_speed = 0.25
+	
 	if ammo == 0:
-		var animation_speed = 0.25
 		if Input.is_mouse_button_pressed(BUTTON_LEFT) or Input.get_joy_axis(0, 7) >= 0.5:
 			if reload_tip_displayed == false:
 				$ReloadTipTween.stop_all()
@@ -429,4 +435,5 @@ func reload_tip():
 				$ReloadTipTween.interpolate_property($HUD/ReloadTip, "margin_top", 35, 45, animation_speed, Tween.TRANS_SINE, Tween.EASE_IN_OUT, animation_speed)
 				$ReloadTipTween.interpolate_property($HUD/ReloadTip, "modulate", Color(1, 1, 1, 1), Color(1, 1, 1, 0), animation_speed, Tween.TRANS_SINE, Tween.EASE_IN_OUT, animation_speed)
 				reload_tip_displayed = false
-		$ReloadTipTween.start()
+	
+	$ReloadTipTween.start()
