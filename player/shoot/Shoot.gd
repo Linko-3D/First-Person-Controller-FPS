@@ -216,7 +216,7 @@ func spawn_impact():
 	impact_instance.look_at($BulletSpread/RayCast.get_collision_point() - $BulletSpread/RayCast.get_collision_normal(), Vector3.UP)
 	
 	if $BulletSpread/RayCast.get_collider() is RigidBody:
-		$BulletSpread/RayCast.get_collider().apply_central_impulse(-$BulletSpread/RayCast.get_collision_normal() * 100)
+		$BulletSpread/RayCast.get_collider().apply_central_impulse(-$BulletSpread/RayCast.get_collision_normal() * 20)
 		impact_instance.hide_bullet()
 
 func play_sound(sound, dB, delay):
