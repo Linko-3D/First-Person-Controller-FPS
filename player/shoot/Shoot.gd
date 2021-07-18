@@ -223,7 +223,9 @@ func spawn_impact():
 	if $BulletSpread/RayCast.get_collider() is RigidBody:
 		$BulletSpread/RayCast.get_collider().apply_central_impulse(-$BulletSpread/RayCast.get_collision_normal() * 20)
 		impact_instance.hide_bullet()
-
+	if $BulletSpread/RayCast.get_collider() is KinematicBody:
+		impact_instance.hide_bullet()
+	
 func play_sound(sound, dB, delay):
 	var audio_node = AudioStreamPlayer.new()
 	audio_node.stream = sound
