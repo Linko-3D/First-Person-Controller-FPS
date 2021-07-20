@@ -176,7 +176,7 @@ func shoot():
 	# Adding echo
 	if shooting_sound_echo:
 		var delay = 0
-		var dB = -5
+		var dB = -10
 		for i in 5: # Add an echo effect when shooting by delaying the sound and reducing the volume
 			play_sound(shoot_sound, dB, delay)
 			delay += 0.5
@@ -221,7 +221,7 @@ func spawn_impact():
 	impact_instance.look_at($BulletSpread/RayCast.get_collision_point() - $BulletSpread/RayCast.get_collision_normal(), Vector3.UP)
 	
 	if $BulletSpread/RayCast.get_collider() is RigidBody:
-		$BulletSpread/RayCast.get_collider().apply_central_impulse(-$BulletSpread/RayCast.get_collision_normal() * 20)
+		$BulletSpread/RayCast.get_collider().apply_central_impulse(-$BulletSpread/RayCast.get_collision_normal() * 50)
 		impact_instance.hide_bullet()
 	if $BulletSpread/RayCast.get_collider() is KinematicBody:
 		impact_instance.hide_bullet()
@@ -437,5 +437,10 @@ func reload_tip():
 				$ReloadTipTween.interpolate_property($HUD/ReloadTip, "margin_top", 35, 45, animation_speed, Tween.TRANS_SINE, Tween.EASE_IN_OUT, animation_speed)
 				$ReloadTipTween.interpolate_property($HUD/ReloadTip, "modulate", Color(1, 1, 1, 1), Color(1, 1, 1, 0), animation_speed, Tween.TRANS_SINE, Tween.EASE_IN_OUT, animation_speed)
 				reload_tip_displayed = false
+	else:
+		if reload_tip_displayed:
+			$ReloadTipTween.interpolate_property($HUD/ReloadTip, "margin_top", 35, 45, animation_speed, Tween.TRANS_SINE, Tween.EASE_IN_OUT, animation_speed)
+			$ReloadTipTween.interpolate_property($HUD/ReloadTip, "modulate", Color(1, 1, 1, 1), Color(1, 1, 1, 0), animation_speed, Tween.TRANS_SINE, Tween.EASE_IN_OUT, animation_speed)
+			reload_tip_displayed = false 
 	
 	$ReloadTipTween.start()

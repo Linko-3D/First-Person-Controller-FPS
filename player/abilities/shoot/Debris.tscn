@@ -32,7 +32,7 @@ shape = SubResource( 3 )
 [node name="ColorTween" type="Tween" parent="."]
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 2.0
+wait_time = 5.0
 one_shot = true
 autostart = true
 
