@@ -16,7 +16,6 @@ func _ready():
 	$GrabText.modulate = Color(0.81, 0.5, 0.09, 0)
 
 func _physics_process(delta):
-	print(throw_pressed)
 	if not object_grabbed and $TextTimer.is_stopped() and get_collider() is RigidBody and get_collider().mass <= mass_limit:
 		grab_text_appears()
 	else:
