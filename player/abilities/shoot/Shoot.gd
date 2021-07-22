@@ -224,7 +224,7 @@ func spawn_impact():
 	impact_instance.look_at($BulletSpread/RayCast.get_collision_point() - $BulletSpread/RayCast.get_collision_normal(), Vector3.UP)
 	
 	if $BulletSpread/RayCast.get_collider() is RigidBody:
-		$BulletSpread/RayCast.get_collider().apply_central_impulse(-$BulletSpread/RayCast.get_collision_normal() * 50)
+		$BulletSpread/RayCast.get_collider().apply_central_impulse(-$BulletSpread/RayCast.get_collision_normal() * 30)
 		impact_instance.hide_bullet()
 	if $BulletSpread/RayCast.get_collider() is KinematicBody:
 		impact_instance.hide_bullet()
