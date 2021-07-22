@@ -9,10 +9,14 @@ var can_use = true
 
 var text_visible = false
 
+# This variable has been made to avoid grabbing and throwing at the same time
+var throw_pressed = false
+
 func _ready():
 	$GrabText.modulate = Color(0.81, 0.5, 0.09, 0)
 
 func _physics_process(delta):
+	print(throw_pressed)
 	if not object_grabbed and $TextTimer.is_stopped() and get_collider() is RigidBody and get_collider().mass <= mass_limit:
 		grab_text_appears()
 	else:
@@ -29,6 +33,7 @@ func _physics_process(delta):
 			object_grabbed.set_mode(0)
 			release()
 	
+	# Grab or drop
 	if Input.is_key_pressed(KEY_E) or Input.is_joy_button_pressed(0, JOY_XBOX_Y):
 		if can_use:
 			can_use = false
@@ -37,13 +42,20 @@ func _physics_process(delta):
 					object_grabbed = get_collider()
 					object_grabbed.rotation_degrees.x = 0
 					object_grabbed.rotation_degrees.z = 0
+					if Input.is_mouse_button_pressed(BUTTON_LEFT) or Input.get_joy_axis(0, 7) >= 0.6:
+						throw_pressed = true
+						print(throw_pressed)
 			else:
 				release()
 	else:
 		can_use = true
 	
+	if throw_pressed:
+		if not Input.is_mouse_button_pressed(BUTTON_LEFT) and not Input.get_joy_axis(0, 7) >= 0.6:
+			throw_pressed = false
+	# Throw
 	if Input.is_mouse_button_pressed(BUTTON_LEFT) or Input.get_joy_axis(0, 7) >= 0.6:
-		if object_grabbed:
+		if object_grabbed and not throw_pressed:
 			object_grabbed.linear_velocity = global_transform.basis.z * -throw_force
 			release()
 
