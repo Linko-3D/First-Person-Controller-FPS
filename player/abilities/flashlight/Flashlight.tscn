@@ -4,11 +4,12 @@
 [ext_resource path="res://player/abilities/flashlight/light_on.wav" type="AudioStream" id=2]
 [ext_resource path="res://player/abilities/flashlight/light_off.wav" type="AudioStream" id=3]
 
-[node name="Flashlight" type="SpotLight"]
-shadow_enabled = true
-spot_range = 15.0
-spot_attenuation = 0.392292
-spot_angle = 25.0
+[node name="Flashlight" type="Position3D"]
 script = ExtResource( 1 )
 light_on_sound = ExtResource( 2 )
 light_off_sound = ExtResource( 3 )
+
+[node name="SpotLight" type="SpotLight" parent="."]
+shadow_enabled = true
+spot_range = 15.0
+spot_angle = 25.0

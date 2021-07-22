@@ -106,8 +106,6 @@ func _process(delta):
 		else:
 			can_switch_joy_dpad = true
 		
-
-	
 	
 	if $BulletSpread/RayCast.is_colliding():
 		$Position3D/LookAt.look_at($BulletSpread/RayCast.get_collision_point(), Vector3.UP)
@@ -116,6 +114,7 @@ func _process(delta):
 		$Position3D/LookAt.rotation_degrees = Vector3()
 		$Position3D/SwitchAndAttack/Bobbing/LookAtLerp.rotation_degrees = lerp($Position3D/SwitchAndAttack/Bobbing/LookAtLerp.rotation_degrees, $Position3D/LookAt.rotation_degrees, 10 * delta)
 	$Position3D/SwitchAndAttack/Bobbing/LookAtLerp.rotation_degrees.z = 0
+
 #	Weapon sway
 	$Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway.rotation_degrees.z = lerp($Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway.rotation_degrees.z, -mouse_relative_x / 10, weapon_sway_amount * delta)
 	$Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway.rotation_degrees.y = lerp($Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway.rotation_degrees.y, mouse_relative_x / 20, weapon_sway_amount * delta)
