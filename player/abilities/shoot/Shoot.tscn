@@ -42,6 +42,11 @@ empty_sound = ExtResource( 5 )
 enabled = true
 cast_to = Vector3( 0, 0, -1000 )
 
+[node name="MeleeRayCast" type="RayCast" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.333, 0.127, -0.4 )
+enabled = true
+cast_to = Vector3( 0, 0, -0.46 )
+
 [node name="Torso" type="Position3D" parent="."]
 
 [node name="Position3D" type="Position3D" parent="Torso"]
@@ -282,7 +287,9 @@ __meta__ = {
 
 [node name="VBobbingTween" type="Tween" parent="."]
 
-[node name="SwitchWeaponTween" type="Tween" parent="."]
+[node name="SwitchTween" type="Tween" parent="."]
+
+[node name="AttackTween" type="Tween" parent="."]
 
 [node name="InterfaceTween" type="Tween" parent="."]
 
@@ -291,6 +298,8 @@ __meta__ = {
 [node name="SelectionTween" type="Tween" parent="."]
 
 [node name="ReloadTipTween" type="Tween" parent="."]
+
+[node name="LandingTween" type="Tween" parent="."]
 
 [node name="FireRateTimer" type="Timer" parent="."]
 wait_time = 0.1
@@ -304,8 +313,11 @@ one_shot = true
 wait_time = 0.5
 one_shot = true
 
-[node name="LandingTween" type="Tween" parent="."]
+[node name="MeleeTimer" type="Timer" parent="."]
+wait_time = 0.35
+one_shot = true
 
 [connection signal="tween_all_completed" from="ReloadTween" to="." method="_on_ReloadTween_tween_all_completed"]
 [connection signal="timeout" from="RecoilTimer" to="." method="_on_RecoilTimer_timeout"]
 [connection signal="timeout" from="SpawnMagazineTimer" to="." method="_on_SpawnMagazineTimer_timeout"]
+[connection signal="timeout" from="MeleeTimer" to="." method="_on_MeleeTimer_timeout"]

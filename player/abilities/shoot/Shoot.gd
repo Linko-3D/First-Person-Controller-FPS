@@ -61,7 +61,7 @@ func _input(event):
 		
 		
 	if event is InputEventMouseButton:
-		if event.is_pressed():
+		if event.is_pressed() and not $AttackTween.is_active():
 			if event.button_index == BUTTON_WHEEL_DOWN:
 				if not $ReloadTween.is_active():
 					weapon_selected += 1
@@ -80,27 +80,27 @@ func _process(delta):
 		$LandingTween.start()
 	
 	
-	
-	if not $ReloadTween.is_active():
-		if Input.is_key_pressed(KEY_1):
-			if weapon_selected != 1:
-				weapon_selected = 1
-				switch_animation()
-			
-		if Input.is_key_pressed(KEY_2):
-			if weapon_selected != 2:
-				weapon_selected = 2
-				switch_animation()
+	if not $AttackTween.is_active():
+		if not $ReloadTween.is_active():
+			if Input.is_key_pressed(KEY_1):
+				if weapon_selected != 1:
+					weapon_selected = 1
+					switch_animation()
 				
-#		if Input.is_key_pressed(KEY_3):
-#			if weapon_selected != 3:
-#				weapon_selected = 3
-#				switch_animation()
-#
-#		if Input.is_key_pressed(KEY_4):
-#			if weapon_selected != 4:
-#				weapon_selected = 4
-#				switch_animation()
+			if Input.is_key_pressed(KEY_2):
+				if weapon_selected != 2:
+					weapon_selected = 2
+					switch_animation()
+					
+	#		if Input.is_key_pressed(KEY_3):
+	#			if weapon_selected != 3:
+	#				weapon_selected = 3
+	#				switch_animation()
+	#
+	#		if Input.is_key_pressed(KEY_4):
+	#			if weapon_selected != 4:
+	#				weapon_selected = 4
+	#				switch_animation()
 		
 		if can_switch_joy_dpad:
 			if Input.is_joy_button_pressed(0, JOY_DPAD_RIGHT) or Input.is_joy_button_pressed(0, JOY_DPAD_DOWN):
@@ -142,8 +142,11 @@ func _process(delta):
 		if player.is_on_floor() and player.player_speed >= 2:
 			weapon_bobbing_animation()
 	
-	if $ReloadTween.is_active() or $SwitchWeaponTween.is_active():
+	if $ReloadTween.is_active() or $SwitchTween.is_active() or $AttackTween.is_active():
 		return
+	
+	if Input.is_key_pressed(KEY_V) or Input.is_mouse_button_pressed(BUTTON_MIDDLE) or Input.is_joy_button_pressed(0, JOY_R3):
+		attack_animation()
 	
 	if Input.is_mouse_button_pressed(BUTTON_LEFT) or Input.get_joy_axis(0, 7) >= 0.5:
 		if $FireRateTimer.is_stopped() and can_shoot and weapon_selected < 3:
@@ -195,7 +198,7 @@ func shoot():
 	if weapon_selected == 2:
 		pistol_shoot_animation()
 	camera_shake()
-	spawn_impact()
+	spawn_impact($BulletSpread/RayCast.get_collision_point())
 	spawn_shell()
 	
 	# Calculate bullet spread amount
@@ -222,14 +225,14 @@ func spawn_magazine():
 	magazine_instance.global_transform = $Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/MagazineSpawn.global_transform
 	magazine_instance.linear_velocity = $Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/MagazineSpawn.global_transform.basis.z * -3
 
-func spawn_impact():
+func spawn_impact(collision_point):
 	if not $BulletSpread/RayCast.is_colliding():
 		return
 	
 	var impact_instance = impact.instance()
 	get_tree().get_root().add_child(impact_instance)
 	
-	impact_instance.global_transform.origin = $BulletSpread/RayCast.get_collision_point()
+	impact_instance.global_transform.origin = collision_point
 	impact_instance.look_at($BulletSpread/RayCast.get_collision_point() - $BulletSpread/RayCast.get_collision_normal(), Vector3.UP)
 	
 	if $BulletSpread/RayCast.get_collider() is RigidBody:
@@ -374,9 +377,9 @@ func switch_animation():
 		max_ammo = weapon2_max_ammo
 	update_ammo_HUD()
 	
-	$SwitchWeaponTween.interpolate_property($Torso/Position3D/SwitchAndAttack, "translation", Vector3(0, -0.25, -0.1), Vector3(), 0.3, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
-	$SwitchWeaponTween.interpolate_property($Torso/Position3D/SwitchAndAttack, "rotation_degrees", Vector3(-30, 20, 10), Vector3(), 0.3, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
-	$SwitchWeaponTween.start()
+	$SwitchTween.interpolate_property($Torso/Position3D/SwitchAndAttack, "translation", Vector3(0, -0.25, -0.1), Vector3(), 0.3, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+	$SwitchTween.interpolate_property($Torso/Position3D/SwitchAndAttack, "rotation_degrees", Vector3(-30, 20, 10), Vector3(), 0.3, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+	$SwitchTween.start()
 	
 	if weapon_selected == 1:
 		$HUD/BackgroundColor/ColorRect1.color = background_color_active
@@ -433,6 +436,33 @@ func switch_animation():
 		$Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/Weapon/OmniLight.translation.z = -0.2
 		$Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/MagazineSpawn.translation = Vector3(0, -0.06, -0.01)
 
+func attack_animation():
+	$MeleeTimer.start()
+	
+	$AttackTween.interpolate_property($Torso/Position3D/SwitchAndAttack, "translation", Vector3(), Vector3(0.015, -0.065, -0.04), 0.08, Tween.TRANS_SINE, Tween.EASE_IN)
+	$AttackTween.interpolate_property($Torso/Position3D/SwitchAndAttack, "translation", Vector3(0.015, -0.065, -0.04), Vector3(0.04, -0.056, 0.03), 0.12, Tween.TRANS_SINE, Tween.EASE_OUT, 0.08)
+	$AttackTween.interpolate_property($Torso/Position3D/SwitchAndAttack, "translation", Vector3(0.04, -0.056, 0.03), Vector3(0.08, 0.1, -0.38), 0.15, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 0.2)
+	# Hit 0.35
+	$AttackTween.interpolate_property($Torso/Position3D/SwitchAndAttack, "translation", Vector3(0.08, 0.1, -0.38), Vector3(0.15, -0.4, 0), 0.45, Tween.TRANS_SINE, Tween.EASE_IN, 0.35)
+	$AttackTween.interpolate_property($Torso/Position3D/SwitchAndAttack, "translation", Vector3(0.15, -0.4, 0), Vector3(), 0.2, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 0.8)
+	
+	$AttackTween.interpolate_property($Torso/Position3D/SwitchAndAttack, "rotation_degrees", Vector3(), Vector3(20, 45, 15), 0.08, Tween.TRANS_SINE, Tween.EASE_IN)
+	$AttackTween.interpolate_property($Torso/Position3D/SwitchAndAttack, "rotation_degrees", Vector3(20, 45, 15), Vector3(0, 90, 90), 0.12, Tween.TRANS_SINE, Tween.EASE_OUT, 0.08)
+	$AttackTween.interpolate_property($Torso/Position3D/SwitchAndAttack, "rotation_degrees", Vector3(0, 90, 90), Vector3(-19.6, 130, 105), 0.15, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 0.2)
+	# Hit
+	$AttackTween.interpolate_property($Torso/Position3D/SwitchAndAttack, "rotation_degrees", Vector3(-19.6, 130, 105), Vector3(34.5, 80, 35), 0.45, Tween.TRANS_SINE, Tween.EASE_IN, 0.35)
+	$AttackTween.interpolate_property($Torso/Position3D/SwitchAndAttack, "rotation_degrees", Vector3(34.5, 80, 35), Vector3(), 0.2, Tween.TRANS_SINE, Tween.EASE_OUT, 0.8)
+
+	$AttackTween.interpolate_property(camera, "rotation_degrees", Vector3(), Vector3(-2, -5, 0), 0.25, Tween.TRANS_SINE, Tween.EASE_IN)
+	$AttackTween.interpolate_property(camera, "rotation_degrees", Vector3(-2, -5, 0), Vector3(2, 10, 0), 0.1, Tween.TRANS_SINE, Tween.EASE_OUT, 0.25)
+	#Hit
+	$AttackTween.interpolate_property(camera, "rotation_degrees", Vector3(2, 10, 0), Vector3(-2, -2, 0), 0.4, Tween.TRANS_SINE, Tween.EASE_IN, 0.35)
+	$AttackTween.interpolate_property(camera, "rotation_degrees", Vector3(-2, -2, 0), Vector3(0, 0, 0), 0.25, Tween.TRANS_SINE, Tween.EASE_OUT, 0.75)
+	
+	$AttackTween.start()
+
+
+
 func _on_RecoilTimer_timeout():
 	$BulletSpread/RayCast.rotation_degrees = Vector3()
 
@@ -484,3 +514,7 @@ func reload_tip():
 			reload_tip_displayed = false 
 	
 	$ReloadTipTween.start()
+
+func _on_MeleeTimer_timeout():
+	if $MeleeRayCast.is_colliding():
+		spawn_impact($MeleeRayCast.get_collision_point())
