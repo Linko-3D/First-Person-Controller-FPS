@@ -296,6 +296,10 @@ func pistol_shoot_animation():
 	$ShootTween.interpolate_property(weapon, "translation:z", 0, value, 0.05, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 0.025)
 	$ShootTween.interpolate_property(weapon, "translation:z", value, 0, 0.125, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 0.075)
 	
+	value = rand_range(-0.005, 0.005)
+	$ShootTween.interpolate_property(weapon, "translation:x", 0, value, 0.1, Tween.TRANS_SINE, Tween.EASE_OUT)
+	$ShootTween.interpolate_property(weapon, "translation:x",value, 0, 0.15, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 0.1)
+	
 	value = rand_range(-1, 1)
 	$ShootTween.interpolate_property(weapon, "rotation_degrees:z", 0, value, 0.05, Tween.TRANS_SINE, Tween.EASE_OUT)
 	$ShootTween.interpolate_property(weapon, "rotation_degrees:z", value, 0, 0.05, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 0.05)
