@@ -44,7 +44,7 @@ var can_switch_joy_dpad = true
 
 var reload_tip_displayed = false
 
-onready var weapon = $Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/Weapon
+onready var weapon = $Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/Weapon
 
 onready var player = get_tree().get_root().find_node("Player", true, false)
 onready var camera = player.get_node("Head/Camera")
@@ -72,6 +72,15 @@ func _input(event):
 					switch_animation()
 
 func _process(delta):
+	#	Animation when falling on the ground
+	if player.is_on_floor() and not player.snapped:
+		var max_rotation = clamp(player.gravity_vec.y, -20, 0) # Use the impact velocity for the angle and clamp the value
+		$LandingTween.interpolate_property($Torso, "rotation_degrees:x", 0, max_rotation, 0.2, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 0)
+		$LandingTween.interpolate_property($Torso, "rotation_degrees:x", max_rotation, 0, 0.2, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 0.2)
+		$LandingTween.start()
+	
+	
+	
 	if not $ReloadTween.is_active():
 		if Input.is_key_pressed(KEY_1):
 			if weapon_selected != 1:
@@ -107,28 +116,28 @@ func _process(delta):
 			can_switch_joy_dpad = true
 		
 	
-	if $BulletSpread/RayCast.is_colliding():
-		$Position3D/LookAt.look_at($BulletSpread/RayCast.get_collision_point(), Vector3.UP)
-		$Position3D/SwitchAndAttack/Bobbing/LookAtLerp.rotation_degrees = lerp($Position3D/SwitchAndAttack/Bobbing/LookAtLerp.rotation_degrees, $Position3D/LookAt.rotation_degrees, 10 * delta)
+	if $BulletSpread/RayCast.is_colliding() and not $LandingTween.is_active():
+		$Torso/Position3D/LookAt.look_at($BulletSpread/RayCast.get_collision_point(), Vector3.UP)
+		$Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp.rotation_degrees = lerp($Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp.rotation_degrees, $Torso/Position3D/LookAt.rotation_degrees, 10 * delta)
 	else:
-		$Position3D/LookAt.rotation_degrees = Vector3()
-		$Position3D/SwitchAndAttack/Bobbing/LookAtLerp.rotation_degrees = lerp($Position3D/SwitchAndAttack/Bobbing/LookAtLerp.rotation_degrees, $Position3D/LookAt.rotation_degrees, 10 * delta)
-	$Position3D/SwitchAndAttack/Bobbing/LookAtLerp.rotation_degrees.z = 0
+		$Torso/Position3D/LookAt.rotation_degrees = Vector3()
+		$Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp.rotation_degrees = lerp($Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp.rotation_degrees, $Torso/Position3D/LookAt.rotation_degrees, 10 * delta)
+	$Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp.rotation_degrees.z = 0
 
 #	Weapon sway
-	$Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway.rotation_degrees.z = lerp($Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway.rotation_degrees.z, -mouse_relative_x / 10, weapon_sway_amount * delta)
-	$Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway.rotation_degrees.y = lerp($Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway.rotation_degrees.y, mouse_relative_x / 20, weapon_sway_amount * delta)
-	$Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway.rotation_degrees.x = lerp($Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway.rotation_degrees.x, -mouse_relative_y / 10, weapon_sway_amount * delta)
+	$Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway.rotation_degrees.z = lerp($Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway.rotation_degrees.z, -mouse_relative_x / 10, weapon_sway_amount * delta)
+	$Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway.rotation_degrees.y = lerp($Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway.rotation_degrees.y, mouse_relative_x / 20, weapon_sway_amount * delta)
+	$Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway.rotation_degrees.x = lerp($Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway.rotation_degrees.x, -mouse_relative_y / 10, weapon_sway_amount * delta)
 	
 	var weapon_movement = clamp(player.player_speed * 0.003, 0, 0.018)
 	
 	
 	if round(player.player_speed) == 0:
-		$Position3D.translation.y = lerp($Position3D.translation.y, -0.1, 5 * delta)
-		$Position3D.translation.z = lerp($Position3D.translation.z, weapon_position_z, 5 * delta)
+		$Torso/Position3D.translation.y = lerp($Torso/Position3D.translation.y, -0.1, 5 * delta)
+		$Torso/Position3D.translation.z = lerp($Torso/Position3D.translation.z, weapon_position_z, 5 * delta)
 	else:
-		$Position3D.translation.y = lerp($Position3D.translation.y, -0.1 + -weapon_movement, 5 * delta)
-		$Position3D.translation.z = lerp($Position3D.translation.z, weapon_position_z + weapon_movement, 5 * delta)
+		$Torso/Position3D.translation.y = lerp($Torso/Position3D.translation.y, -0.1 + -weapon_movement, 5 * delta)
+		$Torso/Position3D.translation.z = lerp($Torso/Position3D.translation.z, weapon_position_z + weapon_movement, 5 * delta)
 		
 		if player.is_on_floor() and player.player_speed >= 2:
 			weapon_bobbing_animation()
@@ -204,14 +213,14 @@ func shoot():
 func spawn_shell():
 	var shell_instance = shell.instance()
 	get_tree().get_root().add_child(shell_instance)
-	shell_instance.global_transform = $Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/Weapon/ShellSpawn.global_transform
-	shell_instance.linear_velocity = $Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/Weapon/ShellSpawn.global_transform.basis.x * 2.5
+	shell_instance.global_transform = $Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/Weapon/ShellSpawn.global_transform
+	shell_instance.linear_velocity = $Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/Weapon/ShellSpawn.global_transform.basis.x * 2.5
 
 func spawn_magazine():
 	var magazine_instance = magazine.instance()
 	get_tree().get_root().add_child(magazine_instance)
-	magazine_instance.global_transform = $Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/MagazineSpawn.global_transform
-	magazine_instance.linear_velocity = $Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/MagazineSpawn.global_transform.basis.z * -3
+	magazine_instance.global_transform = $Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/MagazineSpawn.global_transform
+	magazine_instance.linear_velocity = $Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/MagazineSpawn.global_transform.basis.z * -3
 
 func spawn_impact():
 	if not $BulletSpread/RayCast.is_colliding():
@@ -255,8 +264,8 @@ func calculate_ammo():
 func rifle_shoot_animation():
 	randomize()
 	var value = rand_range(0.8, 1)
-	$ShootTween.interpolate_property($Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/Weapon/OmniLight, "light_energy", 0, value, 0.05, Tween.TRANS_SINE, Tween.EASE_OUT)
-	$ShootTween.interpolate_property($Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/Weapon/OmniLight, "light_energy", value, 0, 0.05, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 0.05)
+	$ShootTween.interpolate_property($Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/Weapon/OmniLight, "light_energy", 0, value, 0.05, Tween.TRANS_SINE, Tween.EASE_OUT)
+	$ShootTween.interpolate_property($Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/Weapon/OmniLight, "light_energy", value, 0, 0.05, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 0.05)
 	
 	value = rand_range(0.035, 0.045)
 	$ShootTween.interpolate_property(weapon, "translation:z", 0, value, 0.1, Tween.TRANS_SINE, Tween.EASE_OUT)
@@ -321,18 +330,18 @@ func weapon_bobbing_animation():
 	var animation_value = player.player_speed / 600 # 0.01
 	
 	if not $HBobbingTween.is_active():
-		$HBobbingTween.interpolate_property($Position3D/SwitchAndAttack/Bobbing, "translation:x", 0, animation_value, animation_speed * 2, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
-		$HBobbingTween.interpolate_property($Position3D/SwitchAndAttack/Bobbing, "translation:x", animation_value, 0, animation_speed * 2, Tween.TRANS_SINE, Tween.EASE_IN_OUT, animation_speed * 2)
+		$HBobbingTween.interpolate_property($Torso/Position3D/SwitchAndAttack/Bobbing, "translation:x", 0, animation_value, animation_speed * 2, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+		$HBobbingTween.interpolate_property($Torso/Position3D/SwitchAndAttack/Bobbing, "translation:x", animation_value, 0, animation_speed * 2, Tween.TRANS_SINE, Tween.EASE_IN_OUT, animation_speed * 2)
 		$HBobbingTween.start()
 	
 	if not $VBobbingTween.is_active():
-		$VBobbingTween.interpolate_property($Position3D/SwitchAndAttack/Bobbing, "translation:y", 0, animation_value / 2, animation_speed, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
-		$VBobbingTween.interpolate_property($Position3D/SwitchAndAttack/Bobbing, "translation:y", animation_value / 2, 0, animation_speed, Tween.TRANS_SINE, Tween.EASE_IN_OUT, animation_speed)
+		$VBobbingTween.interpolate_property($Torso/Position3D/SwitchAndAttack/Bobbing, "translation:y", 0, animation_value / 2, animation_speed, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+		$VBobbingTween.interpolate_property($Torso/Position3D/SwitchAndAttack/Bobbing, "translation:y", animation_value / 2, 0, animation_speed, Tween.TRANS_SINE, Tween.EASE_IN_OUT, animation_speed)
 		
-		$VBobbingTween.interpolate_property($Position3D/SwitchAndAttack/Bobbing, "translation:z", 0, -animation_value / 10, animation_speed / 2, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
-		$VBobbingTween.interpolate_property($Position3D/SwitchAndAttack/Bobbing, "translation:z", -animation_value / 10, 0, animation_speed / 2, Tween.TRANS_SINE, Tween.EASE_IN_OUT, animation_speed / 2)
-		$VBobbingTween.interpolate_property($Position3D/SwitchAndAttack/Bobbing, "translation:z", 0, -animation_value / 10, animation_speed / 2, Tween.TRANS_SINE, Tween.EASE_IN_OUT, (animation_speed / 2) * 2)
-		$VBobbingTween.interpolate_property($Position3D/SwitchAndAttack/Bobbing, "translation:z", -animation_value / 10, 0, animation_speed / 2, Tween.TRANS_SINE, Tween.EASE_IN_OUT, (animation_speed / 2) * 3)
+		$VBobbingTween.interpolate_property($Torso/Position3D/SwitchAndAttack/Bobbing, "translation:z", 0, -animation_value / 10, animation_speed / 2, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+		$VBobbingTween.interpolate_property($Torso/Position3D/SwitchAndAttack/Bobbing, "translation:z", -animation_value / 10, 0, animation_speed / 2, Tween.TRANS_SINE, Tween.EASE_IN_OUT, animation_speed / 2)
+		$VBobbingTween.interpolate_property($Torso/Position3D/SwitchAndAttack/Bobbing, "translation:z", 0, -animation_value / 10, animation_speed / 2, Tween.TRANS_SINE, Tween.EASE_IN_OUT, (animation_speed / 2) * 2)
+		$VBobbingTween.interpolate_property($Torso/Position3D/SwitchAndAttack/Bobbing, "translation:z", -animation_value / 10, 0, animation_speed / 2, Tween.TRANS_SINE, Tween.EASE_IN_OUT, (animation_speed / 2) * 3)
 		$VBobbingTween.start()
 
 func switch_animation():
@@ -365,8 +374,8 @@ func switch_animation():
 		max_ammo = weapon2_max_ammo
 	update_ammo_HUD()
 	
-	$SwitchWeaponTween.interpolate_property($Position3D/SwitchAndAttack, "translation", Vector3(0, -0.25, -0.1), Vector3(), 0.3, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
-	$SwitchWeaponTween.interpolate_property($Position3D/SwitchAndAttack, "rotation_degrees", Vector3(-30, 20, 10), Vector3(), 0.3, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+	$SwitchWeaponTween.interpolate_property($Torso/Position3D/SwitchAndAttack, "translation", Vector3(0, -0.25, -0.1), Vector3(), 0.3, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+	$SwitchWeaponTween.interpolate_property($Torso/Position3D/SwitchAndAttack, "rotation_degrees", Vector3(-30, 20, 10), Vector3(), 0.3, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
 	$SwitchWeaponTween.start()
 	
 	if weapon_selected == 1:
@@ -385,9 +394,9 @@ func switch_animation():
 		$HUD/DisplayAmmo.show()
 		$HUD/AmmoBackgroundColor.show()
 		
-		$Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/Weapon/ShellSpawn.translation.z = -0.2
-		$Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/Weapon/OmniLight.translation.z = -0.7
-		$Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/MagazineSpawn.translation = Vector3(0, -0.11, -0.18)
+		$Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/Weapon/ShellSpawn.translation.z = -0.2
+		$Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/Weapon/OmniLight.translation.z = -0.7
+		$Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/MagazineSpawn.translation = Vector3(0, -0.11, -0.18)
 	
 	if weapon_selected == 2:
 		$HUD/BackgroundColor/ColorRect1.color = background_color_inactive
@@ -405,9 +414,9 @@ func switch_animation():
 		$HUD/DisplayAmmo.show()
 		$HUD/AmmoBackgroundColor.show()
 		
-		$Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/Weapon/ShellSpawn.translation.z = -0.07
-		$Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/Weapon/OmniLight.translation.z = -0.2
-		$Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/MagazineSpawn.translation = Vector3(0, -0.06, -0.01)
+		$Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/Weapon/ShellSpawn.translation.z = -0.07
+		$Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/Weapon/OmniLight.translation.z = -0.2
+		$Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/MagazineSpawn.translation = Vector3(0, -0.06, -0.01)
 		
 	if weapon_selected == 3:
 		$HUD/BackgroundColor/ColorRect1.color = background_color_inactive
@@ -420,9 +429,9 @@ func switch_animation():
 		$HUD/DisplayAmmo.hide()
 		$HUD/AmmoBackgroundColor.hide()
 		
-		$Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/Weapon/ShellSpawn.translation.z = -0.07
-		$Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/Weapon/OmniLight.translation.z = -0.2
-		$Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/MagazineSpawn.translation = Vector3(0, -0.06, -0.01)
+		$Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/Weapon/ShellSpawn.translation.z = -0.07
+		$Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/Weapon/OmniLight.translation.z = -0.2
+		$Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/MagazineSpawn.translation = Vector3(0, -0.06, -0.01)
 
 func _on_RecoilTimer_timeout():
 	$BulletSpread/RayCast.rotation_degrees = Vector3()

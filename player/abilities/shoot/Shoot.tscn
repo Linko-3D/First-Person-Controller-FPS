@@ -42,34 +42,36 @@ empty_sound = ExtResource( 5 )
 enabled = true
 cast_to = Vector3( 0, 0, -1000 )
 
-[node name="Position3D" type="Position3D" parent="."]
+[node name="Torso" type="Position3D" parent="."]
+
+[node name="Position3D" type="Position3D" parent="Torso"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.15, -0.1, -0.2 )
 
-[node name="SwitchAndAttack" type="Position3D" parent="Position3D"]
+[node name="SwitchAndAttack" type="Position3D" parent="Torso/Position3D"]
 
-[node name="Bobbing" type="Position3D" parent="Position3D/SwitchAndAttack"]
+[node name="Bobbing" type="Position3D" parent="Torso/Position3D/SwitchAndAttack"]
 
-[node name="LookAtLerp" type="Position3D" parent="Position3D/SwitchAndAttack/Bobbing"]
+[node name="LookAtLerp" type="Position3D" parent="Torso/Position3D/SwitchAndAttack/Bobbing"]
 
-[node name="Sway" type="Position3D" parent="Position3D/SwitchAndAttack/Bobbing/LookAtLerp"]
+[node name="Sway" type="Position3D" parent="Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp"]
 
-[node name="MagazineSpawn" type="Position3D" parent="Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway"]
+[node name="MagazineSpawn" type="Position3D" parent="Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.11, -0.18 )
 
-[node name="Weapon" type="MeshInstance" parent="Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway"]
+[node name="Weapon" type="MeshInstance" parent="Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway"]
 mesh = ExtResource( 10 )
 material/0 = null
 
-[node name="ShellSpawn" type="Position3D" parent="Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/Weapon"]
+[node name="ShellSpawn" type="Position3D" parent="Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/Weapon"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.025, 0.01, -0.2 )
 
-[node name="OmniLight" type="OmniLight" parent="Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/Weapon"]
+[node name="OmniLight" type="OmniLight" parent="Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/Weapon"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.7 )
 light_energy = 0.0
 shadow_enabled = true
 omni_range = 2.0
 
-[node name="LookAt" type="Position3D" parent="Position3D"]
+[node name="LookAt" type="Position3D" parent="Torso/Position3D"]
 
 [node name="HUD" type="Control" parent="."]
 modulate = Color( 0.811765, 0.498039, 0.0901961, 1 )
@@ -301,6 +303,8 @@ one_shot = true
 [node name="SpawnMagazineTimer" type="Timer" parent="."]
 wait_time = 0.5
 one_shot = true
+
+[node name="LandingTween" type="Tween" parent="."]
 
 [connection signal="tween_all_completed" from="ReloadTween" to="." method="_on_ReloadTween_tween_all_completed"]
 [connection signal="timeout" from="RecoilTimer" to="." method="_on_RecoilTimer_timeout"]
