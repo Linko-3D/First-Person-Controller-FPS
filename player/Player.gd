@@ -23,8 +23,10 @@ var gravity_vec = Vector3()
 
 var snapped = false
 var can_jump = true
+
 var crouched = false
-var can_crouch = true
+var toggle_mode_crouch = false
+var can_press_crouch = true
 
 # Data:
 var player_speed = 0
@@ -108,16 +110,28 @@ func _physics_process(delta):
 			snapped = false
 			can_jump = false
 			gravity_vec = Vector3.UP * jump_height
+			if toggle_mode_crouch:
+				crouch_animation(false)
 	else:
 		can_jump = true
 	
 	if is_on_ceiling():
 		gravity_vec.y = 0
 	
-	if Input.is_key_pressed(KEY_CONTROL) or Input.is_key_pressed(KEY_C) or Input.is_joy_button_pressed(0, JOY_XBOX_B):
+	if Input.is_key_pressed(KEY_CONTROL):
+		toggle_mode_crouch = false
 		crouch_animation(true)
 	else:
-		crouch_animation(false)
+		if not toggle_mode_crouch:
+			crouch_animation(false)
+	
+	if Input.is_key_pressed(KEY_C) or Input.is_joy_button_pressed(0, JOY_XBOX_B):
+		toggle_mode_crouch = true
+		if can_press_crouch:
+			can_press_crouch = false
+			crouch_animation(!crouched)
+	else:
+		can_press_crouch = true
 	
 	velocity = velocity.linear_interpolate(direction * current_speed, acceleration * delta)
 	
