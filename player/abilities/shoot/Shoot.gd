@@ -12,6 +12,7 @@ export (Resource) var rifle_shoot_sound
 export (Resource) var pistol_shoot_sound
 export (Resource) var reload_sound
 export (Resource) var empty_sound
+export (Resource) var melee_hit_sound
 
 onready var shoot_sound = rifle_shoot_sound
 
@@ -39,6 +40,8 @@ var singleshot = false
 var can_shoot = true
 var weapon_selected = 1
 var weapon_position_z = -0.2
+
+var can_attack = true
 
 var can_switch_joy_dpad = true
 
@@ -146,7 +149,11 @@ func _process(delta):
 		return
 	
 	if Input.is_key_pressed(KEY_V) or Input.is_mouse_button_pressed(BUTTON_MIDDLE) or Input.is_joy_button_pressed(0, JOY_R3):
-		attack_animation()
+		if can_attack:
+			attack_animation()
+		can_attack = false
+	else:
+		can_attack = true
 	
 	if Input.is_mouse_button_pressed(BUTTON_LEFT) or Input.get_joy_axis(0, 7) >= 0.5:
 		if $FireRateTimer.is_stopped() and can_shoot and weapon_selected < 3:
@@ -198,7 +205,7 @@ func shoot():
 	if weapon_selected == 2:
 		pistol_shoot_animation()
 	camera_shake()
-	spawn_impact($BulletSpread/RayCast.get_collision_point())
+	spawn_impact($BulletSpread/RayCast)
 	spawn_shell()
 	
 	# Calculate bullet spread amount
@@ -225,20 +232,20 @@ func spawn_magazine():
 	magazine_instance.global_transform = $Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/MagazineSpawn.global_transform
 	magazine_instance.linear_velocity = $Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/MagazineSpawn.global_transform.basis.z * -3
 
-func spawn_impact(collision_point):
-	if not $BulletSpread/RayCast.is_colliding():
+func spawn_impact(raycast):
+	if not raycast.is_colliding():
 		return
 	
 	var impact_instance = impact.instance()
 	get_tree().get_root().add_child(impact_instance)
 	
-	impact_instance.global_transform.origin = collision_point
-	impact_instance.look_at($BulletSpread/RayCast.get_collision_point() - $BulletSpread/RayCast.get_collision_normal(), Vector3.UP)
+	impact_instance.global_transform.origin = raycast.get_collision_point()
+	impact_instance.look_at(raycast.get_collision_point() - raycast.get_collision_normal(), Vector3.UP)
 	
-	if $BulletSpread/RayCast.get_collider() is RigidBody:
-		$BulletSpread/RayCast.get_collider().apply_central_impulse(-$BulletSpread/RayCast.get_collision_normal() * 30)
+	if raycast.get_collider() is RigidBody:
+		raycast.get_collider().apply_central_impulse(-raycast.get_collision_normal() * 30)
 		impact_instance.hide_bullet()
-	if $BulletSpread/RayCast.get_collider() is KinematicBody:
+	if raycast.get_collider() is KinematicBody:
 		impact_instance.hide_bullet()
 	
 func play_sound(sound, dB, delay):
@@ -517,4 +524,5 @@ func reload_tip():
 
 func _on_MeleeTimer_timeout():
 	if $MeleeRayCast.is_colliding():
-		spawn_impact($MeleeRayCast.get_collision_point())
+		spawn_impact($MeleeRayCast)
+		play_sound(melee_hit_sound, 0, 0)
