@@ -45,6 +45,11 @@ enabled = true
 cast_to = Vector3( 0, 0, -1000 )
 
 [node name="MeleeRayCast" type="RayCast" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.333, 0.127, 0 )
+enabled = true
+cast_to = Vector3( 0, 0, -1.5 )
+
+[node name="MeleeRayCast2" type="RayCast" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.333, 0.127, -0.35 )
 enabled = true
 cast_to = Vector3( 0, 0, -0.51 )
