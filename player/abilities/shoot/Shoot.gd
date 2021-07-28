@@ -534,9 +534,8 @@ func reload_tip():
 					$HUD/ReloadTip.text = "Out of ammo"
 		else:
 			if reload_tip_displayed:
-				if $HUD/ReloadTip.modulate == Color(1, 1, 1, 1):
-					$ReloadTipTween.interpolate_property($HUD/ReloadTip, "margin_top", 35, 45, animation_speed, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
-					$ReloadTipTween.interpolate_property($HUD/ReloadTip, "modulate", Color(1, 1, 1, 1), Color(1, 1, 1, 0), animation_speed, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+				$ReloadTipTween.interpolate_property($HUD/ReloadTip, "margin_top", 35, 45, animation_speed, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+				$ReloadTipTween.interpolate_property($HUD/ReloadTip, "modulate", Color(1, 1, 1, 1), Color(1, 1, 1, 0), animation_speed, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
 				reload_tip_displayed = false
 	else:
 		if reload_tip_displayed:
