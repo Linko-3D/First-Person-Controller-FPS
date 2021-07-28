@@ -104,7 +104,23 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="AmmoBackgroundColor2" type="ColorRect" parent="HUD"]
+[node name="AmmoContour" type="ReferenceRect" parent="HUD"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -360.0
+margin_top = -64.0
+margin_right = -90.0
+margin_bottom = -4.0
+border_color = Color( 1, 1, 1, 0 )
+border_width = 2.0
+editor_only = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HealthBackgroundColor" type="ColorRect" parent="HUD"]
 anchor_top = 1.0
 anchor_bottom = 1.0
 margin_left = 90.0
@@ -147,10 +163,52 @@ color = Color( 0, 0, 0, 0.1 )
 [node name="ColorRect3" type="ColorRect" parent="HUD/BackgroundColor"]
 visible = false
 margin_top = 70.0
-margin_right = 146.0
+margin_right = 125.0
 margin_bottom = 101.0
 rect_min_size = Vector2( 0, 31 )
 color = Color( 0, 0, 0, 0.25098 )
+
+[node name="ContourHighlight" type="VBoxContainer" parent="HUD"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -129.0
+margin_top = -251.0
+margin_right = -4.0
+margin_bottom = -150.0
+alignment = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ReferenceRect1" type="ReferenceRect" parent="HUD/ContourHighlight"]
+margin_top = 35.0
+margin_right = 125.0
+margin_bottom = 66.0
+rect_min_size = Vector2( 0, 31 )
+border_color = Color( 1, 1, 1, 1 )
+border_width = 2.0
+editor_only = false
+
+[node name="ReferenceRect2" type="ReferenceRect" parent="HUD/ContourHighlight"]
+margin_top = 70.0
+margin_right = 125.0
+margin_bottom = 101.0
+rect_min_size = Vector2( 0, 31 )
+border_color = Color( 1, 1, 1, 0 )
+border_width = 2.0
+editor_only = false
+
+[node name="ReferenceRect3" type="ReferenceRect" parent="HUD/ContourHighlight"]
+visible = false
+margin_top = 70.0
+margin_right = 125.0
+margin_bottom = 101.0
+rect_min_size = Vector2( 0, 31 )
+border_color = Color( 1, 1, 1, 0 )
+border_width = 2.0
+editor_only = false
 
 [node name="WeaponSelected" type="VBoxContainer" parent="HUD"]
 anchor_left = 1.0

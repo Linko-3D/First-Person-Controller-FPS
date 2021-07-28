@@ -8,6 +8,9 @@ func _ready():
 	pause_mode = PAUSE_MODE_PROCESS # This script can't get paused
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	hide()
+	
+	$Label.margin_top = get_viewport().size.y / 4
+	get_tree().connect("screen_resized", self, "_on_screen_resized")
 
 func _input(event):
 	if not Input.is_key_pressed(KEY_ESCAPE) and not Input.is_joy_button_pressed(0, JOY_START):
@@ -29,8 +32,11 @@ func _input(event):
 
 func _on_Timer_timeout():
 	if $Label.text == "GAME PAUSED":
-		$Label.text = "GAME PAUSED_"
+		$Label.text = ""
 	else:
 		$Label.text = "GAME PAUSED"
 	
 	$Timer.start()
+
+func _on_screen_resized():
+	$Label.margin_top = get_viewport().size.y / 4

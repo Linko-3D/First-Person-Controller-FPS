@@ -68,11 +68,11 @@ func _input(event):
 			if event.button_index == BUTTON_WHEEL_DOWN:
 				if not $ReloadTween.is_active():
 					weapon_selected += 1
-					switch_animation()
+					switch_weapon()
 			if event.button_index == BUTTON_WHEEL_UP:
 				if not $ReloadTween.is_active():
 					weapon_selected -= 1
-					switch_animation()
+					switch_weapon()
 
 func _process(delta):
 	#	Animation when falling on the ground
@@ -88,30 +88,25 @@ func _process(delta):
 			if Input.is_key_pressed(KEY_1):
 				if weapon_selected != 1:
 					weapon_selected = 1
-					switch_animation()
+					switch_weapon()
 				
 			if Input.is_key_pressed(KEY_2):
 				if weapon_selected != 2:
 					weapon_selected = 2
-					switch_animation()
+					switch_weapon()
 					
-	#		if Input.is_key_pressed(KEY_3):
-	#			if weapon_selected != 3:
-	#				weapon_selected = 3
-	#				switch_animation()
-	#
-	#		if Input.is_key_pressed(KEY_4):
-	#			if weapon_selected != 4:
-	#				weapon_selected = 4
-	#				switch_animation()
+#			if Input.is_key_pressed(KEY_3):
+#				if weapon_selected != 3:
+#					weapon_selected = 3
+#					switch_weapon()
 		
 		if can_switch_joy_dpad:
 			if Input.is_joy_button_pressed(0, JOY_DPAD_RIGHT) or Input.is_joy_button_pressed(0, JOY_DPAD_DOWN):
 				weapon_selected += 1
-				switch_animation()
+				switch_weapon()
 			if Input.is_joy_button_pressed(0, JOY_DPAD_UP) or Input.is_joy_button_pressed(0, JOY_DPAD_LEFT):
 				weapon_selected -= 1
-				switch_animation()
+				switch_weapon()
 		
 		if Input.is_joy_button_pressed(0, JOY_DPAD_LEFT) or Input.is_joy_button_pressed(0, JOY_DPAD_RIGHT) or Input.is_joy_button_pressed(0, JOY_DPAD_UP) or Input.is_joy_button_pressed(0, JOY_DPAD_DOWN):
 			can_switch_joy_dpad = false
@@ -149,7 +144,7 @@ func _process(delta):
 		return
 	
 	if Input.is_key_pressed(KEY_V) or Input.is_mouse_button_pressed(BUTTON_MIDDLE) or Input.is_joy_button_pressed(0, JOY_R3):
-		if can_attack:
+		if can_attack and weapon_selected != 3:
 			attack_animation()
 		can_attack = false
 	else:
@@ -177,6 +172,8 @@ func _process(delta):
 			can_shoot = false
 		else:
 			can_shoot = true
+	else:
+		can_shoot = true
 	
 	if (Input.is_key_pressed(KEY_R) or Input.is_joy_button_pressed(0, JOY_XBOX_X)):
 		if ammo != max_ammo and clip > 0 and weapon_selected < 3:
@@ -354,8 +351,10 @@ func weapon_bobbing_animation():
 		$VBobbingTween.interpolate_property($Torso/Position3D/SwitchAndAttack/Bobbing, "translation:z", -animation_value / 10, 0, animation_speed / 2, Tween.TRANS_SINE, Tween.EASE_IN_OUT, (animation_speed / 2) * 3)
 		$VBobbingTween.start()
 
-func switch_animation():
-	ammo_animation()
+func switch_weapon():
+	$ReloadTipTween.stop_all()
+	$HUD/ReloadTip.margin_top = 45
+	$HUD/ReloadTip.modulate = Color(1, 1, 1, 0)
 	
 	var background_color_active = Color(0, 0, 0, 0.25)
 	var background_color_inactive = Color(0, 0, 0, 0.1)
@@ -367,6 +366,8 @@ func switch_animation():
 		weapon_selected = 1
 	if weapon_selected < 1:
 		weapon_selected = 2
+	
+	ammo_animation()
 	
 	if weapon_selected == 1:
 		weapon2_ammo = ammo
@@ -382,6 +383,12 @@ func switch_animation():
 		ammo = weapon2_ammo
 		clip = weapon2_clip
 		max_ammo = weapon2_max_ammo
+		
+	if clip > 0:
+		$HUD/ReloadTip.text = "Reload"
+	else:
+		$HUD/ReloadTip.text = "Out of ammo"
+	
 	update_ammo_HUD()
 	
 	$SwitchTween.interpolate_property($Torso/Position3D/SwitchAndAttack, "translation", Vector3(0, -0.25, -0.1), Vector3(), 0.3, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
@@ -393,8 +400,13 @@ func switch_animation():
 		$HUD/BackgroundColor/ColorRect2.color = background_color_inactive
 		$HUD/BackgroundColor/ColorRect3.color = background_color_inactive
 		
+		$HUD/ContourHighlight/ReferenceRect1.border_color = Color(1, 1, 1, 1)
+		$HUD/ContourHighlight/ReferenceRect2.border_color = Color(1, 1, 1, 0)
+		$HUD/ContourHighlight/ReferenceRect3.border_color = Color(1, 1, 1, 0)
+		
 		$HUD/WeaponSelected/Weapon1.modulate = text_color_active
 		$HUD/WeaponSelected/Weapon2.modulate = text_color_inactive
+		$HUD/WeaponSelected/Weapon3.modulate = text_color_inactive
 		
 		weapon_position_z = -0.2
 		weapon.mesh = rifle_model
@@ -413,8 +425,13 @@ func switch_animation():
 		$HUD/BackgroundColor/ColorRect2.color = background_color_active
 		$HUD/BackgroundColor/ColorRect3.color = background_color_inactive
 		
+		$HUD/ContourHighlight/ReferenceRect1.border_color = Color(1, 1, 1, 0)
+		$HUD/ContourHighlight/ReferenceRect2.border_color = Color(1, 1, 1, 1)
+		$HUD/ContourHighlight/ReferenceRect3.border_color = Color(1, 1, 1, 0)
+		
 		$HUD/WeaponSelected/Weapon1.modulate = text_color_inactive
 		$HUD/WeaponSelected/Weapon2.modulate = text_color_active
+		$HUD/WeaponSelected/Weapon3.modulate = text_color_inactive
 		
 		weapon_position_z = -0.3
 		weapon.mesh = pistol_model
@@ -432,6 +449,14 @@ func switch_animation():
 		$HUD/BackgroundColor/ColorRect1.color = background_color_inactive
 		$HUD/BackgroundColor/ColorRect2.color = background_color_inactive
 		$HUD/BackgroundColor/ColorRect3.color = background_color_active
+		
+		$HUD/ContourHighlight/ReferenceRect1.border_color = Color(1, 1, 1, 0)
+		$HUD/ContourHighlight/ReferenceRect2.border_color = Color(1, 1, 1, 0)
+		$HUD/ContourHighlight/ReferenceRect3.border_color = Color(1, 1, 1, 1)
+		
+		$HUD/WeaponSelected/Weapon1.modulate = text_color_inactive
+		$HUD/WeaponSelected/Weapon2.modulate = text_color_inactive
+		$HUD/WeaponSelected/Weapon3.modulate = text_color_active
 		
 		weapon_position_z = -0.4
 		weapon.mesh = knife_model
@@ -468,8 +493,6 @@ func attack_animation():
 	
 	$AttackTween.start()
 
-
-
 func _on_RecoilTimer_timeout():
 	$BulletSpread/RayCast.rotation_degrees = Vector3()
 
@@ -481,24 +504,18 @@ func _on_ReloadTween_tween_all_completed():
 	ammo_animation()
 
 func ammo_animation():
-	var animation_speed = 0.1
-	
-	$InterfaceTween.interpolate_property($HUD/AmmoText, "modulate", Color(1, 1, 1, 0.5), Color(1, 1, 1, 1), animation_speed, Tween.TRANS_SINE)
-	$InterfaceTween.interpolate_property($HUD/DisplayAmmo/AmmoText, "modulate", Color(1, 1, 1, 0.5), Color(1, 1, 1, 1), animation_speed, Tween.TRANS_SINE)
-	$InterfaceTween.interpolate_property($HUD/DisplayAmmo/Slash, "modulate", Color(1, 1, 1, 0.5), Color(1, 1, 1, 1), animation_speed, Tween.TRANS_SINE)
-	$InterfaceTween.interpolate_property($HUD/DisplayAmmo/ClipText, "modulate", Color(1, 1, 1, 0.5), Color(1, 1, 1, 1), animation_speed, Tween.TRANS_SINE)
-	$InterfaceTween.start()
+	if weapon_selected < 3:
+		$InterfaceTween.interpolate_property($HUD/AmmoContour, "border_color", (Color(1, 1, 1, 1)), (Color(1, 1, 1, 0)), 0.25)
+		$InterfaceTween.start()
+	else:
+		$InterfaceTween.stop_all()
+		$HUD/AmmoContour.border_color = Color(1, 1, 1, 0)
 
 func update_ammo_HUD():
 	$HUD/DisplayAmmo/AmmoText.text = str(ammo)
 	$HUD/DisplayAmmo/ClipText.text = str(clip)
 
 func reload_tip():
-	if clip > 0:
-		$HUD/ReloadTip.text = "Reload"
-	else:
-		$HUD/ReloadTip.text = "Out of ammo"
-	
 	var animation_speed = 0.25
 	
 	if ammo == 0:
@@ -508,16 +525,24 @@ func reload_tip():
 				
 				$ReloadTipTween.interpolate_property($HUD/ReloadTip, "margin_top", 45, 35, animation_speed, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
 				$ReloadTipTween.interpolate_property($HUD/ReloadTip, "modulate", Color(1, 1, 1, 0), Color(1, 1, 1, 1), animation_speed, Tween.TRANS_SINE)
+				
 				reload_tip_displayed = true
+				
+				if clip > 0:
+					$HUD/ReloadTip.text = "Reload"
+				else:
+					$HUD/ReloadTip.text = "Out of ammo"
 		else:
 			if reload_tip_displayed:
-				$ReloadTipTween.interpolate_property($HUD/ReloadTip, "margin_top", 35, 45, animation_speed, Tween.TRANS_SINE, Tween.EASE_IN_OUT, animation_speed)
-				$ReloadTipTween.interpolate_property($HUD/ReloadTip, "modulate", Color(1, 1, 1, 1), Color(1, 1, 1, 0), animation_speed, Tween.TRANS_SINE, Tween.EASE_IN_OUT, animation_speed)
+				if $HUD/ReloadTip.modulate == Color(1, 1, 1, 1):
+					$ReloadTipTween.interpolate_property($HUD/ReloadTip, "margin_top", 35, 45, animation_speed, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+					$ReloadTipTween.interpolate_property($HUD/ReloadTip, "modulate", Color(1, 1, 1, 1), Color(1, 1, 1, 0), animation_speed, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
 				reload_tip_displayed = false
 	else:
 		if reload_tip_displayed:
-			$ReloadTipTween.interpolate_property($HUD/ReloadTip, "margin_top", 35, 45, animation_speed, Tween.TRANS_SINE, Tween.EASE_IN_OUT, animation_speed)
-			$ReloadTipTween.interpolate_property($HUD/ReloadTip, "modulate", Color(1, 1, 1, 1), Color(1, 1, 1, 0), animation_speed, Tween.TRANS_SINE, Tween.EASE_IN_OUT, animation_speed)
+			if $HUD/ReloadTip.modulate == Color(1, 1, 1, 1):
+				$ReloadTipTween.interpolate_property($HUD/ReloadTip, "margin_top", 35, 45, animation_speed, Tween.TRANS_SINE, Tween.EASE_IN_OUT, animation_speed)
+				$ReloadTipTween.interpolate_property($HUD/ReloadTip, "modulate", Color(1, 1, 1, 1), Color(1, 1, 1, 0), animation_speed, Tween.TRANS_SINE, Tween.EASE_IN_OUT, animation_speed)
 			reload_tip_displayed = false 
 	
 	$ReloadTipTween.start()

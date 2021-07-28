@@ -16,7 +16,7 @@ func _ready():
 	$GrabText.modulate = Color(0.81, 0.5, 0.09, 0)
 
 func _physics_process(delta):
-	if not object_grabbed and $TextTimer.is_stopped() and get_collider() is RigidBody and get_collider().mass <= mass_limit:
+	if not object_grabbed and $TextTimer.is_stopped() and get_collider() is RigidBody and get_collider().mass <= mass_limit and not get_collider() is VehicleBody:
 		grab_text_appears()
 	else:
 		grab_text_disappears()
@@ -37,7 +37,7 @@ func _physics_process(delta):
 		if can_use:
 			can_use = false
 			if not object_grabbed:
-				if get_collider() is RigidBody and get_collider().mass <= mass_limit:
+				if get_collider() is RigidBody and get_collider().mass <= mass_limit and not get_collider() is VehicleBody:
 					object_grabbed = get_collider()
 					object_grabbed.rotation_degrees.x = 0
 					object_grabbed.rotation_degrees.z = 0

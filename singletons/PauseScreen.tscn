@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://singletons/PauseScreen.gd" type="Script" id=1]
+[ext_resource path="res://font/Theme.tres" type="Theme" id=2]
 
 [node name="PauseScreen" type="Control"]
 anchor_right = 1.0
@@ -19,12 +20,14 @@ __meta__ = {
 }
 
 [node name="Label" type="Label" parent="."]
+modulate = Color( 0.811765, 0.498039, 0.0901961, 1 )
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = -46.0
-margin_top = 4.0
-margin_right = 47.0
-margin_bottom = 18.0
+margin_left = -85.0
+margin_top = 150.0
+margin_right = 85.0
+margin_bottom = 497.0
+theme = ExtResource( 2 )
 text = "GAME PAUSED"
 __meta__ = {
 "_edit_use_anchors_": false
