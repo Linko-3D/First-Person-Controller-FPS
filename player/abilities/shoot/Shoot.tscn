@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://player/abilities/shoot/Shell.tscn" type="PackedScene" id=1]
 [ext_resource path="res://player/abilities/shoot/Impact.tscn" type="PackedScene" id=2]
@@ -14,6 +14,7 @@
 [ext_resource path="res://font/Theme.tres" type="Theme" id=12]
 [ext_resource path="res://font/Roboto-Regular.ttf" type="DynamicFontData" id=13]
 [ext_resource path="res://player/abilities/shoot/melee_hit.wav" type="AudioStream" id=14]
+[ext_resource path="res://player/abilities/laser/Laser.tscn" type="PackedScene" id=15]
 
 [sub_resource type="DynamicFont" id=1]
 size = 50
@@ -43,6 +44,8 @@ melee_hit_sound = ExtResource( 14 )
 [node name="RayCast" type="RayCast" parent="BulletSpread"]
 enabled = true
 cast_to = Vector3( 0, 0, -1000 )
+
+[node name="Laser" parent="BulletSpread/RayCast" instance=ExtResource( 15 )]
 
 [node name="MeleeRayCast" type="RayCast" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.333, 0.127, -0.35 )
@@ -104,22 +107,6 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="AmmoContour" type="ReferenceRect" parent="HUD"]
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = -360.0
-margin_top = -64.0
-margin_right = -90.0
-margin_bottom = -4.0
-border_color = Color( 1, 1, 1, 0 )
-border_width = 2.0
-editor_only = false
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="HealthBackgroundColor" type="ColorRect" parent="HUD"]
 anchor_top = 1.0
 anchor_bottom = 1.0
@@ -151,7 +138,7 @@ margin_top = 35.0
 margin_right = 125.0
 margin_bottom = 66.0
 rect_min_size = Vector2( 0, 31 )
-color = Color( 0, 0, 0, 0.25 )
+color = Color( 0, 0, 0, 0.25098 )
 
 [node name="ColorRect2" type="ColorRect" parent="HUD/BackgroundColor"]
 margin_top = 70.0
@@ -241,7 +228,7 @@ text = "2     M1911"
 visible = false
 modulate = Color( 1, 1, 1, 0.501961 )
 margin_top = 105.0
-margin_right = 122.0
+margin_right = 136.0
 margin_bottom = 136.0
 text = "3     Knife"
 
@@ -323,22 +310,6 @@ margin_right = 84.0
 margin_bottom = 60.0
 text = "100"
 
-[node name="ReloadTip" type="Label" parent="HUD"]
-modulate = Color( 1, 1, 1, 0 )
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -135.0
-margin_top = 35.0
-margin_right = 136.0
-margin_bottom = 71.0
-text = "Reload"
-align = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="ShootTween" type="Tween" parent="."]
 
 [node name="ReloadTween" type="Tween" parent="."]
@@ -356,8 +327,6 @@ __meta__ = {
 [node name="BackgroundColorTween" type="Tween" parent="."]
 
 [node name="SelectionTween" type="Tween" parent="."]
-
-[node name="ReloadTipTween" type="Tween" parent="."]
 
 [node name="LandingTween" type="Tween" parent="."]
 

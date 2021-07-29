@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://player/Player.gd" type="Script" id=1]
 [ext_resource path="res://player/abilities/grab/Grab.tscn" type="PackedScene" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://player/abilities/shoot/Shoot.tscn" type="PackedScene" id=5]
 [ext_resource path="res://player/abilities/footstep_sound/FootstepSound.tscn" type="PackedScene" id=6]
 [ext_resource path="res://player/abilities/minimap/Minimap.tscn" type="PackedScene" id=7]
+[ext_resource path="res://player/abilities/hook/Hook.tscn" type="PackedScene" id=8]
 
 [sub_resource type="CapsuleShape" id=1]
 radius = 0.5
@@ -33,6 +34,8 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0 )
 [node name="FootstepSound" parent="Head/Camera" instance=ExtResource( 6 )]
 
 [node name="Grab" parent="Head/Camera" instance=ExtResource( 2 )]
+
+[node name="Hook" parent="Head/Camera" instance=ExtResource( 8 )]
 
 [node name="Minimap" parent="Head/Camera" instance=ExtResource( 7 )]
 
