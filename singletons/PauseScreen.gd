@@ -12,6 +12,13 @@ func _ready():
 	$Label.margin_top = get_viewport().size.y / 4
 	get_tree().connect("screen_resized", self, "_on_screen_resized")
 
+func _process(delta):
+	if not $Tween.is_active():
+		$Tween.interpolate_property($Label, "modulate", Color(0.81, 0.5, 0.09, 1), Color(0.81, 0.5, 0.09, 1), 1, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+		$Tween.interpolate_property($Label, "modulate", Color(0.81, 0.5, 0.09, 1), Color(0.81, 0.5, 0.09, 0), 0.25, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 1)
+		$Tween.interpolate_property($Label, "modulate", Color(0.81, 0.5, 0.09, 0), Color(0.81, 0.5, 0.09, 1), 0.25, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 1.25)
+		$Tween.start()
+
 func _input(event):
 	if not Input.is_key_pressed(KEY_ESCAPE) and not Input.is_joy_button_pressed(0, JOY_START):
 		can_press = true
@@ -29,14 +36,6 @@ func _input(event):
 		get_tree().paused = false
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 		hide()
-
-func _on_Timer_timeout():
-	if $Label.text == "GAME PAUSED":
-		$Label.text = ""
-	else:
-		$Label.text = "GAME PAUSED"
-	
-	$Timer.start()
 
 func _on_screen_resized():
 	$Label.margin_top = get_viewport().size.y / 4
