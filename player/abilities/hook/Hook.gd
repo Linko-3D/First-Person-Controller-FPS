@@ -13,16 +13,14 @@ var can_use = true
 var can_use_input = true
 
 func _physics_process(delta):
-	if player.is_on_floor():
-		if not can_use:
-			destination = null
-			if $Timer.is_stopped() and not destination:
-				$Timer.start()
-				$Tween.interpolate_property($CanHook, "margin_left", -30, -5, $Timer.wait_time, Tween.TRANS_SINE, Tween.EASE_OUT)
-				$Tween.interpolate_property($CanHook, "margin_top", -30, -5, $Timer.wait_time, Tween.TRANS_SINE, Tween.EASE_OUT)
-				$Tween.interpolate_property($CanHook, "margin_right", 30, 5, $Timer.wait_time, Tween.TRANS_SINE, Tween.EASE_OUT)
-				$Tween.interpolate_property($CanHook, "margin_bottom", 30, 5, $Timer.wait_time, Tween.TRANS_SINE, Tween.EASE_OUT)
-				$Tween.start()
+	if not can_use:
+		if $Timer.is_stopped() and not destination:
+			$Timer.start()
+			$Tween.interpolate_property($CanHook, "margin_left", -30, -10, $Timer.wait_time)
+			$Tween.interpolate_property($CanHook, "margin_top", -30, -10, $Timer.wait_time)
+			$Tween.interpolate_property($CanHook, "margin_right", 30, 10, $Timer.wait_time)
+			$Tween.interpolate_property($CanHook, "margin_bottom", 30, 10, $Timer.wait_time)
+			$Tween.start()
 	
 	$CanHook.border_color = Color(0, 0, 0, 0.25)
 	if get_collider() is StaticBody or get_collider() is CSGPrimitive:

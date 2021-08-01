@@ -13,10 +13,10 @@ var text_visible = false
 var throw_pressed = false
 
 func _ready():
-	$GrabText.modulate = Color(0.81, 0.5, 0.09, 0)
+	$GrabText.modulate = Color(1, 0.5, 0, 0)
 
 func _physics_process(delta):
-	if not object_grabbed and $TextTimer.is_stopped() and get_collider() is RigidBody and get_collider().mass <= mass_limit and not get_collider() is VehicleBody:
+	if not object_grabbed and get_collider() is RigidBody and get_collider().mass <= mass_limit and not get_collider() is VehicleBody:
 		grab_text_appears()
 	else:
 		grab_text_disappears()
@@ -63,14 +63,13 @@ func release():
 	object_grabbed.axis_lock_angular_y = false
 	object_grabbed.axis_lock_angular_z = false
 	object_grabbed = null
-	$TextTimer.start()
 
 func grab_text_appears():
 	if not text_visible:
 		text_visible = true
 		var animation_speed = 0.25
 		$GrabTween.interpolate_property($GrabText, "margin_top", 45, 35, animation_speed, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
-		$GrabTween.interpolate_property($GrabText, "modulate", Color(0.81, 0.5, 0.09, 0), Color(0.81, 0.5, 0.09, 1), animation_speed, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+		$GrabTween.interpolate_property($GrabText, "modulate", Color(1, 0.5, 0, 0), Color(1, 0.5, 0, 1), animation_speed, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
 		$GrabTween.start()
 
 func grab_text_disappears():
@@ -78,6 +77,5 @@ func grab_text_disappears():
 		text_visible = false
 		var animation_speed = 0.25
 		$GrabTween.interpolate_property($GrabText, "margin_top", 35, 45, animation_speed, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
-		$GrabTween.interpolate_property($GrabText, "modulate", Color(0.81, 0.5, 0.09, 1), Color(0.81, 0.5, 0.09, 0), animation_speed, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+		$GrabTween.interpolate_property($GrabText, "modulate", Color(1, 0.5, 0, 1), Color(1, 0.5, 0, 0), animation_speed, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
 		$GrabTween.start()
-		$TextTimer.start()

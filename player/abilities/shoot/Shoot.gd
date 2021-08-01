@@ -378,7 +378,7 @@ func switch_weapon():
 	$SwitchTween.start()
 	
 	if weapon_selected == 1:
-		$InterfaceTween.interpolate_property($HUD/BackgroundColor/ColorRect1, "color", Color(0.81, 0.5, 0.09, 0.25), Color(0, 0, 0, 0.25), 0.25)
+		$InterfaceTween.interpolate_property($HUD/BackgroundColor/ColorRect1, "color", Color(1, 0.5, 0, 0.25), Color(0, 0, 0, 0.25), 0.25)
 		$InterfaceTween.start()
 		
 		$HUD/BackgroundColor/ColorRect1.color = background_color_active
@@ -406,7 +406,7 @@ func switch_weapon():
 		$Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/MagazineSpawn.translation = Vector3(0, -0.11, -0.18)
 	
 	if weapon_selected == 2:
-		$InterfaceTween.interpolate_property($HUD/BackgroundColor/ColorRect2, "color", Color(0.81, 0.5, 0.09, 0.25), Color(0, 0, 0, 0.25), 0.25)
+		$InterfaceTween.interpolate_property($HUD/BackgroundColor/ColorRect2, "color", Color(1, 0.5, 0, 0.25), Color(0, 0, 0, 0.25), 0.25)
 		$InterfaceTween.start()
 		
 		$HUD/BackgroundColor/ColorRect1.color = background_color_inactive
@@ -492,7 +492,8 @@ func _on_ReloadTween_tween_all_completed():
 	ammo_animation()
 
 func ammo_animation():
-	var color = Color(0.81, 0.5, 0.09, 0.25)
+	var color = Color(1, 0.5, 0, 0.25)
+	
 	if ammo == 0:
 		color = Color(1, 0, 0, 0.5)
 		
@@ -501,7 +502,6 @@ func ammo_animation():
 		$InterfaceTween.start()
 	else:
 		$InterfaceTween.stop_all()
-		$HUD/AmmoContour.border_color = Color(1, 1, 1, 0)
 
 func update_ammo_HUD():
 	$HUD/DisplayAmmo/AmmoText.text = str(ammo)

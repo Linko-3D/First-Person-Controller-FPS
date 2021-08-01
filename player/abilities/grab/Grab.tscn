@@ -12,7 +12,7 @@ script = ExtResource( 1 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2 )
 
 [node name="GrabText" type="Label" parent="."]
-modulate = Color( 0.811765, 0.498039, 0.0901961, 1 )
+modulate = Color( 1, 0.5, 0, 1 )
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -29,7 +29,3 @@ __meta__ = {
 }
 
 [node name="GrabTween" type="Tween" parent="."]
-
-[node name="TextTimer" type="Timer" parent="."]
-wait_time = 0.5
-one_shot = true
