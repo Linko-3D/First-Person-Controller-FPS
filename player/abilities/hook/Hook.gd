@@ -17,7 +17,7 @@ func _physics_process(delta):
 		if $Timer.is_stopped() and not destination:
 			$Timer.start()
 	
-#	$CanHook.border_color = Color(0, 0, 0, 0)
+	$CanHook.border_color = Color(0, 0, 0, 0)
 	if get_collider() is StaticBody or get_collider() is CSGPrimitive:
 		if can_use:
 			if grab:
