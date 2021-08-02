@@ -47,6 +47,7 @@ func _physics_process(delta):
 		vector = (destination - player.global_transform.origin)
 		player.move_and_slide(vector * pull_force)
 		$CanHook.border_width = 2
+		$CanHook.border_color = Color(1, 0, 0)
 	else:
 		$CanHook.border_width = 1
 
