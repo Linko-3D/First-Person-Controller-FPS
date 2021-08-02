@@ -109,7 +109,7 @@ func _physics_process(delta):
 		if is_on_floor() and can_jump:
 			snapped = false
 			can_jump = false
-			gravity_vec = Vector3.UP * jump_height
+			jump()
 			if toggle_mode_crouch:
 				crouch_animation(false)
 	else:
@@ -142,6 +142,9 @@ func _physics_process(delta):
 	movement = move_and_slide(movement, Vector3.UP)
 	
 	player_speed = movement.length()
+
+func jump():
+	gravity_vec = Vector3.UP * jump_height
 
 func land_animation():
 	var movement_y = clamp(falling_velocity, -20, 0) / 40

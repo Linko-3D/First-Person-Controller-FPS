@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://player/Player.gd" type="Script" id=1]
 [ext_resource path="res://player/abilities/grab/Grab.tscn" type="PackedScene" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://player/abilities/footstep_sound/FootstepSound.tscn" type="PackedScene" id=6]
 [ext_resource path="res://player/abilities/minimap/Minimap.tscn" type="PackedScene" id=7]
 [ext_resource path="res://player/abilities/hook/Hook.tscn" type="PackedScene" id=8]
+[ext_resource path="res://player/abilities/double_jump/DoubleJump.tscn" type="PackedScene" id=9]
 
 [sub_resource type="CapsuleShape" id=1]
 radius = 0.5
@@ -28,6 +29,9 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0 )
 [node name="Shoot" parent="Head/Camera" instance=ExtResource( 5 )]
 
 [node name="Crosshair" parent="Head/Camera" instance=ExtResource( 3 )]
+
+[node name="DoubleJump" parent="Head/Camera" instance=ExtResource( 9 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.6, 0 )
 
 [node name="Flashlight" parent="Head/Camera" instance=ExtResource( 4 )]
 
