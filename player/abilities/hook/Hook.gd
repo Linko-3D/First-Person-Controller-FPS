@@ -16,13 +16,8 @@ func _physics_process(delta):
 	if not can_use:
 		if $Timer.is_stopped() and not destination:
 			$Timer.start()
-			$Tween.interpolate_property($CanHook, "margin_left", -30, -10, $Timer.wait_time)
-			$Tween.interpolate_property($CanHook, "margin_top", -30, -10, $Timer.wait_time)
-			$Tween.interpolate_property($CanHook, "margin_right", 30, 10, $Timer.wait_time)
-			$Tween.interpolate_property($CanHook, "margin_bottom", 30, 10, $Timer.wait_time)
-			$Tween.start()
 	
-	$CanHook.border_color = Color(0, 0, 0, 0.25)
+#	$CanHook.border_color = Color(0, 0, 0, 0)
 	if get_collider() is StaticBody or get_collider() is CSGPrimitive:
 		if can_use:
 			if grab:
@@ -31,7 +26,10 @@ func _physics_process(delta):
 			else:
 				$CanHook.border_color = Color(1, 0, 0)
 	
-	if Input.is_mouse_button_pressed(BUTTON_RIGHT):
+	if not $Timer.is_stopped():
+		$CanHook.border_color = Color(0, 0, 0, 0)
+	
+	if Input.is_mouse_button_pressed(BUTTON_RIGHT) or Input.is_joy_button_pressed(0, JOY_R):
 		if get_collider() is StaticBody or get_collider() is CSGPrimitive:
 			if not destination and can_use and can_use_input:
 				can_use = false
@@ -41,14 +39,6 @@ func _physics_process(delta):
 						destination = get_collision_point()
 				else:
 					destination = get_collision_point()
-				
-				if destination:
-					$Tween.interpolate_property($CanHook, "margin_left", -5, -30, 0.25, Tween.TRANS_SINE, Tween.EASE_OUT)
-					$Tween.interpolate_property($CanHook, "margin_top", -5, -30, 0.25, Tween.TRANS_SINE, Tween.EASE_OUT)
-					$Tween.interpolate_property($CanHook, "margin_right", 5, 30, 0.25, Tween.TRANS_SINE, Tween.EASE_OUT)
-					$Tween.interpolate_property($CanHook, "margin_bottom", 5, 30, 0.25, Tween.TRANS_SINE, Tween.EASE_OUT)
-					$Tween.start()
-				
 	else:
 		destination = null
 		can_use_input = true
@@ -56,6 +46,9 @@ func _physics_process(delta):
 	if destination:
 		vector = (destination - player.global_transform.origin)
 		player.move_and_slide(vector * pull_force)
+		$CanHook.border_width = 2
+	else:
+		$CanHook.border_width = 1
 
 func _on_Timer_timeout():
 	can_use = true
