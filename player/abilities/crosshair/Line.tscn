@@ -3,7 +3,6 @@
 [node name="Line" type="Position2D"]
 
 [node name="ReferenceRect" type="ReferenceRect" parent="."]
-visible = false
 margin_left = -6.0
 margin_top = -2.0
 margin_right = 6.0

@@ -94,11 +94,6 @@ func _process(delta):
 				if weapon_selected != 2:
 					weapon_selected = 2
 					switch_weapon()
-					
-#			if Input.is_key_pressed(KEY_3):
-#				if weapon_selected != 3:
-#					weapon_selected = 3
-#					switch_weapon()
 		
 		if can_switch_joy_dpad:
 			if Input.is_joy_button_pressed(0, JOY_DPAD_RIGHT) or Input.is_joy_button_pressed(0, JOY_DPAD_DOWN):
@@ -144,14 +139,14 @@ func _process(delta):
 		return
 	
 	if Input.is_key_pressed(KEY_V) or Input.is_mouse_button_pressed(BUTTON_MIDDLE) or Input.is_joy_button_pressed(0, JOY_R3):
-		if can_attack and weapon_selected != 3:
+		if can_attack:
 			attack_animation()
 		can_attack = false
 	else:
 		can_attack = true
 	
 	if Input.is_mouse_button_pressed(BUTTON_LEFT) or Input.get_joy_axis(0, 7) >= 0.5:
-		if $FireRateTimer.is_stopped() and can_shoot and weapon_selected < 3:
+		if $FireRateTimer.is_stopped() and can_shoot:
 			if ammo > 0:
 				if Input.get_joy_axis(0, 7) >= 0.5:
 						Input.start_joy_vibration(0, 0, 0.2, 0.1)
@@ -172,7 +167,7 @@ func _process(delta):
 		can_shoot = true
 	
 	if (Input.is_key_pressed(KEY_R) or Input.is_joy_button_pressed(0, JOY_XBOX_X)):
-		if ammo != max_ammo and clip > 0 and weapon_selected < 3:
+		if ammo != max_ammo and clip > 0:
 			$ReloadTween.interpolate_property(weapon, "rotation_degrees:x", 0, 360, 1, Tween.TRANS_BACK, Tween.EASE_IN_OUT, 0)
 			$ReloadTween.start()
 			play_sound(reload_sound, -5, 0)
@@ -192,6 +187,7 @@ func shoot():
 		rifle_shoot_animation()
 	if weapon_selected == 2:
 		pistol_shoot_animation()
+	
 	camera_shake()
 	spawn_impact($BulletSpread/RayCast)
 	spawn_shell()
@@ -381,17 +377,11 @@ func switch_weapon():
 		$InterfaceTween.interpolate_property($HUD/BackgroundColor/ColorRect1, "color", Color(1, 0.5, 0, 0.25), Color(0, 0, 0, 0.25), 0.25)
 		$InterfaceTween.start()
 		
+		$HUD/WeaponSelected/Primary.modulate = Color(1, 1, 1, 1)
+		$HUD/WeaponSelected/Secondary.modulate = Color(1, 1, 1, 0.5)
+		
 		$HUD/BackgroundColor/ColorRect1.color = background_color_active
 		$HUD/BackgroundColor/ColorRect2.color = background_color_inactive
-		$HUD/BackgroundColor/ColorRect3.color = background_color_inactive
-		
-		$HUD/ContourHighlight/ReferenceRect1.border_color = Color(1, 1, 1, 1)
-		$HUD/ContourHighlight/ReferenceRect2.border_color = Color(1, 1, 1, 0)
-		$HUD/ContourHighlight/ReferenceRect3.border_color = Color(1, 1, 1, 0)
-		
-		$HUD/WeaponSelected/Weapon1.modulate = text_color_active
-		$HUD/WeaponSelected/Weapon2.modulate = text_color_inactive
-		$HUD/WeaponSelected/Weapon3.modulate = text_color_inactive
 		
 		weapon_position_z = -0.2
 		weapon.mesh = rifle_model
@@ -409,17 +399,11 @@ func switch_weapon():
 		$InterfaceTween.interpolate_property($HUD/BackgroundColor/ColorRect2, "color", Color(1, 0.5, 0, 0.25), Color(0, 0, 0, 0.25), 0.25)
 		$InterfaceTween.start()
 		
+		$HUD/WeaponSelected/Primary.modulate = Color(1, 1, 1, 0.5)
+		$HUD/WeaponSelected/Secondary.modulate = Color(1, 1, 1, 1)
+		
 		$HUD/BackgroundColor/ColorRect1.color = background_color_inactive
 		$HUD/BackgroundColor/ColorRect2.color = background_color_active
-		$HUD/BackgroundColor/ColorRect3.color = background_color_inactive
-		
-		$HUD/ContourHighlight/ReferenceRect1.border_color = Color(1, 1, 1, 0)
-		$HUD/ContourHighlight/ReferenceRect2.border_color = Color(1, 1, 1, 1)
-		$HUD/ContourHighlight/ReferenceRect3.border_color = Color(1, 1, 1, 0)
-		
-		$HUD/WeaponSelected/Weapon1.modulate = text_color_inactive
-		$HUD/WeaponSelected/Weapon2.modulate = text_color_active
-		$HUD/WeaponSelected/Weapon3.modulate = text_color_inactive
 		
 		weapon_position_z = -0.3
 		weapon.mesh = pistol_model
@@ -428,29 +412,6 @@ func switch_weapon():
 		$HUD/AmmoText.show()
 		$HUD/DisplayAmmo.show()
 		$HUD/AmmoBackgroundColor.show()
-		
-		$Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/Weapon/ShellSpawn.translation.z = -0.07
-		$Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/Weapon/OmniLight.translation.z = -0.2
-		$Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/MagazineSpawn.translation = Vector3(0, -0.06, -0.01)
-		
-	if weapon_selected == 3:
-		$HUD/BackgroundColor/ColorRect1.color = background_color_inactive
-		$HUD/BackgroundColor/ColorRect2.color = background_color_inactive
-		$HUD/BackgroundColor/ColorRect3.color = background_color_active
-		
-		$HUD/ContourHighlight/ReferenceRect1.border_color = Color(1, 1, 1, 0)
-		$HUD/ContourHighlight/ReferenceRect2.border_color = Color(1, 1, 1, 0)
-		$HUD/ContourHighlight/ReferenceRect3.border_color = Color(1, 1, 1, 1)
-		
-		$HUD/WeaponSelected/Weapon1.modulate = text_color_inactive
-		$HUD/WeaponSelected/Weapon2.modulate = text_color_inactive
-		$HUD/WeaponSelected/Weapon3.modulate = text_color_active
-		
-		weapon_position_z = -0.4
-		weapon.mesh = knife_model
-		$HUD/AmmoText.hide()
-		$HUD/DisplayAmmo.hide()
-		$HUD/AmmoBackgroundColor.hide()
 		
 		$Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/Weapon/ShellSpawn.translation.z = -0.07
 		$Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/Weapon/OmniLight.translation.z = -0.2
@@ -497,11 +458,8 @@ func ammo_animation():
 	if ammo == 0:
 		color = Color(1, 0, 0, 0.5)
 		
-	if weapon_selected < 3:
-		$InterfaceTween.interpolate_property($HUD/AmmoBackgroundColor, "color", color, Color(0, 0, 0, 0.25), 0.25)
-		$InterfaceTween.start()
-	else:
-		$InterfaceTween.stop_all()
+	$InterfaceTween.interpolate_property($HUD/AmmoBackgroundColor, "color", color, Color(0, 0, 0, 0.25), 0.25)
+	$InterfaceTween.start()
 
 func update_ammo_HUD():
 	$HUD/DisplayAmmo/AmmoText.text = str(ammo)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://player/abilities/shoot/Shell.tscn" type="PackedScene" id=1]
 [ext_resource path="res://player/abilities/shoot/Impact.tscn" type="PackedScene" id=2]
@@ -8,13 +8,15 @@
 [ext_resource path="res://player/abilities/shoot/pistol_shoot.wav" type="AudioStream" id=6]
 [ext_resource path="res://player/abilities/shoot/rifle_shoot.wav" type="AudioStream" id=7]
 [ext_resource path="res://player/abilities/shoot/reload.wav" type="AudioStream" id=8]
-[ext_resource path="res://player/abilities/shoot/M1911.obj" type="ArrayMesh" id=9]
+[ext_resource path="res://player/abilities/shoot/Beretta.obj" type="ArrayMesh" id=9]
 [ext_resource path="res://player/abilities/shoot/AK-47.obj" type="ArrayMesh" id=10]
 [ext_resource path="res://player/abilities/shoot/Knife.obj" type="ArrayMesh" id=11]
 [ext_resource path="res://font/Theme.tres" type="Theme" id=12]
 [ext_resource path="res://font/Roboto-Regular.ttf" type="DynamicFontData" id=13]
 [ext_resource path="res://player/abilities/shoot/melee_hit.wav" type="AudioStream" id=14]
 [ext_resource path="res://player/abilities/laser/Laser.tscn" type="PackedScene" id=15]
+[ext_resource path="res://player/abilities/shoot/AK-47_silhouette.png" type="Texture" id=16]
+[ext_resource path="res://player/abilities/shoot/Beretta_M9_silhouette.png" type="Texture" id=17]
 
 [sub_resource type="DynamicFont" id=1]
 size = 50
@@ -124,9 +126,9 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -129.0
-margin_top = -251.0
-margin_right = -4.0
+margin_left = -205.0
+margin_top = -405.0
+margin_right = -25.0
 margin_bottom = -150.0
 alignment = 2
 __meta__ = {
@@ -134,76 +136,26 @@ __meta__ = {
 }
 
 [node name="ColorRect1" type="ColorRect" parent="HUD/BackgroundColor"]
-margin_top = 35.0
-margin_right = 125.0
-margin_bottom = 66.0
-rect_min_size = Vector2( 0, 31 )
+margin_top = 71.0
+margin_right = 180.0
+margin_bottom = 161.0
+rect_min_size = Vector2( 0, 90 )
 color = Color( 0, 0, 0, 0.25098 )
 
 [node name="ColorRect2" type="ColorRect" parent="HUD/BackgroundColor"]
-margin_top = 70.0
-margin_right = 125.0
-margin_bottom = 101.0
-rect_min_size = Vector2( 0, 31 )
-color = Color( 0, 0, 0, 0.1 )
-
-[node name="ColorRect3" type="ColorRect" parent="HUD/BackgroundColor"]
-visible = false
-margin_top = 70.0
-margin_right = 125.0
-margin_bottom = 101.0
-rect_min_size = Vector2( 0, 31 )
+margin_top = 165.0
+margin_right = 180.0
+margin_bottom = 255.0
+rect_min_size = Vector2( 0, 90 )
 color = Color( 0, 0, 0, 0.25098 )
-
-[node name="ContourHighlight" type="VBoxContainer" parent="HUD"]
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = -129.0
-margin_top = -251.0
-margin_right = -4.0
-margin_bottom = -150.0
-alignment = 2
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="ReferenceRect1" type="ReferenceRect" parent="HUD/ContourHighlight"]
-margin_top = 35.0
-margin_right = 125.0
-margin_bottom = 66.0
-rect_min_size = Vector2( 0, 31 )
-border_color = Color( 1, 1, 1, 1 )
-border_width = 2.0
-editor_only = false
-
-[node name="ReferenceRect2" type="ReferenceRect" parent="HUD/ContourHighlight"]
-margin_top = 70.0
-margin_right = 125.0
-margin_bottom = 101.0
-rect_min_size = Vector2( 0, 31 )
-border_color = Color( 1, 1, 1, 0 )
-border_width = 2.0
-editor_only = false
-
-[node name="ReferenceRect3" type="ReferenceRect" parent="HUD/ContourHighlight"]
-visible = false
-margin_top = 70.0
-margin_right = 125.0
-margin_bottom = 101.0
-rect_min_size = Vector2( 0, 31 )
-border_color = Color( 1, 1, 1, 0 )
-border_width = 2.0
-editor_only = false
 
 [node name="WeaponSelected" type="VBoxContainer" parent="HUD"]
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -126.0
-margin_top = -286.0
+margin_left = -249.0
+margin_top = -381.0
 margin_right = -4.0
 margin_bottom = -150.0
 alignment = 2
@@ -211,26 +163,84 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Weapon1" type="Label" parent="HUD/WeaponSelected"]
-margin_top = 70.0
-margin_right = 122.0
-margin_bottom = 101.0
-text = "1     AK-47"
+[node name="Primary" type="HBoxContainer" parent="HUD/WeaponSelected"]
+margin_top = 47.0
+margin_right = 245.0
+margin_bottom = 137.0
+alignment = 2
 
-[node name="Weapon2" type="Label" parent="HUD/WeaponSelected"]
-modulate = Color( 1, 1, 1, 0.501961 )
-margin_top = 105.0
-margin_right = 122.0
-margin_bottom = 136.0
-text = "2     M1911"
+[node name="VBoxContainer" type="VBoxContainer" parent="HUD/WeaponSelected/Primary"]
+margin_left = 47.0
+margin_right = 219.0
+margin_bottom = 90.0
 
-[node name="Weapon3" type="Label" parent="HUD/WeaponSelected"]
-visible = false
-modulate = Color( 1, 1, 1, 0.501961 )
-margin_top = 105.0
-margin_right = 136.0
-margin_bottom = 136.0
-text = "3     Knife"
+[node name="Label" type="Label" parent="HUD/WeaponSelected/Primary/VBoxContainer"]
+margin_right = 172.0
+margin_bottom = 31.0
+text = "AK-47"
+align = 2
+
+[node name="WeaponSilhouette" type="TextureRect" parent="HUD/WeaponSelected/Primary/VBoxContainer"]
+margin_top = 35.0
+margin_right = 172.0
+margin_bottom = 85.0
+texture = ExtResource( 16 )
+
+[node name="VSeparator" type="VSeparator" parent="HUD/WeaponSelected/Primary"]
+margin_left = 223.0
+margin_right = 227.0
+margin_bottom = 90.0
+rect_min_size = Vector2( 0, 90 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Slot" type="Label" parent="HUD/WeaponSelected/Primary"]
+margin_left = 231.0
+margin_top = 29.0
+margin_right = 245.0
+margin_bottom = 60.0
+text = "1"
+
+[node name="Secondary" type="HBoxContainer" parent="HUD/WeaponSelected"]
+modulate = Color( 1, 1, 1, 0.5 )
+margin_top = 141.0
+margin_right = 245.0
+margin_bottom = 231.0
+alignment = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HUD/WeaponSelected/Secondary"]
+margin_left = 96.0
+margin_right = 219.0
+margin_bottom = 90.0
+
+[node name="Label" type="Label" parent="HUD/WeaponSelected/Secondary/VBoxContainer"]
+margin_right = 123.0
+margin_bottom = 31.0
+text = "Beretta M9"
+align = 2
+
+[node name="WeaponSilhouette" type="TextureRect" parent="HUD/WeaponSelected/Secondary/VBoxContainer"]
+margin_top = 35.0
+margin_right = 123.0
+margin_bottom = 77.0
+texture = ExtResource( 17 )
+
+[node name="VSeparator" type="VSeparator" parent="HUD/WeaponSelected/Secondary"]
+margin_left = 223.0
+margin_right = 227.0
+margin_bottom = 90.0
+rect_min_size = Vector2( 0, 90 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Slot" type="Label" parent="HUD/WeaponSelected/Secondary"]
+margin_left = 231.0
+margin_top = 29.0
+margin_right = 245.0
+margin_bottom = 60.0
+text = "2"
 
 [node name="HealthText" type="Label" parent="HUD"]
 anchor_top = 1.0
@@ -323,10 +333,6 @@ text = "100"
 [node name="AttackTween" type="Tween" parent="."]
 
 [node name="InterfaceTween" type="Tween" parent="."]
-
-[node name="BackgroundColorTween" type="Tween" parent="."]
-
-[node name="SelectionTween" type="Tween" parent="."]
 
 [node name="LandingTween" type="Tween" parent="."]
 
