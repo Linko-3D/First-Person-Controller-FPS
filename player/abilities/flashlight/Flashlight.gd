@@ -18,9 +18,9 @@ func _input(event):
 			can_use = false
 			visible = !visible
 			if visible:
-				play_sound(light_on_sound, -10)
+				play_sound(light_on_sound, -25)
 			else:
-				play_sound(light_off_sound, -10)
+				play_sound(light_off_sound, -25)
 	else:
 		can_use = true
 		

@@ -57,7 +57,7 @@ material/0 = SubResource( 5 )
 
 [node name="ImpactSound" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource( 3 )
-unit_db = -5.0
+unit_db = -20.0
 max_db = 0.0
 autoplay = true
 

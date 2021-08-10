@@ -57,7 +57,7 @@ func _ready():
 	$HUD/DisplayAmmo/ClipText.text = str(clip)
 
 func _input(event):
-#	Getting the mouse movement for the weapon sway in the physics process
+	# Getting the mouse movement for the weapon sway in the physics process
 	if event is InputEventMouseMotion:
 		mouse_relative_x = clamp(event.relative.x, -50, 50)
 		mouse_relative_y = clamp(event.relative.y, -50, 10)
@@ -75,7 +75,7 @@ func _input(event):
 					switch_weapon()
 
 func _process(delta):
-	#	Animation when falling on the ground
+	# Animation when falling on the ground
 	if player.is_on_floor() and not player.snapped:
 		var max_rotation = clamp(player.gravity_vec.y, -20, 0) # Use the impact velocity for the angle and clamp the value
 		$LandingTween.interpolate_property($Torso, "rotation_degrees:x", 0, max_rotation, 0.2, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 0)
@@ -117,7 +117,7 @@ func _process(delta):
 		$Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp.rotation_degrees = lerp($Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp.rotation_degrees, $Torso/Position3D/LookAt.rotation_degrees, 10 * delta)
 	$Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp.rotation_degrees.z = 0
 
-#	Weapon sway
+	# Weapon sway
 	$Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway.rotation_degrees.z = lerp($Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway.rotation_degrees.z, -mouse_relative_x / 10, weapon_sway_amount * delta)
 	$Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway.rotation_degrees.y = lerp($Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway.rotation_degrees.y, mouse_relative_x / 20, weapon_sway_amount * delta)
 	$Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway.rotation_degrees.x = lerp($Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway.rotation_degrees.x, -mouse_relative_y / 10, weapon_sway_amount * delta)
@@ -153,7 +153,7 @@ func _process(delta):
 				shoot()
 				$FireRateTimer.start()
 			else:
-				play_sound(empty_sound, 0, 0)
+				play_sound(empty_sound, -15, 0)
 				$FireRateTimer.start()
 				
 			ammo_animation()
@@ -436,7 +436,7 @@ func attack_animation():
 
 	$AttackTween.interpolate_property(camera, "rotation_degrees", Vector3(), Vector3(-2, -5, 0), 0.25, Tween.TRANS_SINE, Tween.EASE_IN)
 	$AttackTween.interpolate_property(camera, "rotation_degrees", Vector3(-2, -5, 0), Vector3(2, 10, 0), 0.1, Tween.TRANS_SINE, Tween.EASE_OUT, 0.25)
-	#Hit
+	# Hit
 	$AttackTween.interpolate_property(camera, "rotation_degrees", Vector3(2, 10, 0), Vector3(-2, -2, 0), 0.4, Tween.TRANS_SINE, Tween.EASE_IN, 0.35)
 	$AttackTween.interpolate_property(camera, "rotation_degrees", Vector3(-2, -2, 0), Vector3(0, 0, 0), 0.25, Tween.TRANS_SINE, Tween.EASE_OUT, 0.75)
 	
@@ -468,4 +468,4 @@ func update_ammo_HUD():
 func _on_MeleeTimer_timeout():
 	if $MeleeRayCast.is_colliding():
 		spawn_impact($MeleeRayCast)
-		play_sound(melee_hit_sound, 0, 0)
+		play_sound(melee_hit_sound, -10, 0)

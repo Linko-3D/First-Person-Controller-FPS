@@ -19,7 +19,7 @@ material/0 = null
 
 [node name="ShellImpactSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 2 )
-volume_db = -10.0
+volume_db = -20.0
 
 [node name="AudioTimer" type="Timer" parent="."]
 wait_time = 0.75
