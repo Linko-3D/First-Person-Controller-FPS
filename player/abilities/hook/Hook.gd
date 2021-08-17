@@ -21,9 +21,11 @@ func _physics_process(delta):
 				get_collider().linear_velocity = vector * 1.5
 			can_use = false
 			can_use_input = false
+			$CanHook.border_width = 2
 	else:
 		destination = null
 		can_use_input = true
+		$CanHook.border_width = 1
 	
 	if destination:
 		var vector = (destination - player.global_transform.origin)

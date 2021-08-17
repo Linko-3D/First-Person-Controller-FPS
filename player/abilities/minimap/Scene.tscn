@@ -11,11 +11,10 @@ projection = 1
 current = true
 size = 50.0
 
-[node name="Display" type="Control" parent="."]
-anchor_right = 1.0
-anchor_bottom = 1.0
+[node name="Display" type="Position2D" parent="."]
+position = Vector2( 128, 128 )
 __meta__ = {
-"_edit_use_anchors_": false
+"_edit_group_": true
 }
 
 [node name="Player" type="ColorRect" parent="Display"]

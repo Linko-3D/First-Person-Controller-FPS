@@ -28,7 +28,7 @@ var ammo = weapon1_ammo
 var max_ammo = weapon1_max_ammo
 var clip = weapon1_clip
 
-var bullet_spread = 30
+var bullet_spread = 25
 
 var shooting_sound_echo = true
 
@@ -155,8 +155,7 @@ func _process(delta):
 			else:
 				play_sound(empty_sound, -15, 0)
 				$FireRateTimer.start()
-				
-			ammo_animation()
+				ammo_animation()
 	
 	if singleshot:
 		if Input.is_mouse_button_pressed(BUTTON_LEFT) or Input.get_joy_axis(0, 7) >= 0.5:
@@ -339,9 +338,6 @@ func weapon_bobbing_animation():
 		$VBobbingTween.start()
 
 func switch_weapon():
-	var background_color_active = Color(0, 0, 0, 0.25)
-	var background_color_inactive = Color(0, 0, 0, 0.1)
-	
 	var text_color_active = Color(1, 1, 1, 1)
 	var text_color_inactive = Color(1, 1, 1, 0.5)
 	
@@ -365,8 +361,6 @@ func switch_weapon():
 		clip = weapon2_clip
 		max_ammo = weapon2_max_ammo
 	
-	ammo_animation()
-	
 	update_ammo_HUD()
 	
 	$SwitchTween.interpolate_property($Torso/Position3D/SwitchAndAttack, "translation", Vector3(0, -0.25, -0.1), Vector3(), 0.3, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
@@ -374,14 +368,11 @@ func switch_weapon():
 	$SwitchTween.start()
 	
 	if weapon_selected == 1:
-		$InterfaceTween.interpolate_property($HUD/BackgroundColor/ColorRect1, "color", Color(1, 0.5, 0, 0.25), Color(0, 0, 0, 0.25), 0.25)
-		$InterfaceTween.start()
-		
 		$HUD/WeaponSelected/Primary.modulate = Color(1, 1, 1, 1)
 		$HUD/WeaponSelected/Secondary.modulate = Color(1, 1, 1, 0.5)
 		
-		$HUD/BackgroundColor/ColorRect1.color = background_color_active
-		$HUD/BackgroundColor/ColorRect2.color = background_color_inactive
+		$HUD/WeaponSelected/Primary/ColorRect.color = Color(0, 0.75, 1, 1)
+		$HUD/WeaponSelected/Secondary/ColorRect.color = Color(0, 0, 0, 1)
 		
 		weapon_position_z = -0.2
 		weapon.mesh = rifle_model
@@ -396,14 +387,11 @@ func switch_weapon():
 		$Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/MagazineSpawn.translation = Vector3(0, -0.11, -0.18)
 	
 	if weapon_selected == 2:
-		$InterfaceTween.interpolate_property($HUD/BackgroundColor/ColorRect2, "color", Color(1, 0.5, 0, 0.25), Color(0, 0, 0, 0.25), 0.25)
-		$InterfaceTween.start()
-		
 		$HUD/WeaponSelected/Primary.modulate = Color(1, 1, 1, 0.5)
 		$HUD/WeaponSelected/Secondary.modulate = Color(1, 1, 1, 1)
 		
-		$HUD/BackgroundColor/ColorRect1.color = background_color_inactive
-		$HUD/BackgroundColor/ColorRect2.color = background_color_active
+		$HUD/WeaponSelected/Primary/ColorRect.color = Color(0, 0, 0, 1)
+		$HUD/WeaponSelected/Secondary/ColorRect.color = Color(0, 0.75, 1, 1)
 		
 		weapon_position_z = -0.3
 		weapon.mesh = pistol_model
@@ -434,11 +422,11 @@ func attack_animation():
 	$AttackTween.interpolate_property($Torso/Position3D/SwitchAndAttack, "rotation_degrees", Vector3(-19.6, 130, 105), Vector3(34.5, 80, 35), 0.45, Tween.TRANS_SINE, Tween.EASE_IN, 0.35)
 	$AttackTween.interpolate_property($Torso/Position3D/SwitchAndAttack, "rotation_degrees", Vector3(34.5, 80, 35), Vector3(), 0.2, Tween.TRANS_SINE, Tween.EASE_OUT, 0.8)
 
-	$AttackTween.interpolate_property(camera, "rotation_degrees", Vector3(), Vector3(-2, -5, 0), 0.25, Tween.TRANS_SINE, Tween.EASE_IN)
-	$AttackTween.interpolate_property(camera, "rotation_degrees", Vector3(-2, -5, 0), Vector3(2, 10, 0), 0.1, Tween.TRANS_SINE, Tween.EASE_OUT, 0.25)
+#	$AttackTween.interpolate_property(camera, "rotation_degrees", Vector3(), Vector3(-2, -5, 0), 0.25, Tween.TRANS_SINE, Tween.EASE_IN)
+#	$AttackTween.interpolate_property(camera, "rotation_degrees", Vector3(-2, -5, 0), Vector3(2, 10, 0), 0.1, Tween.TRANS_SINE, Tween.EASE_OUT, 0.25)
 	# Hit
-	$AttackTween.interpolate_property(camera, "rotation_degrees", Vector3(2, 10, 0), Vector3(-2, -2, 0), 0.4, Tween.TRANS_SINE, Tween.EASE_IN, 0.35)
-	$AttackTween.interpolate_property(camera, "rotation_degrees", Vector3(-2, -2, 0), Vector3(0, 0, 0), 0.25, Tween.TRANS_SINE, Tween.EASE_OUT, 0.75)
+#	$AttackTween.interpolate_property(camera, "rotation_degrees", Vector3(2, 10, 0), Vector3(-2, -2, 0), 0.4, Tween.TRANS_SINE, Tween.EASE_IN, 0.35)
+#	$AttackTween.interpolate_property(camera, "rotation_degrees", Vector3(-2, -2, 0), Vector3(0, 0, 0), 0.25, Tween.TRANS_SINE, Tween.EASE_OUT, 0.75)
 	
 	$AttackTween.start()
 
@@ -450,14 +438,10 @@ func _on_SpawnMagazineTimer_timeout():
 
 func _on_ReloadTween_tween_all_completed():
 	calculate_ammo()
-	ammo_animation()
 
 func ammo_animation():
-	var color = Color(1, 0.5, 0, 0.25)
+	var color = Color(1, 0, 0, 0.5)
 	
-	if ammo == 0:
-		color = Color(1, 0, 0, 0.5)
-		
 	$InterfaceTween.interpolate_property($HUD/AmmoBackgroundColor, "color", color, Color(0, 0, 0, 0.25), 0.25)
 	$InterfaceTween.start()
 

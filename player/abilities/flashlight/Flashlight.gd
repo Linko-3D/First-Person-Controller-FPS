@@ -31,8 +31,8 @@ func _input(event):
 
 func _process(delta):
 	#	Weapon sway
-	$SpotLight.rotation_degrees.y = lerp($SpotLight.rotation_degrees.y, -mouse_relative_x / 10, sway_amount * delta)
-	$SpotLight.rotation_degrees.x = lerp($SpotLight.rotation_degrees.x, -mouse_relative_y / 5, sway_amount * delta)
+	$SpotLight.rotation_degrees.y = lerp($SpotLight.rotation_degrees.y, mouse_relative_x / 10, sway_amount * delta)
+	$SpotLight.rotation_degrees.x = lerp($SpotLight.rotation_degrees.x, -mouse_relative_y / 10, sway_amount * delta)
 
 func play_sound(sound, volume):
 	var audio_node = AudioStreamPlayer.new()
