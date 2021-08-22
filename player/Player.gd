@@ -28,6 +28,8 @@ var crouched = false
 var toggle_mode_crouch = false
 var can_press_crouch = true
 
+var in_water = false
+
 # Data:
 var player_speed = 0
 var falling_velocity = 0
@@ -95,7 +97,10 @@ func _physics_process(delta):
 			gravity_vec = Vector3()
 			snapped = false
 		else:
-			gravity_vec += Vector3.DOWN * gravity * delta
+			if not in_water:
+				gravity_vec += Vector3.DOWN * gravity * delta
+			else:
+				gravity_vec = Vector3.ZERO
 	
 	if is_on_floor():
 		if Input.is_key_pressed(KEY_SHIFT) or Input.get_joy_axis(0, 6) >= 0.6:
@@ -168,3 +173,11 @@ func crouch_animation(button_pressed):
 			$CrouchTween.interpolate_property($Head, "translation:y", $Head.translation.y, 1.6, 0.2, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
 			$CrouchTween.start()
 			crouched = false
+
+func _on_Area_area_entered(area):
+	if area.is_in_group("water"):
+		in_water = true
+
+func _on_Area_area_exited(area):
+	if area.is_in_group("water"):
+		in_water = false

@@ -371,7 +371,7 @@ func switch_weapon():
 		$HUD/WeaponSelected/Primary.modulate = Color(1, 1, 1, 1)
 		$HUD/WeaponSelected/Secondary.modulate = Color(1, 1, 1, 0.5)
 		
-		$HUD/WeaponSelected/Primary/ColorRect.color = Color(0, 0.75, 1, 1)
+		$HUD/WeaponSelected/Primary/ColorRect.color = Color(1, 1, 1, 1)
 		$HUD/WeaponSelected/Secondary/ColorRect.color = Color(0, 0, 0, 1)
 		
 		weapon_position_z = -0.2
@@ -391,7 +391,7 @@ func switch_weapon():
 		$HUD/WeaponSelected/Secondary.modulate = Color(1, 1, 1, 1)
 		
 		$HUD/WeaponSelected/Primary/ColorRect.color = Color(0, 0, 0, 1)
-		$HUD/WeaponSelected/Secondary/ColorRect.color = Color(0, 0.75, 1, 1)
+		$HUD/WeaponSelected/Secondary/ColorRect.color = Color(1, 1, 1, 1)
 		
 		weapon_position_z = -0.3
 		weapon.mesh = pistol_model
