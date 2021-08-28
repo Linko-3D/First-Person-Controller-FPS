@@ -1,0 +1,68 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://font/Theme.tres" type="Theme" id=1]
+[ext_resource path="res://player/abilities/tutorial/Tutorial.gd" type="Script" id=2]
+
+[node name="Tutorial" type="Control"]
+modulate = Color( 1, 0.5, 0, 1 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 1 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 0.75 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = -4.0
+margin_bottom = -4.0
+text = "First Person Controller inputs:
+Moving: WASD or ZQSD or left analog
+Camera look: mouse movement or right analog
+Jumping: space bar or A on Xbox controller or X on PS controller
+Crouching: hold Ctrl
+Crouching (toggle): C or B on Xbox controller or Circle on PS controller
+Walking: hold shift or hold L2
+
+Shooting: left click or R2
+Reloading: R or X on XBox controller or Square on PS controller
+Melee attack: middle mouse button or R3
+
+Double jump: while in the air space bar or A on Xbox controller or X on PS controller
+Flashlight (toggle): F or L1
+Grabbing/releasing (toggle): E or Y on Xbox controller or Triangle on PS controller
+Throwing: Left click or R2
+Hook: hold right click or R1"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="."]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -285.0
+margin_top = -184.0
+margin_right = 286.0
+margin_bottom = -100.0
+text = "-- Press space bar or A on XBox controller to hide --"
+align = 1
+valign = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Tween" type="Tween" parent="."]

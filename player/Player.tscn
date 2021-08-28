@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://player/Player.gd" type="Script" id=1]
 [ext_resource path="res://player/abilities/grab/Grab.tscn" type="PackedScene" id=2]
@@ -9,6 +9,8 @@
 [ext_resource path="res://player/abilities/minimap/Minimap.tscn" type="PackedScene" id=7]
 [ext_resource path="res://player/abilities/hook/Hook.tscn" type="PackedScene" id=8]
 [ext_resource path="res://player/abilities/double_jump/DoubleJump.tscn" type="PackedScene" id=9]
+[ext_resource path="res://font/Theme.tres" type="Theme" id=10]
+[ext_resource path="res://player/abilities/tutorial/Tutorial.tscn" type="PackedScene" id=11]
 
 [sub_resource type="CubeMesh" id=4]
 size = Vector3( 0.5, 0.1, 0.5 )
@@ -52,6 +54,8 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.6, 0 )
 
 [node name="Minimap" parent="Head/Camera" instance=ExtResource( 7 )]
 
+[node name="Tutorial" parent="Head/Camera" instance=ExtResource( 11 )]
+
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
 shape = SubResource( 2 )
@@ -70,6 +74,21 @@ shape = SubResource( 2 )
 [node name="CrouchTween" type="Tween" parent="."]
 
 [node name="LandTween" type="Tween" parent="."]
+
+[node name="CrouchLocked" type="Label" parent="."]
+modulate = Color( 1, 0.5, 0, 1 )
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = -227.0
+margin_right = 279.0
+margin_bottom = -150.0
+theme = ExtResource( 10 )
+text = "[Crouch locked]"
+valign = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [connection signal="area_entered" from="Area" to="." method="_on_Area_area_entered"]
 [connection signal="area_exited" from="Area" to="." method="_on_Area_area_exited"]

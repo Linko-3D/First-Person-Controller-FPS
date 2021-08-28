@@ -145,7 +145,7 @@ func _process(delta):
 	else:
 		can_attack = true
 	
-	if Input.is_mouse_button_pressed(BUTTON_LEFT) or Input.get_joy_axis(0, 7) >= 0.5:
+	if Input.is_mouse_button_pressed(BUTTON_LEFT) or Input.get_joy_axis(0, 7) >= 0.6:
 		if $FireRateTimer.is_stopped() and can_shoot:
 			if ammo > 0:
 				if Input.get_joy_axis(0, 7) >= 0.5:
@@ -158,7 +158,7 @@ func _process(delta):
 				ammo_animation()
 	
 	if singleshot:
-		if Input.is_mouse_button_pressed(BUTTON_LEFT) or Input.get_joy_axis(0, 7) >= 0.5:
+		if Input.is_mouse_button_pressed(BUTTON_LEFT) or Input.get_joy_axis(0, 7) >= 0.6:
 			can_shoot = false
 		else:
 			can_shoot = true

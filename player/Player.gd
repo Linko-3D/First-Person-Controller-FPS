@@ -37,6 +37,7 @@ var falling_velocity = 0
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	$Head/DirectionIndicator.hide()
+	$CrouchLocked.hide()
 
 func _input(event):
 	# Look with the mouse
@@ -113,6 +114,7 @@ func _physics_process(delta):
 	
 	if Input.is_key_pressed(KEY_SPACE) or Input.is_joy_button_pressed(0, JOY_XBOX_A):
 		if is_on_floor() and can_jump:
+			$CrouchLocked.hide()
 			jump()
 			snapped = false
 			can_jump = false
@@ -126,6 +128,7 @@ func _physics_process(delta):
 	
 	if Input.is_key_pressed(KEY_CONTROL):
 		toggle_mode_crouch = false
+		$CrouchLocked.hide()
 		crouch_animation(true)
 	else:
 		if not toggle_mode_crouch:
@@ -133,6 +136,10 @@ func _physics_process(delta):
 	
 	if Input.is_key_pressed(KEY_C) or Input.is_joy_button_pressed(0, JOY_XBOX_B):
 		toggle_mode_crouch = true
+		if crouched:
+			$CrouchLocked.show()
+		else:
+			$CrouchLocked.hide()
 		if can_press_crouch:
 			can_press_crouch = false
 			crouch_animation(!crouched)
@@ -146,7 +153,6 @@ func _physics_process(delta):
 	movement.y = gravity_vec.y
 	
 	movement = move_and_slide(movement, Vector3.UP)
-	print($CollisionShape.shape.height)
 	
 	player_speed = movement.length()
 

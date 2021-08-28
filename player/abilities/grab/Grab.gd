@@ -43,7 +43,6 @@ func _physics_process(delta):
 					object_grabbed.rotation_degrees.z = 0
 					if Input.is_mouse_button_pressed(BUTTON_LEFT) or Input.get_joy_axis(0, 7) >= 0.6:
 						throw_pressed = true
-						print(throw_pressed)
 			else:
 				release()
 	else:
