@@ -363,11 +363,16 @@ func switch_weapon():
 	
 	update_ammo_HUD()
 	
+	ammo_animation()
+	
 	$SwitchTween.interpolate_property($Torso/Position3D/SwitchAndAttack, "translation", Vector3(0, -0.25, -0.1), Vector3(), 0.3, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
 	$SwitchTween.interpolate_property($Torso/Position3D/SwitchAndAttack, "rotation_degrees", Vector3(-30, 20, 10), Vector3(), 0.3, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
 	$SwitchTween.start()
 	
 	if weapon_selected == 1:
+		$InterfaceTween.interpolate_property($HUD/BackgroundColor/ColorRect1, "color", Color(1, 1, 1, 0.5), Color(0, 0, 0, 0.25), 0.25)
+		$InterfaceTween.start()
+		
 		$HUD/WeaponSelected/Primary.modulate = Color(1, 1, 1, 1)
 		$HUD/WeaponSelected/Secondary.modulate = Color(1, 1, 1, 0.5)
 		
@@ -387,6 +392,9 @@ func switch_weapon():
 		$Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/MagazineSpawn.translation = Vector3(0, -0.11, -0.18)
 	
 	if weapon_selected == 2:
+		$InterfaceTween.interpolate_property($HUD/BackgroundColor/ColorRect2, "color", Color(1, 1, 1, 0.5), Color(0, 0, 0, 0.25), 0.25)
+		$InterfaceTween.start()
+		
 		$HUD/WeaponSelected/Primary.modulate = Color(1, 1, 1, 0.5)
 		$HUD/WeaponSelected/Secondary.modulate = Color(1, 1, 1, 1)
 		
@@ -438,9 +446,13 @@ func _on_SpawnMagazineTimer_timeout():
 
 func _on_ReloadTween_tween_all_completed():
 	calculate_ammo()
+	ammo_animation()
 
 func ammo_animation():
-	var color = Color(1, 0, 0, 0.5)
+	var color = Color(1, 0.5, 0, 0.5)
+	
+	if ammo == 0:
+		color = Color(1, 0, 0, 0.5)
 	
 	$InterfaceTween.interpolate_property($HUD/AmmoBackgroundColor, "color", color, Color(0, 0, 0, 0.25), 0.25)
 	$InterfaceTween.start()
@@ -453,3 +465,13 @@ func _on_MeleeTimer_timeout():
 	if $MeleeRayCast.is_colliding():
 		spawn_impact($MeleeRayCast)
 		play_sound(melee_hit_sound, -10, 0)
+
+func _on_Button1_pressed():
+	if weapon_selected != 1:
+		weapon_selected = 1
+		switch_weapon()
+
+func _on_Button2_pressed():
+	if weapon_selected != 2:
+		weapon_selected = 2
+		switch_weapon()

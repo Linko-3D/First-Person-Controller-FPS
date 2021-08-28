@@ -36,6 +36,7 @@ var falling_velocity = 0
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	$Head/DirectionIndicator.hide()
 
 func _input(event):
 	# Look with the mouse
@@ -112,9 +113,9 @@ func _physics_process(delta):
 	
 	if Input.is_key_pressed(KEY_SPACE) or Input.is_joy_button_pressed(0, JOY_XBOX_A):
 		if is_on_floor() and can_jump:
+			jump()
 			snapped = false
 			can_jump = false
-			jump()
 			if toggle_mode_crouch:
 				crouch_animation(false)
 	else:
@@ -145,6 +146,7 @@ func _physics_process(delta):
 	movement.y = gravity_vec.y
 	
 	movement = move_and_slide(movement, Vector3.UP)
+	print($CollisionShape.shape.height)
 	
 	player_speed = movement.length()
 
@@ -161,16 +163,16 @@ func land_animation():
 func crouch_animation(button_pressed):
 	if button_pressed:
 		if not crouched:
-			$CrouchTween.interpolate_property($MeshInstance, "mesh:mid_height", $MeshInstance.mesh.mid_height, 0.25, 0.2, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
-			$CrouchTween.interpolate_property($CollisionShape, "shape:height", $CollisionShape.shape.height, 0.25, 0.2, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
-			$CrouchTween.interpolate_property($Head, "translation:y", $Head.translation.y, 1.35, 0.2, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+			$CrouchTween.interpolate_property($MeshInstance, "mesh:height", 2, 1.5, 0.2, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+			$CrouchTween.interpolate_property($CollisionShape, "shape:height", 2, 1.5, 0.2, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+			$CrouchTween.interpolate_property($Head, "translation:y", 1.8, 1.55, 0.2, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
 			$CrouchTween.start()
 			crouched = true
 	else:
 		if crouched:
-			$CrouchTween.interpolate_property($MeshInstance, "mesh:mid_height", $MeshInstance.mesh.mid_height, 0.75, 0.2, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
-			$CrouchTween.interpolate_property($CollisionShape, "shape:height", $CollisionShape.shape.height, 0.75, 0.2, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
-			$CrouchTween.interpolate_property($Head, "translation:y", $Head.translation.y, 1.6, 0.2, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+			$CrouchTween.interpolate_property($MeshInstance, "mesh:height", 1.5, 2, 0.2, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+			$CrouchTween.interpolate_property($CollisionShape, "shape:height", 1.5, 2, 0.2, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+			$CrouchTween.interpolate_property($Head, "translation:y", 1.55, 1.8, 0.2, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
 			$CrouchTween.start()
 			crouched = false
 
