@@ -37,14 +37,16 @@ Crouching (toggle): C or B on Xbox controller or Circle on PS controller
 Walking: hold shift or hold L2
 
 Shooting: left click or R2
-Reloading: R or X on XBox controller or Square on PS controller
+Reloading: R or X on Xbox controller or Square on PS controller
 Melee attack: middle mouse button or R3
 
 Double jump: while in the air space bar or A on Xbox controller or X on PS controller
 Flashlight (toggle): F or L1
 Grabbing/releasing (toggle): E or Y on Xbox controller or Triangle on PS controller
 Throwing: Left click or R2
-Hook: hold right click or R1"
+Hook: hold right click or R1
+
+If you don't want this message to appear again remove the \"Tutorial\" instance from the Player Camera node."
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -57,7 +59,7 @@ anchor_bottom = 1.0
 margin_left = -285.0
 margin_top = -184.0
 margin_right = 286.0
-margin_bottom = -100.0
+margin_bottom = -50.0
 text = "-- Press space bar or A on Xbox controller to hide --"
 align = 1
 valign = 2

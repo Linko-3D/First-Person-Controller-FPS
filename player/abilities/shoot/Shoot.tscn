@@ -62,9 +62,9 @@ cast_to = Vector3( 0, 0, -1000 )
 [node name="Laser" parent="BulletSpread/RayCast" instance=ExtResource( 15 )]
 
 [node name="MeleeRayCast" type="RayCast" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.333, 0.127, -0.35 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.333, 0.127, -0.200169 )
 enabled = true
-cast_to = Vector3( 0, 0, -0.51 )
+cast_to = Vector3( 0, 0, -0.66 )
 
 [node name="Torso" type="Position3D" parent="."]
 

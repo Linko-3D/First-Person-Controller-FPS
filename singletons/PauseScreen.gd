@@ -14,9 +14,9 @@ func _ready():
 
 func _process(delta):
 	if not $Tween.is_active():
-		$Tween.interpolate_property($Label, "modulate", Color(1, 0.5, 0, 1), Color(1, 0.5, 0, 1), 1, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
-		$Tween.interpolate_property($Label, "modulate", Color(1, 0.5, 0, 1), Color(1, 0.5, 0, 0), 0.25, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 1)
-		$Tween.interpolate_property($Label, "modulate", Color(1, 0.5, 0, 0), Color(1, 0.5, 0, 1), 0.25, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 1.25)
+		$Tween.interpolate_property($Label, "modulate", Color(1, 1, 1, 1), Color(1, 1, 1, 1), 1, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+		$Tween.interpolate_property($Label, "modulate", Color(1, 1, 1, 1), Color(1, 1, 1, 0), 0.25, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 1)
+		$Tween.interpolate_property($Label, "modulate", Color(1, 1, 1, 0), Color(1, 1, 1, 1), 0.25, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 1.25)
 		$Tween.start()
 
 func _input(event):
