@@ -370,6 +370,8 @@ func switch_weapon():
 	$SwitchTween.start()
 	
 	if weapon_selected == 1:
+		$Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/Weapon/Laser.translation = Vector3(0, 0.05, -0.28)
+		
 		$InterfaceTween.interpolate_property($HUD/BackgroundColor/ColorRect1, "color", Color(1, 1, 1, 0.5), Color(0, 0, 0, 0.25), 0.25)
 		$InterfaceTween.start()
 		
@@ -392,6 +394,8 @@ func switch_weapon():
 		$Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/MagazineSpawn.translation = Vector3(0, -0.11, -0.18)
 	
 	if weapon_selected == 2:
+		$Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/Weapon/Laser.translation = Vector3(0, 0.013, -0.006)
+		
 		$InterfaceTween.interpolate_property($HUD/BackgroundColor/ColorRect2, "color", Color(1, 1, 1, 0.5), Color(0, 0, 0, 0.25), 0.25)
 		$InterfaceTween.start()
 		

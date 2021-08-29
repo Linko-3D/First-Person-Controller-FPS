@@ -11,6 +11,9 @@ var can_use_input = true
 var mass_limit = 50
 
 func _physics_process(delta):
+	if is_colliding():
+		$Position3D.look_at(get_collision_point(), Vector3.UP)
+	
 	if Input.is_mouse_button_pressed(BUTTON_RIGHT) or Input.is_joy_button_pressed(0, JOY_R):
 		if can_use_input and can_use:
 			if get_collider() is StaticBody or get_collider() is CSGPrimitive or (get_collider() is RigidBody and get_collider().mass > mass_limit):
@@ -37,7 +40,7 @@ func _physics_process(delta):
 			$Timer.start()
 	else:
 		if is_colliding():
-			$CanHook.border_color = Color(1, 0, 0)
+			$CanHook.border_color = Color(1, 0.5, 0)
 		else:
 			$CanHook.border_color = Color(0, 0, 0, 0)
 			
