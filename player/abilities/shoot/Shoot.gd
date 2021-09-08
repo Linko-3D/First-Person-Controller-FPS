@@ -108,7 +108,7 @@ func _process(delta):
 		else:
 			can_switch_joy_dpad = true
 		
-	
+	# Uses a lerp to copy to smoothly copy the rotation on the LookAt node
 	if $BulletSpread/RayCast.is_colliding() and not $LandingTween.is_active():
 		$Torso/Position3D/LookAt.look_at($BulletSpread/RayCast.get_collision_point(), Vector3.UP)
 		$Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp.rotation_degrees = lerp($Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp.rotation_degrees, $Torso/Position3D/LookAt.rotation_degrees, 10 * delta)
@@ -309,11 +309,10 @@ func pistol_shoot_animation():
 	$ShootTween.start()
 
 func camera_shake():
-	randomize()
-	var value = rand_range(0.5, 1.5)
 	$ShootTween.interpolate_property(camera, "rotation_degrees:x", 0, 1, 0.05, Tween.TRANS_SINE, Tween.EASE_OUT)
 	$ShootTween.interpolate_property(camera, "rotation_degrees:x", 1, 0, 0.05, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 0.05)
-	value = rand_range(-1, 1)
+	randomize()
+	var value = rand_range(-0.5, 0.5)
 	$ShootTween.interpolate_property(camera, "rotation_degrees:y", 0, value, 0.05, Tween.TRANS_SINE, Tween.EASE_OUT)
 	$ShootTween.interpolate_property(camera, "rotation_degrees:y", value, 0, 0.05, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 0.05)
 	$ShootTween.start()
@@ -453,12 +452,12 @@ func _on_ReloadTween_tween_all_completed():
 	ammo_animation()
 
 func ammo_animation():
-	var color = Color(1, 0.5, 0, 0.5)
+	var color = Color(1, 1, 1, 0.5)
 	
 	if ammo == 0:
 		color = Color(1, 0, 0, 0.5)
 	
-	$InterfaceTween.interpolate_property($HUD/AmmoBackgroundColor, "color", color, Color(0, 0, 0, 0.25), 0.25)
+	$InterfaceTween.interpolate_property($HUD/AmmoBackgroundColor, "color", color, Color(0.13, 0.14, 0.19, 0.5), 0.25)
 	$InterfaceTween.start()
 
 func update_ammo_HUD():

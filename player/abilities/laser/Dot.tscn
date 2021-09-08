@@ -5,6 +5,7 @@ radius = 0.02
 height = 0.04
 
 [sub_resource type="SpatialMaterial" id=2]
+flags_transparent = true
 albedo_color = Color( 1, 0, 0, 1 )
 emission_enabled = true
 emission = Color( 1, 0, 0, 1 )

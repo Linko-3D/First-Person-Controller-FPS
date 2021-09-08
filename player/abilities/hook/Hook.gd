@@ -40,7 +40,7 @@ func _physics_process(delta):
 			$Timer.start()
 	else:
 		if is_colliding():
-			$CanHook.border_color = Color(1, 0.5, 0)
+			$CanHook.border_color = Color(1, 1, 1, 0.5)
 		else:
 			$CanHook.border_color = Color(0, 0, 0, 0)
 			

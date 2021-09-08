@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://player/Player.gd" type="Script" id=1]
 [ext_resource path="res://player/abilities/grab/Grab.tscn" type="PackedScene" id=2]
@@ -12,15 +12,19 @@
 [ext_resource path="res://font/Theme.tres" type="Theme" id=10]
 [ext_resource path="res://player/abilities/tutorial/Tutorial.tscn" type="PackedScene" id=11]
 
-[sub_resource type="PrismMesh" id=2]
+[sub_resource type="PrismMesh" id=1]
 size = Vector3( 0.5, 1, 0.1 )
 
-[sub_resource type="CylinderShape" id=3]
+[sub_resource type="CylinderShape" id=2]
 radius = 0.4
 
-[sub_resource type="CylinderMesh" id=4]
+[sub_resource type="CylinderMesh" id=3]
 top_radius = 0.4
 bottom_radius = 0.4
+
+[sub_resource type="CylinderShape" id=4]
+radius = 0.4
+height = 0.5
 
 [node name="Player" type="KinematicBody" groups=[
 "player",
@@ -32,7 +36,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0 )
 
 [node name="DirectionIndicator" type="MeshInstance" parent="Head"]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, -0.75 )
-mesh = SubResource( 2 )
+mesh = SubResource( 1 )
 material/0 = null
 
 [node name="Camera" type="Camera" parent="Head"]
@@ -58,22 +62,24 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.6, 0 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
-shape = SubResource( 3 )
+shape = SubResource( 2 )
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, -1, -8.74228e-08, 0, 8.74228e-08, -1, 0, 1, 0 )
-mesh = SubResource( 4 )
+mesh = SubResource( 3 )
 material/0 = null
 
 [node name="Area" type="Area" parent="."]
 
 [node name="CollisionShape" type="CollisionShape" parent="Area"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
-shape = SubResource( 3 )
+shape = SubResource( 2 )
 
-[node name="CrouchTween" type="Tween" parent="."]
+[node name="CanUncrouch" type="Area" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0 )
 
-[node name="LandTween" type="Tween" parent="."]
+[node name="CollisionShape" type="CollisionShape" parent="CanUncrouch"]
+shape = SubResource( 4 )
 
 [node name="CrouchLocked" type="Label" parent="."]
 modulate = Color( 1, 0.5, 0, 1 )
@@ -89,6 +95,10 @@ valign = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="CrouchTween" type="Tween" parent="."]
+
+[node name="LandTween" type="Tween" parent="."]
 
 [connection signal="area_entered" from="Area" to="." method="_on_Area_area_entered"]
 [connection signal="area_exited" from="Area" to="." method="_on_Area_area_exited"]

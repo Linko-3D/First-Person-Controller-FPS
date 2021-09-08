@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://player/abilities/shoot/Shell.tscn" type="PackedScene" id=1]
 [ext_resource path="res://player/abilities/shoot/Impact.tscn" type="PackedScene" id=2]
@@ -18,11 +18,9 @@
 [ext_resource path="res://player/abilities/shoot/AK-47_silhouette.png" type="Texture" id=16]
 [ext_resource path="res://player/abilities/shoot/Beretta_M9_silhouette.png" type="Texture" id=17]
 
-[sub_resource type="DynamicFont" id=1]
-size = 25
-outline_size = 2
-outline_color = Color( 0, 0, 0, 1 )
-font_data = ExtResource( 13 )
+[sub_resource type="SpatialMaterial" id=1]
+albedo_color = Color( 0.501961, 0.501961, 0.501961, 1 )
+roughness = 0.5
 
 [sub_resource type="DynamicFont" id=2]
 size = 25
@@ -31,13 +29,19 @@ outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 13 )
 
 [sub_resource type="DynamicFont" id=3]
+size = 25
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 13 )
+
+[sub_resource type="DynamicFont" id=4]
 size = 50
 outline_size = 2
 outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 13 )
 
-[sub_resource type="Theme" id=4]
-default_font = SubResource( 3 )
+[sub_resource type="Theme" id=5]
+default_font = SubResource( 4 )
 
 [node name="Shoot" type="Spatial"]
 script = ExtResource( 4 )
@@ -82,7 +86,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.11, -0.18 )
 
 [node name="Weapon" type="MeshInstance" parent="Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway"]
 mesh = ExtResource( 10 )
-material/0 = null
+material/0 = SubResource( 1 )
 
 [node name="ShellSpawn" type="Position3D" parent="Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/Weapon"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.025, 0.01, -0.2 )
@@ -99,7 +103,6 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, -0.28 )
 [node name="LookAt" type="Position3D" parent="Torso/Position3D"]
 
 [node name="HUD" type="Control" parent="."]
-modulate = Color( 1, 0.501961, 0, 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 theme = ExtResource( 12 )
@@ -117,7 +120,7 @@ margin_left = -360.667
 margin_top = -64.0
 margin_right = -90.6674
 margin_bottom = -4.0
-color = Color( 0, 0, 0, 0.25098 )
+color = Color( 0.129412, 0.141176, 0.188235, 0.501961 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -129,7 +132,7 @@ margin_left = 90.0
 margin_top = -64.0
 margin_right = 305.0
 margin_bottom = -4.0
-color = Color( 0, 0, 0, 0.25098 )
+color = Color( 0.129412, 0.141176, 0.188235, 0.501961 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -153,14 +156,14 @@ margin_top = 81.0
 margin_right = 181.0
 margin_bottom = 166.0
 rect_min_size = Vector2( 0, 85 )
-color = Color( 0, 0, 0, 0.25098 )
+color = Color( 0.129412, 0.141176, 0.188235, 0.501961 )
 
 [node name="ColorRect2" type="ColorRect" parent="HUD/BackgroundColor"]
 margin_top = 170.0
 margin_right = 181.0
 margin_bottom = 255.0
 rect_min_size = Vector2( 0, 85 )
-color = Color( 0, 0, 0, 0.25098 )
+color = Color( 0.129412, 0.141176, 0.188235, 0.501961 )
 
 [node name="WeaponSelected" type="VBoxContainer" parent="HUD"]
 anchor_left = 1.0
@@ -257,7 +260,7 @@ margin_left = 100.0
 margin_top = -40.0
 margin_right = 173.0
 margin_bottom = -9.0
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = SubResource( 2 )
 text = "Health"
 valign = 2
 __meta__ = {
@@ -273,7 +276,7 @@ margin_left = -350.0
 margin_top = -40.0
 margin_right = -230.0
 margin_bottom = -9.0
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = SubResource( 3 )
 text = "Ammo     "
 valign = 2
 __meta__ = {
@@ -289,7 +292,7 @@ margin_left = -349.0
 margin_top = -64.0
 margin_right = -100.0
 margin_bottom = -4.0
-theme = SubResource( 4 )
+theme = SubResource( 5 )
 alignment = 2
 __meta__ = {
 "_edit_use_anchors_": false
@@ -320,7 +323,7 @@ margin_left = 210.0
 margin_top = -64.0
 margin_right = 338.0
 margin_bottom = -4.0
-theme = SubResource( 4 )
+theme = SubResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -397,6 +400,10 @@ wait_time = 0.35
 one_shot = true
 
 [node name="Tween" type="Tween" parent="."]
+
+[node name="Node2D" type="Node2D" parent="."]
+
+[node name="Camera2D" type="Camera2D" parent="."]
 
 [connection signal="pressed" from="HUD/Buttons/Button1" to="." method="_on_Button1_pressed"]
 [connection signal="pressed" from="HUD/Buttons/Button2" to="." method="_on_Button2_pressed"]

@@ -49,6 +49,7 @@ func _input(event):
 	direction = Vector3()
 
 func _physics_process(delta):
+	
 	# Look with the right analog of the joystick
 	if Input.get_joy_axis(0, 2) < -joystick_deadzone or Input.get_joy_axis(0, 2) > joystick_deadzone:
 		rotation_degrees.y -= Input.get_joy_axis(0, 2) * 2
