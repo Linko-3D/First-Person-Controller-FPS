@@ -371,14 +371,14 @@ func switch_weapon():
 	if weapon_selected == 1:
 		$Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/Weapon/Laser.translation = Vector3(0, 0.05, -0.28)
 		
-		$InterfaceTween.interpolate_property($HUD/BackgroundColor/ColorRect1, "color", Color(1, 1, 1, 0.5), Color(0.13, 0.14, 0.19, 0.5), 0.25)
+		$InterfaceTween.interpolate_property($HUD/BackgroundColor/ColorRect1, "color", Color(0, 1, 1, 0.5), Color(0, 0, 0, 0.5), 0.25)
 		$InterfaceTween.start()
 		
 		$HUD/WeaponSelected/Primary.modulate = Color(1, 1, 1, 1)
 		$HUD/WeaponSelected/Secondary.modulate = Color(1, 1, 1, 0.5)
 		
-		$HUD/WeaponSelected/Primary/ColorRect.color = Color(1, 1, 1, 1)
-		$HUD/WeaponSelected/Secondary/ColorRect.color = Color(0, 0, 0, 1)
+		$HUD/WeaponSelected/Primary/Selector.color = Color(0, 1, 1, 1)
+		$HUD/WeaponSelected/Secondary/Selector.color = Color(0, 0, 0, 1)
 		
 		weapon_position_z = -0.2
 		weapon.mesh = rifle_model
@@ -395,14 +395,14 @@ func switch_weapon():
 	if weapon_selected == 2:
 		$Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/Weapon/Laser.translation = Vector3(0, 0.013, -0.006)
 		
-		$InterfaceTween.interpolate_property($HUD/BackgroundColor/ColorRect2, "color", Color(1, 1, 1, 0.5), Color(0.13, 0.14, 0.19, 0.5), 0.25)
+		$InterfaceTween.interpolate_property($HUD/BackgroundColor/ColorRect2, "color", Color(0, 1, 1, 0.5), Color(0, 0, 0, 0.5), 0.25)
 		$InterfaceTween.start()
 		
 		$HUD/WeaponSelected/Primary.modulate = Color(1, 1, 1, 0.5)
 		$HUD/WeaponSelected/Secondary.modulate = Color(1, 1, 1, 1)
 		
-		$HUD/WeaponSelected/Primary/ColorRect.color = Color(0, 0, 0, 1)
-		$HUD/WeaponSelected/Secondary/ColorRect.color = Color(1, 1, 1, 1)
+		$HUD/WeaponSelected/Primary/Selector.color = Color(0, 0, 0, 1)
+		$HUD/WeaponSelected/Secondary/Selector.color = Color(0, 1, 1, 1)
 		
 		weapon_position_z = -0.3
 		weapon.mesh = pistol_model
@@ -452,12 +452,12 @@ func _on_ReloadTween_tween_all_completed():
 	ammo_animation()
 
 func ammo_animation():
-	var color = Color(1, 1, 1, 0.5)
+	var color = Color(0, 1, 1, 0.5)
 	
 	if ammo == 0:
 		color = Color(1, 0, 0, 0.5)
 	
-	$InterfaceTween.interpolate_property($HUD/AmmoBackgroundColor, "color", color, Color(0.13, 0.14, 0.19, 0.5), 0.25)
+	$InterfaceTween.interpolate_property($HUD/AmmoBackgroundColor, "color", color, Color(0, 0, 0, 0.5), 0.25)
 	$InterfaceTween.start()
 
 func update_ammo_HUD():

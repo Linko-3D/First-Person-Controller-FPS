@@ -24,11 +24,11 @@ func _physics_process(delta):
 				get_collider().linear_velocity = vector * 1.5
 			can_use = false
 			can_use_input = false
-			$CanHook.border_width = 2
+			$CanHook.border_width = 3
 	else:
 		destination = null
 		can_use_input = true
-		$CanHook.border_width = 1
+		$CanHook.border_width = 2
 	
 	if destination:
 		var vector = (destination - player.global_transform.origin)
@@ -40,7 +40,7 @@ func _physics_process(delta):
 			$Timer.start()
 	else:
 		if is_colliding():
-			$CanHook.border_color = Color(1, 1, 1, 0.5)
+			$CanHook.border_color = Color(0, 1, 1, 0.5)
 		else:
 			$CanHook.border_color = Color(0, 0, 0, 0)
 			

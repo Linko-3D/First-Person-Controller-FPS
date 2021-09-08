@@ -120,7 +120,7 @@ margin_left = -360.667
 margin_top = -64.0
 margin_right = -90.6674
 margin_bottom = -4.0
-color = Color( 0.129412, 0.141176, 0.188235, 0.501961 )
+color = Color( 0, 0, 0, 0.501961 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -132,7 +132,7 @@ margin_left = 90.0
 margin_top = -64.0
 margin_right = 305.0
 margin_bottom = -4.0
-color = Color( 0.129412, 0.141176, 0.188235, 0.501961 )
+color = Color( 0, 0, 0, 0.501961 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -156,14 +156,14 @@ margin_top = 81.0
 margin_right = 181.0
 margin_bottom = 166.0
 rect_min_size = Vector2( 0, 85 )
-color = Color( 0.129412, 0.141176, 0.188235, 0.501961 )
+color = Color( 0, 0, 0, 0.501961 )
 
 [node name="ColorRect2" type="ColorRect" parent="HUD/BackgroundColor"]
 margin_top = 170.0
 margin_right = 181.0
 margin_bottom = 255.0
 rect_min_size = Vector2( 0, 85 )
-color = Color( 0.129412, 0.141176, 0.188235, 0.501961 )
+color = Color( 0, 0, 0, 0.501961 )
 
 [node name="WeaponSelected" type="VBoxContainer" parent="HUD"]
 anchor_left = 1.0
@@ -202,7 +202,7 @@ margin_right = 172.0
 margin_bottom = 78.0
 texture = ExtResource( 16 )
 
-[node name="ColorRect" type="ColorRect" parent="HUD/WeaponSelected/Primary"]
+[node name="Selector" type="ColorRect" parent="HUD/WeaponSelected/Primary"]
 margin_left = 218.0
 margin_right = 223.0
 margin_bottom = 85.0
@@ -239,7 +239,7 @@ margin_right = 98.0
 margin_bottom = 70.0
 texture = ExtResource( 17 )
 
-[node name="ColorRect" type="ColorRect" parent="HUD/WeaponSelected/Secondary"]
+[node name="Selector" type="ColorRect" parent="HUD/WeaponSelected/Secondary"]
 margin_left = 218.0
 margin_right = 223.0
 margin_bottom = 85.0
