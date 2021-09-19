@@ -36,13 +36,13 @@ func _physics_process(delta):
 
 	if not can_use:
 		if $Timer.is_stopped() and not destination:
-			$CanHook.border_color = Color(0, 0, 0, 0)
+			$CanHook.hide()
 			$Timer.start()
 	else:
 		if is_colliding():
-			$CanHook.border_color = Color(0, 1, 1, 0.5)
+			$CanHook.show()
 		else:
-			$CanHook.border_color = Color(0, 0, 0, 0)
+			$CanHook.hide()
 			
 func _on_Timer_timeout():
 	can_use = true

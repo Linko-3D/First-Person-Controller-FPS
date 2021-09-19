@@ -1,6 +1,6 @@
 [gd_resource type="Theme" load_steps=3 format=2]
 
-[ext_resource path="res://font/Roboto-Regular.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://font/Roboto-Medium.ttf" type="DynamicFontData" id=1]
 
 [sub_resource type="DynamicFont" id=1]
 size = 20

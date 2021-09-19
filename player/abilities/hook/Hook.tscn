@@ -21,6 +21,7 @@ margin_left = -30.0
 margin_top = -30.0
 margin_right = 30.0
 margin_bottom = 30.0
+border_color = Color( 1, 1, 0, 1 )
 editor_only = false
 __meta__ = {
 "_edit_use_anchors_": false

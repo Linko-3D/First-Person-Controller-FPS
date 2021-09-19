@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://player/abilities/shoot/Shell.tscn" type="PackedScene" id=1]
 [ext_resource path="res://player/abilities/shoot/Impact.tscn" type="PackedScene" id=2]
@@ -12,7 +12,7 @@
 [ext_resource path="res://player/abilities/shoot/AK-47.obj" type="ArrayMesh" id=10]
 [ext_resource path="res://player/abilities/shoot/Knife.obj" type="ArrayMesh" id=11]
 [ext_resource path="res://font/Theme.tres" type="Theme" id=12]
-[ext_resource path="res://font/Roboto-Regular.ttf" type="DynamicFontData" id=13]
+[ext_resource path="res://font/Roboto-Medium.ttf" type="DynamicFontData" id=13]
 [ext_resource path="res://player/abilities/shoot/melee_hit.wav" type="AudioStream" id=14]
 [ext_resource path="res://player/abilities/laser/Laser.tscn" type="PackedScene" id=15]
 [ext_resource path="res://player/abilities/shoot/AK-47_silhouette.png" type="Texture" id=16]
@@ -22,26 +22,32 @@
 albedo_color = Color( 0.501961, 0.501961, 0.501961, 1 )
 roughness = 0.5
 
-[sub_resource type="DynamicFont" id=2]
-size = 25
-outline_size = 2
-outline_color = Color( 0, 0, 0, 1 )
-font_data = ExtResource( 13 )
+[sub_resource type="DynamicFontData" id=2]
+font_path = "res://font/Roboto-Medium.ttf"
 
 [sub_resource type="DynamicFont" id=3]
 size = 25
 outline_size = 2
 outline_color = Color( 0, 0, 0, 1 )
-font_data = ExtResource( 13 )
+font_data = SubResource( 2 )
 
 [sub_resource type="DynamicFont" id=4]
-size = 50
+size = 25
 outline_size = 2
 outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 13 )
 
-[sub_resource type="Theme" id=5]
-default_font = SubResource( 4 )
+[sub_resource type="DynamicFontData" id=7]
+font_path = "res://font/Roboto-Medium.ttf"
+
+[sub_resource type="DynamicFont" id=5]
+size = 50
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+font_data = SubResource( 7 )
+
+[sub_resource type="Theme" id=6]
+default_font = SubResource( 5 )
 
 [node name="Shoot" type="Spatial"]
 script = ExtResource( 4 )
@@ -103,6 +109,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, -0.28 )
 [node name="LookAt" type="Position3D" parent="Torso/Position3D"]
 
 [node name="HUD" type="Control" parent="."]
+modulate = Color( 1, 0.75, 0, 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 theme = ExtResource( 12 )
@@ -116,9 +123,9 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -360.667
+margin_left = -360.0
 margin_top = -64.0
-margin_right = -90.6674
+margin_right = -91.0
 margin_bottom = -4.0
 color = Color( 0, 0, 0, 0.501961 )
 __meta__ = {
@@ -133,6 +140,19 @@ margin_top = -64.0
 margin_right = 305.0
 margin_bottom = -4.0
 color = Color( 0, 0, 0, 0.501961 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ReloadBackground" type="ColorRect" parent="HUD"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -360.0
+margin_top = -10.0
+margin_right = -360.0
+margin_bottom = -4.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -223,19 +243,19 @@ margin_bottom = 231.0
 alignment = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="HUD/WeaponSelected/Secondary"]
-margin_left = 116.0
+margin_left = 113.0
 margin_right = 214.0
 margin_bottom = 85.0
 
 [node name="Label" type="Label" parent="HUD/WeaponSelected/Secondary/VBoxContainer"]
-margin_right = 98.0
+margin_right = 101.0
 margin_bottom = 24.0
 text = "Beretta M9"
 align = 2
 
 [node name="WeaponSilhouette" type="TextureRect" parent="HUD/WeaponSelected/Secondary/VBoxContainer"]
 margin_top = 28.0
-margin_right = 98.0
+margin_right = 101.0
 margin_bottom = 70.0
 texture = ExtResource( 17 )
 
@@ -260,7 +280,7 @@ margin_left = 100.0
 margin_top = -40.0
 margin_right = 173.0
 margin_bottom = -9.0
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = SubResource( 3 )
 text = "Health"
 valign = 2
 __meta__ = {
@@ -276,7 +296,7 @@ margin_left = -350.0
 margin_top = -40.0
 margin_right = -230.0
 margin_bottom = -9.0
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 4 )
 text = "Ammo     "
 valign = 2
 __meta__ = {
@@ -292,28 +312,31 @@ margin_left = -349.0
 margin_top = -64.0
 margin_right = -100.0
 margin_bottom = -4.0
-theme = SubResource( 5 )
+theme = SubResource( 6 )
 alignment = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="AmmoText" type="Label" parent="HUD/DisplayAmmo"]
-margin_left = 108.0
-margin_right = 164.0
-margin_bottom = 60.0
+margin_left = 236.0
+margin_top = 29.0
+margin_right = 238.0
+margin_bottom = 31.0
 text = "30"
 
 [node name="Slash" type="Label" parent="HUD/DisplayAmmo"]
-margin_left = 168.0
-margin_right = 189.0
-margin_bottom = 60.0
+margin_left = 242.0
+margin_top = 29.0
+margin_right = 243.0
+margin_bottom = 31.0
 text = "/"
 
 [node name="ClipText" type="Label" parent="HUD/DisplayAmmo"]
-margin_left = 193.0
+margin_left = 247.0
+margin_top = 29.0
 margin_right = 249.0
-margin_bottom = 60.0
+margin_bottom = 31.0
 text = "90"
 
 [node name="DisplayHealth" type="HBoxContainer" parent="HUD"]
@@ -323,14 +346,15 @@ margin_left = 210.0
 margin_top = -64.0
 margin_right = 338.0
 margin_bottom = -4.0
-theme = SubResource( 5 )
+theme = SubResource( 6 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Health" type="Label" parent="HUD/DisplayHealth"]
-margin_right = 84.0
-margin_bottom = 60.0
+margin_top = 29.0
+margin_right = 3.0
+margin_bottom = 31.0
 text = "100"
 
 [node name="Buttons" type="VBoxContainer" parent="HUD"]
