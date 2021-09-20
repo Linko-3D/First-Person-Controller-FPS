@@ -28,14 +28,14 @@ outline_size = 2
 outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 13 )
 
-[sub_resource type="DynamicFont" id=5]
+[sub_resource type="DynamicFont" id=3]
 size = 50
 outline_size = 2
 outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 13 )
 
 [sub_resource type="Theme" id=4]
-default_font = SubResource( 5 )
+default_font = SubResource( 3 )
 
 [node name="Shoot" type="Spatial"]
 script = ExtResource( 4 )

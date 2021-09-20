@@ -5,7 +5,8 @@
 [ext_resource path="res://player/abilities/shoot/bullet_impact.wav" type="AudioStream" id=3]
 
 [sub_resource type="SpatialMaterial" id=1]
-albedo_color = Color( 0, 0, 0, 1 )
+flags_transparent = true
+albedo_color = Color( 0, 0, 0, 0.5 )
 emission_enabled = true
 emission = Color( 1, 0.75, 0, 1 )
 emission_energy = 5.0
