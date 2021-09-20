@@ -8,10 +8,10 @@ func _ready():
 	$ImpactSound.pitch_scale = rand_range(0.95, 1.05)
 	
 	var material = $Bullet.get_active_material(0)
-	$ColorTween.interpolate_property(material, "emission", Color(0.93, 0.9, 0.89), Color(0.88, 0.55, 0.45), 0.075, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
-	$ColorTween.interpolate_property(material, "emission", Color(0.88, 0.55, 0.45), Color(0, 0, 0), 0.075, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 0.075)
-	$ColorTween.interpolate_property(material, "emission_energy", 5, 0, 0.15, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
-	$ColorTween.interpolate_property($Bullet, "scale", Vector3(1.5, 1.5, 1.5), Vector3(1, 1, 1), 0.15, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+	$ColorTween.interpolate_property(material, "emission", Color(1, 1, 1), Color(1, 0.75, 0), 0.1, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+	$ColorTween.interpolate_property(material, "emission", Color(1, 0.75, 0), Color(0, 0, 0), 0.1, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 0.1)
+	$ColorTween.interpolate_property(material, "emission_energy", 5, 0, 0.2, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+	$ColorTween.interpolate_property($Bullet, "scale", Vector3(2, 2, 2), Vector3(0, 0, 0), 0.2, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
 	$ColorTween.start()
 	
 	yield(get_tree(), "idle_frame")

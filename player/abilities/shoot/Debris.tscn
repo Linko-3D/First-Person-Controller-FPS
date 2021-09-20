@@ -31,9 +31,4 @@ shape = SubResource( 3 )
 
 [node name="ColorTween" type="Tween" parent="."]
 
-[node name="Timer" type="Timer" parent="."]
-wait_time = 5.0
-one_shot = true
-autostart = true
-
-[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+[connection signal="tween_all_completed" from="ColorTween" to="." method="_on_ColorTween_tween_all_completed"]

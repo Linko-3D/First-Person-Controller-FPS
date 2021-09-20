@@ -24,10 +24,10 @@ __meta__ = {
 modulate = Color( 1, 0.75, 0, 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 4.0
-margin_right = -4.0
-margin_bottom = -4.0
+margin_left = 10.0
+margin_top = 10.0
+margin_right = -10.0
+margin_bottom = -10.0
 text = "First Person Controller inputs:
 Moving: WASD or ZQSD or left analog
 Camera look: mouse movement or right analog
