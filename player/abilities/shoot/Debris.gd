@@ -8,9 +8,9 @@ func _ready():
 	$ColorTween.start()
 	
 	randomize()
-	var size_x = rand_range(1, 2)
-	var size_y = rand_range(1, 2)
-	var size_z = rand_range(1, 2)
+	var size_x = rand_range(0.8, 1.2)
+	var size_y = rand_range(0.8, 1.2)
+	var size_z = rand_range(0.8, 1.2)
 	$Pebble.scale = Vector3(size_x, size_y, size_z)
 	$CollisionShape.scale = Vector3(size_x, size_y, size_z)
 
