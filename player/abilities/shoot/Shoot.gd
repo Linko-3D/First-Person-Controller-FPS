@@ -288,7 +288,11 @@ func rifle_shoot_animation():
 
 func pistol_shoot_animation():
 	randomize()
-	var value = rand_range(8, 12)
+	var value = rand_range(0.8, 1)
+	$ShootTween.interpolate_property($Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/Weapon/OmniLight, "light_energy", 0, value, 0.05, Tween.TRANS_SINE, Tween.EASE_OUT)
+	$ShootTween.interpolate_property($Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/Weapon/OmniLight, "light_energy", value, 0, 0.05, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 0.05)
+	
+	value = rand_range(8, 12)
 	$ShootTween.interpolate_property(weapon, "rotation_degrees:x", 0, value, 0.05, Tween.TRANS_SINE, Tween.EASE_OUT)
 	$ShootTween.interpolate_property(weapon, "rotation_degrees:x", value, 0, 0.15, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 0.05)
 	
