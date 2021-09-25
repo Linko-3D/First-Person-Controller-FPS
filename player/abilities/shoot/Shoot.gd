@@ -374,7 +374,7 @@ func switch_weapon():
 	if weapon_selected == 1:
 		$Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/Weapon/Laser.translation = Vector3(0, 0.05, -0.28)
 		
-		$InterfaceTween.interpolate_property($HUD/BackgroundColor/ColorRect1, "color", Color(1, 0.75, 0, 0.5), Color(0, 0, 0, 0.5), 0.2)
+		$InterfaceTween.interpolate_property($HUD/BackgroundColor/ColorRect1, "color", Color(1, 1, 1, 0.5), Color(0, 0, 0, 0.5), 0.2)
 		$InterfaceTween.interpolate_property($HUD/WeaponSelected/Primary, "modulate", Color(0, 0, 0, 1), Color(1, 1, 1, 1), 0.2)
 		$InterfaceTween.start()
 		
@@ -399,7 +399,7 @@ func switch_weapon():
 	if weapon_selected == 2:
 		$Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/Weapon/Laser.translation = Vector3(0, 0.013, -0.006)
 		
-		$InterfaceTween.interpolate_property($HUD/BackgroundColor/ColorRect2, "color", Color(1, 0.75, 0, 0.5), Color(0, 0, 0, 0.5), 0.2)
+		$InterfaceTween.interpolate_property($HUD/BackgroundColor/ColorRect2, "color", Color(1, 1, 1, 0.5), Color(0, 0, 0, 0.5), 0.2)
 		$InterfaceTween.interpolate_property($HUD/WeaponSelected/Secondary, "modulate", Color(0, 0, 0, 0), Color(1, 1, 1, 1), 0.2)
 		$InterfaceTween.start()
 		
