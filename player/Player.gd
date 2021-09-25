@@ -170,15 +170,15 @@ func land_animation():
 func crouch_animation(button_pressed):
 	if button_pressed:
 		if not crouched:
-			$CrouchTween.interpolate_property($MeshInstance, "mesh:height", 2, 1.5, 0.2, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
-			$CrouchTween.interpolate_property($CollisionShape, "shape:height", 2, 1.5, 0.2, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+			$CrouchTween.interpolate_property($MeshInstance, "mesh:mid_height", 1.2, 0.7, 0.2, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+			$CrouchTween.interpolate_property($CollisionShape, "shape:height", 1.2, 0.7, 0.2, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
 			$CrouchTween.interpolate_property($Head, "translation:y", 1.8, 1.55, 0.2, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
 			$CrouchTween.start()
 			crouched = true
 	else:
 		if crouched:
-			$CrouchTween.interpolate_property($MeshInstance, "mesh:height", 1.5, 2, 0.2, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
-			$CrouchTween.interpolate_property($CollisionShape, "shape:height", 1.5, 2, 0.2, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+			$CrouchTween.interpolate_property($MeshInstance, "mesh:mid_height", 0.7, 1.2, 0.2, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+			$CrouchTween.interpolate_property($CollisionShape, "shape:height", 0.7, 1.2, 0.2, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
 			$CrouchTween.interpolate_property($Head, "translation:y", 1.55, 1.8, 0.2, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
 			$CrouchTween.start()
 			crouched = false

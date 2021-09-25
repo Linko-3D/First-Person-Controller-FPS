@@ -168,6 +168,7 @@ func _process(delta):
 	if (Input.is_key_pressed(KEY_R) or Input.is_joy_button_pressed(0, JOY_XBOX_X)):
 		if ammo != max_ammo and clip > 0:
 			$ReloadTween.interpolate_property(weapon, "rotation_degrees:x", 0, 360, 1, Tween.TRANS_BACK, Tween.EASE_IN_OUT, 0)
+			$ReloadTween.interpolate_property($HUD/ReloadBackground, "modulate", Color(1, 0, 0), Color(1, 1, 1), 1)
 			$ReloadTween.interpolate_property($HUD/ReloadBackground, "margin_right", -360, -91, 1)
 			$ReloadTween.interpolate_property($HUD/ReloadBackground, "margin_right", -91, -360, 0, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT, 1)
 			$ReloadTween.start()
@@ -373,7 +374,8 @@ func switch_weapon():
 	if weapon_selected == 1:
 		$Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/Weapon/Laser.translation = Vector3(0, 0.05, -0.28)
 		
-		$InterfaceTween.interpolate_property($HUD/BackgroundColor/ColorRect1, "color", Color(1, 0.75, 0, 0.5), Color(0, 0, 0, 0.5), 0.25)
+		$InterfaceTween.interpolate_property($HUD/BackgroundColor/ColorRect1, "color", Color(1, 0.75, 0, 0.5), Color(0, 0, 0, 0.5), 0.2)
+		$InterfaceTween.interpolate_property($HUD/WeaponSelected/Primary, "modulate", Color(0, 0, 0, 1), Color(1, 1, 1, 1), 0.2)
 		$InterfaceTween.start()
 		
 		$HUD/WeaponSelected/Primary.modulate = Color(1, 1, 1, 1)
@@ -397,7 +399,8 @@ func switch_weapon():
 	if weapon_selected == 2:
 		$Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/Weapon/Laser.translation = Vector3(0, 0.013, -0.006)
 		
-		$InterfaceTween.interpolate_property($HUD/BackgroundColor/ColorRect2, "color", Color(1, 0.75, 0, 0.5), Color(0, 0, 0, 0.5), 0.25)
+		$InterfaceTween.interpolate_property($HUD/BackgroundColor/ColorRect2, "color", Color(1, 0.75, 0, 0.5), Color(0, 0, 0, 0.5), 0.2)
+		$InterfaceTween.interpolate_property($HUD/WeaponSelected/Secondary, "modulate", Color(0, 0, 0, 0), Color(1, 1, 1, 1), 0.2)
 		$InterfaceTween.start()
 		
 		$HUD/WeaponSelected/Primary.modulate = Color(1, 1, 1, 0.5)
@@ -459,7 +462,8 @@ func ammo_animation():
 	if ammo == 0:
 		color = Color(1, 0, 0, 0.5)
 	
-	$InterfaceTween.interpolate_property($HUD/AmmoBackgroundColor, "color", color, Color(0, 0, 0, 0.5), 0.25)
+	$InterfaceTween.interpolate_property($HUD/AmmoBackgroundColor, "color", color, Color(0, 0, 0, 0.5), 0.2)
+	$InterfaceTween.interpolate_property($HUD/DisplayAmmo, "modulate", Color(0, 0, 0, 1), Color(1, 1, 1, 1), 0.2)
 	$InterfaceTween.start()
 
 func update_ammo_HUD():
