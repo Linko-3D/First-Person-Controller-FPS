@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://player/Player.gd" type="Script" id=1]
 [ext_resource path="res://player/abilities/grab/Grab.tscn" type="PackedScene" id=2]
@@ -12,8 +12,19 @@
 [ext_resource path="res://font/Theme.tres" type="Theme" id=10]
 [ext_resource path="res://player/abilities/tutorial/Tutorial.tscn" type="PackedScene" id=11]
 
+[sub_resource type="PrismMesh" id=9]
+size = Vector3( 0.5, 1, 0.05 )
+
+[sub_resource type="SpatialMaterial" id=10]
+flags_unshaded = true
+albedo_color = Color( 0, 0, 0, 1 )
+
 [sub_resource type="PrismMesh" id=1]
-size = Vector3( 0.5, 1, 0.1 )
+size = Vector3( 0.4, 0.9, 0.06 )
+
+[sub_resource type="SpatialMaterial" id=7]
+flags_unshaded = true
+albedo_color = Color( 1, 0, 1, 1 )
 
 [sub_resource type="CapsuleShape" id=3]
 radius = 0.4
@@ -22,6 +33,8 @@ height = 1.2
 [sub_resource type="CapsuleMesh" id=6]
 radius = 0.4
 mid_height = 1.2
+
+[sub_resource type="SpatialMaterial" id=8]
 
 [sub_resource type="CylinderShape" id=2]
 radius = 0.4
@@ -40,9 +53,14 @@ script = ExtResource( 1 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0 )
 
 [node name="DirectionIndicator" type="MeshInstance" parent="Head"]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, -0.75 )
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, -0.5 )
+mesh = SubResource( 9 )
+material/0 = SubResource( 10 )
+
+[node name="DirectionIndicator" type="MeshInstance" parent="Head/DirectionIndicator"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0 )
 mesh = SubResource( 1 )
-material/0 = null
+material/0 = SubResource( 7 )
 
 [node name="Camera" type="Camera" parent="Head"]
 
@@ -72,7 +90,7 @@ shape = SubResource( 3 )
 [node name="MeshInstance" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 1, 0 )
 mesh = SubResource( 6 )
-material/0 = null
+material/0 = SubResource( 8 )
 
 [node name="Area" type="Area" parent="."]
 
