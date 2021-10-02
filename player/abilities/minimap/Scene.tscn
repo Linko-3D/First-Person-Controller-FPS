@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://player/abilities/minimap/Scene.gd" type="Script" id=1]
+[ext_resource path="res://font/Theme.tres" type="Theme" id=2]
 
 [node name="Scene" type="Spatial"]
 script = ExtResource( 1 )
@@ -57,6 +58,20 @@ margin_top = -12.0
 margin_right = 1.0
 margin_bottom = -7.0
 color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NorthDirection" type="Position2D" parent="Display"]
+
+[node name="NorthText" type="Label" parent="Display/NorthDirection"]
+modulate = Color( 1, 0.6, 0.1, 1 )
+margin_left = -7.0
+margin_top = -120.0
+margin_right = 7.0
+theme = ExtResource( 2 )
+text = "N"
+align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
