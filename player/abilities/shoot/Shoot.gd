@@ -230,9 +230,6 @@ func spawn_impact(raycast):
 	
 	if raycast.get_collider() is RigidBody:
 		raycast.get_collider().apply_central_impulse(-raycast.get_collision_normal() * 30)
-		impact_instance.hide_bullet()
-	if raycast.get_collider() is KinematicBody:
-		impact_instance.hide_bullet()
 	
 func play_sound(sound, dB, delay):
 	var audio_node = AudioStreamPlayer.new()
