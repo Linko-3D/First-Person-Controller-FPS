@@ -84,11 +84,10 @@ func _physics_process(delta):
 	# Rotates the direction from the Y axis to move forward
 	direction = direction.rotated(Vector3.UP, rotation.y)
 	
-	# Snaps the character on the ground and changes the gravity vector to climb
-	# slopes at the same speed until 45 degrees
+	# Snaps the character on the ground and changes the gravity vector to climb slopes at the same speed until 45 degrees
 	if is_on_floor():
 		if snapped == false:
-			falling_velocity = gravity_vec.y
+			falling_velocity = gravity_vec.y # Data to apply damage and custom landing animation depending on the impact strength
 			land_animation()
 		current_acceleration = ground_acceleration
 		movement.y = 0
