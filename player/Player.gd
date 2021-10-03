@@ -12,7 +12,7 @@ var current_speed = run_speed
 
 var ground_acceleration = 10
 var air_acceleration = 5
-var acceleration = air_acceleration
+var current_acceleration = air_acceleration
 
 var direction = Vector3()
 var velocity = Vector3() # Direction with acceleration added
@@ -37,7 +37,7 @@ var falling_velocity = 0
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	$Head/DirectionIndicator.hide()
-	$CrouchLocked.hide()
+	$CrouchLockedText.hide()
 
 func _input(event):
 	# Look with the mouse
@@ -90,12 +90,12 @@ func _physics_process(delta):
 		if snapped == false:
 			falling_velocity = gravity_vec.y
 			land_animation()
-		acceleration = ground_acceleration
+		current_acceleration = ground_acceleration
 		movement.y = 0
 		gravity_vec = -get_floor_normal() * 10
 		snapped = true
 	else:
-		acceleration = air_acceleration
+		current_acceleration = air_acceleration
 		if snapped:
 			gravity_vec = Vector3()
 			snapped = false
@@ -115,7 +115,7 @@ func _physics_process(delta):
 	
 	if Input.is_key_pressed(KEY_SPACE) or Input.is_joy_button_pressed(0, JOY_XBOX_A):
 		if is_on_floor() and can_jump:
-			$CrouchLocked.hide()
+			$CrouchLockedText.hide()
 			jump()
 			snapped = false
 			can_jump = false
@@ -129,7 +129,7 @@ func _physics_process(delta):
 	
 	if Input.is_key_pressed(KEY_CONTROL):
 		toggle_mode_crouch = false
-		$CrouchLocked.hide()
+		$CrouchLockedText.hide()
 		crouch_animation(true)
 	else:
 		if not toggle_mode_crouch:
@@ -138,22 +138,22 @@ func _physics_process(delta):
 	if Input.is_key_pressed(KEY_C) or Input.is_joy_button_pressed(0, JOY_XBOX_B):
 		toggle_mode_crouch = true
 		if crouched:
-			$CrouchLocked.show()
+			$CrouchLockedText.show()
 		else:
-			$CrouchLocked.hide()
+			$CrouchLockedText.hide()
 		if can_press_crouch:
 			can_press_crouch = false
 			crouch_animation(!crouched)
 	else:
 		can_press_crouch = true
 	
-	velocity = velocity.linear_interpolate(direction * current_speed, acceleration * delta)
+	velocity = velocity.linear_interpolate(direction * current_speed, current_acceleration * delta)
 	
 	movement.x = velocity.x + gravity_vec.x
 	movement.z = velocity.z + gravity_vec.z
 	movement.y = gravity_vec.y
 	
-	movement = move_and_slide(movement, Vector3.UP)
+	movement = move_and_slide(movement, Vector3.UP, false, 4, 0.785398, false)
 	
 	player_speed = movement.length()
 

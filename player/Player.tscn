@@ -120,7 +120,8 @@ visible = false
 [node name="CollisionShape" type="CollisionShape" parent="CanUncrouch"]
 shape = SubResource( 9 )
 
-[node name="CrouchLocked" type="Label" parent="."]
+[node name="CrouchLockedText" type="Label" parent="."]
+modulate = Color( 1, 0.6, 0.1, 1 )
 anchor_top = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
