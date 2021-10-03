@@ -14,14 +14,10 @@ func _ready():
 	$ColorTween.interpolate_property($Bullet, "scale", Vector3(2, 2, 2), Vector3(0, 0, 0), 0.2, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
 	$ColorTween.start()
 	
-	yield(get_tree(), "idle_frame")
-	
-	for i in 5:
-		spawn_debris(rand_range(1, 5))
-
-func hide_bullet():
-	yield(get_tree().create_timer(0.12), "timeout")
-	$Bullet.hide()
+#	yield(get_tree(), "idle_frame")
+#
+#	for i in 5:
+#		spawn_debris(rand_range(1, 5))
 
 func spawn_debris(throw_force):
 	$Position3D.rotation_degrees.z = rand_range(0, 360)
@@ -31,3 +27,6 @@ func spawn_debris(throw_force):
 	get_tree().get_root().add_child(debris_instance)
 	debris_instance.global_transform = $Position3D/Position3D2.global_transform
 	debris_instance.linear_velocity = $Position3D/Position3D2.global_transform.basis.z * throw_force
+
+func _on_ColorTween_tween_all_completed():
+	queue_free()

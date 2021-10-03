@@ -192,7 +192,7 @@ func shoot():
 	
 	camera_shake()
 	spawn_impact($BulletSpread/RayCast)
-	spawn_shell()
+#	spawn_shell()
 	
 	# Calculate bullet spread amount
 	var recoil = 0
@@ -454,7 +454,8 @@ func _on_RecoilTimer_timeout():
 	$BulletSpread/RayCast.rotation_degrees = Vector3()
 
 func _on_SpawnMagazineTimer_timeout():
-	spawn_magazine()
+#	spawn_magazine()
+	pass
 
 func _on_ReloadTween_tween_all_completed():
 	calculate_ammo()

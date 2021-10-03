@@ -72,3 +72,5 @@ autoplay = true
 [node name="Position3D2" type="Position3D" parent="Position3D"]
 
 [node name="ColorTween" type="Tween" parent="."]
+
+[connection signal="tween_all_completed" from="ColorTween" to="." method="_on_ColorTween_tween_all_completed"]
