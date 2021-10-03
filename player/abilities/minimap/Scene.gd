@@ -1,11 +1,10 @@
 extends Spatial
 
 onready var player = get_tree().get_root().find_node("Player", true, false)
-onready var player_starting_rotation = player.rotation_degrees.y
 
 func _process(delta):
 	$Camera.translation.x = player.translation.x
 	$Camera.translation.z = player.translation.z
 	$Camera.rotation_degrees.y = player.rotation_degrees.y
 
-	$Display/NorthDirection.rotation_degrees = player.rotation_degrees.y - player_starting_rotation
+	$Display/NorthDirection.rotation_degrees = player.rotation_degrees.y
