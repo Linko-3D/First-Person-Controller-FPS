@@ -20,15 +20,15 @@ var movement = Vector3() # Velocity with gravity added
 
 var gravity = 9.8
 var gravity_vec = Vector3()
-
 var snapped = false
-var can_jump = true
+
+var can_jump = true # Used for the double_jump ability
 
 var crouched = false
-var toggle_mode_crouch = false
+var toggle_mode_crouch = false # Locks crouching with the C key or B on an Xbox controller
 var can_press_crouch = true
 
-var in_water = false
+var in_water = false # Detects if we have entered an Area node in the group "water"
 
 # Data:
 var player_speed = 0
@@ -96,13 +96,13 @@ func _physics_process(delta):
 	else:
 		current_acceleration = air_acceleration
 		if snapped:
-			gravity_vec = Vector3()
+			gravity_vec = Vector3() # Resets the vector, otherwise the player will fall in the direction of the last floor's normal
 			snapped = false
 		else:
 			if not in_water:
 				gravity_vec += Vector3.DOWN * gravity * delta
 			else:
-				gravity_vec = Vector3.ZERO
+				gravity_vec = Vector3.ZERO # Note: the player can't swim yet, he is just floating in the air
 	
 	if is_on_floor():
 		if Input.is_key_pressed(KEY_SHIFT) or Input.get_joy_axis(0, 6) >= 0.6:
