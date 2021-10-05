@@ -27,7 +27,7 @@ margin_left = -5.0
 margin_top = -5.0
 margin_right = 5.0
 margin_bottom = 5.0
-color = Color( 1, 0.6, 0.1, 1 )
+color = Color( 0.85, 0.6, 0.1, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -65,7 +65,7 @@ __meta__ = {
 [node name="NorthDirection" type="Position2D" parent="Display"]
 
 [node name="NorthText" type="Label" parent="Display/NorthDirection"]
-modulate = Color( 1, 0.6, 0.1, 1 )
+modulate = Color( 0.85, 0.6, 0.1, 1 )
 margin_left = -7.0
 margin_top = -120.0
 margin_right = 7.0

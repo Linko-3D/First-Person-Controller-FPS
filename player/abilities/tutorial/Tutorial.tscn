@@ -21,7 +21,7 @@ __meta__ = {
 }
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
-modulate = Color( 1, 0.6, 0.1, 1 )
+modulate = Color( 0.85, 0.6, 0.1, 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 10.0
@@ -52,7 +52,7 @@ __meta__ = {
 }
 
 [node name="Label" type="Label" parent="."]
-modulate = Color( 1, 0.6, 0.1, 1 )
+modulate = Color( 0.85, 0.6, 0.1, 1 )
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
