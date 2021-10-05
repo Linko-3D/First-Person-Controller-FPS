@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://player/abilities/shoot/Shell.tscn" type="PackedScene" id=1]
 [ext_resource path="res://player/abilities/shoot/Impact.tscn" type="PackedScene" id=2]
@@ -14,7 +14,6 @@
 [ext_resource path="res://font/Theme.tres" type="Theme" id=12]
 [ext_resource path="res://font/Roboto-Medium.ttf" type="DynamicFontData" id=13]
 [ext_resource path="res://player/abilities/shoot/melee_hit.wav" type="AudioStream" id=14]
-[ext_resource path="res://player/abilities/laser/Laser.tscn" type="PackedScene" id=15]
 [ext_resource path="res://player/abilities/shoot/AK-47_silhouette.png" type="Texture" id=16]
 [ext_resource path="res://player/abilities/shoot/Beretta_M9_silhouette.png" type="Texture" id=17]
 [ext_resource path="res://player/abilities/shoot/select.wav" type="AudioStream" id=18]
@@ -92,9 +91,6 @@ light_energy = 0.0
 shadow_enabled = true
 omni_range = 2.0
 
-[node name="Laser" parent="Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/Weapon" instance=ExtResource( 15 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, -0.28 )
-
 [node name="LookAt" type="Position3D" parent="Torso/Position3D"]
 
 [node name="HUD" type="Control" parent="."]
@@ -133,14 +129,14 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ReloadBackground" type="ColorRect" parent="HUD"]
+[node name="VisualAmmo" type="ColorRect" parent="HUD"]
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = -360.0
 margin_top = -10.0
-margin_right = -360.0
+margin_right = -91.0
 margin_bottom = -4.0
 __meta__ = {
 "_edit_use_anchors_": false
