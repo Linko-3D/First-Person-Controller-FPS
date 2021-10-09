@@ -155,7 +155,6 @@ func _process(delta):
 			else:
 				play_sound(empty_sound, -15, 0)
 				$FireRateTimer.start()
-				ammo_animation()
 	
 	if singleshot:
 		if Input.is_mouse_button_pressed(BUTTON_LEFT) or Input.get_joy_axis(0, 7) >= 0.6:
@@ -180,10 +179,9 @@ func _process(delta):
 			var current_position = -360 + (step * ammo)
 			var color_step = (1.0 / max_ammo) * ammo
 			
-			
-			$InterfaceTween.interpolate_property($HUD/VisualAmmo, "modulate", Color(1, 0, 0), Color(1, 1, 1), 1)
-			$InterfaceTween.interpolate_property($HUD/VisualAmmo, "margin_right", -360, current_position, 1)
-			$InterfaceTween.start()
+			$ReloadTween.interpolate_property($HUD/VisualAmmo, "modulate", Color(1, 0, 0), Color(1, 1, 1), 1)
+			$ReloadTween.interpolate_property($HUD/VisualAmmo, "margin_right", -360, current_position, 1)
+			$ReloadTween.start()
 			
 			play_sound(reload_sound, -5, 0)
 			$SpawnMagazineTimer.start()
@@ -265,8 +263,6 @@ func calculate_ammo():
 	else:
 		clip -= difference
 		ammo = max_ammo
-	
-	update_ammo_HUD()
 
 func rifle_shoot_animation():
 	randomize()
@@ -383,22 +379,16 @@ func switch_weapon():
 	
 	update_ammo_HUD()
 	
-	ammo_animation()
-	
 	$SwitchTween.interpolate_property($Torso/Position3D/SwitchAndAttack, "translation", Vector3(0, -0.25, -0.1), Vector3(), 0.3, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
 	$SwitchTween.interpolate_property($Torso/Position3D/SwitchAndAttack, "rotation_degrees", Vector3(-30, 20, 10), Vector3(), 0.3, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
 	$SwitchTween.start()
 	
 	if weapon_selected == 1:
-		$InterfaceTween.interpolate_property($HUD/BackgroundColor/ColorRect1, "color", Color(1, 1, 1, 0.5), Color(0, 0, 0, 0.5), 0.1)
-		$InterfaceTween.interpolate_property($HUD/WeaponSelected/Primary, "modulate", Color(0, 0, 0, 1), Color(1, 1, 1, 1), 0.1)
-#		$InterfaceTween.start()
-		
 		$HUD/WeaponSelected/Primary.modulate = Color(1, 1, 1, 1)
 		$HUD/WeaponSelected/Secondary.modulate = Color(1, 1, 1, 0.5)
 		
 		$HUD/WeaponSelected/Primary/Selector.color = Color(1, 1, 1, 1)
-		$HUD/WeaponSelected/Secondary/Selector.color = Color(0, 0, 0, 1)
+		$HUD/WeaponSelected/Secondary/Selector.color = Color(1, 1, 1, 0)
 		
 		weapon_position_z = -0.2
 		weapon.mesh = rifle_model
@@ -412,14 +402,10 @@ func switch_weapon():
 		$Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/MagazineSpawn.translation = Vector3(0, -0.11, -0.18)
 	
 	if weapon_selected == 2:
-		$InterfaceTween.interpolate_property($HUD/BackgroundColor/ColorRect2, "color", Color(1, 1, 1, 0.5), Color(0, 0, 0, 0.5), 0.1)
-		$InterfaceTween.interpolate_property($HUD/WeaponSelected/Secondary, "modulate", Color(0, 0, 0, 1), Color(1, 1, 1, 1), 0.1)
-#		$InterfaceTween.start()
-		
 		$HUD/WeaponSelected/Primary.modulate = Color(1, 1, 1, 0.5)
 		$HUD/WeaponSelected/Secondary.modulate = Color(1, 1, 1, 1)
 		
-		$HUD/WeaponSelected/Primary/Selector.color = Color(0, 0, 0, 1)
+		$HUD/WeaponSelected/Primary/Selector.color = Color(1, 1, 1, 0)
 		$HUD/WeaponSelected/Secondary/Selector.color = Color(1, 1, 1, 1)
 		
 		weapon_position_z = -0.3
@@ -467,18 +453,6 @@ func attack_animation():
 func _on_RecoilTimer_timeout():
 	$BulletSpread/RayCast.rotation_degrees = Vector3()
 
-func _on_ReloadTween_tween_all_completed():
-	ammo_animation()
-
-func ammo_animation():
-	var color = Color(1, 1, 1, 0.5)
-	
-	if ammo == 0:
-		color = Color(1, 0, 0, 0.5)
-	
-	$InterfaceTween.interpolate_property($HUD/DisplayAmmo, "modulate", Color(0, 0, 0, 1), Color(1, 1, 1, 1), 0.1)
-	$InterfaceTween.start()
-
 func update_ammo_HUD():
 	$HUD/DisplayAmmo/AmmoText.text = str(ammo)
 	$HUD/DisplayAmmo/ClipText.text = str(clip)
@@ -497,3 +471,6 @@ func _on_Button2_pressed():
 	if weapon_selected != 2:
 		weapon_selected = 2
 		switch_weapon()
+
+func _on_ReloadTween_tween_all_completed():
+	update_ammo_HUD()

@@ -349,7 +349,7 @@ text = "100"
 
 [node name="AttackTween" type="Tween" parent="."]
 
-[node name="InterfaceTween" type="Tween" parent="."]
+[node name="ReloadBarTween" type="Tween" parent="."]
 
 [node name="LandingTween" type="Tween" parent="."]
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://player/Player.gd" type="Script" id=1]
 [ext_resource path="res://player/abilities/grab/Grab.tscn" type="PackedScene" id=2]
@@ -7,11 +7,8 @@
 [ext_resource path="res://player/abilities/shoot/Shoot.tscn" type="PackedScene" id=5]
 [ext_resource path="res://player/abilities/footstep_sound/FootstepSound.tscn" type="PackedScene" id=6]
 [ext_resource path="res://player/abilities/minimap/Minimap.tscn" type="PackedScene" id=7]
-[ext_resource path="res://player/abilities/hook/Hook.tscn" type="PackedScene" id=8]
-[ext_resource path="res://player/abilities/double_jump/DoubleJump.tscn" type="PackedScene" id=9]
 [ext_resource path="res://font/Theme.tres" type="Theme" id=10]
 [ext_resource path="res://player/abilities/tutorial/Tutorial.tscn" type="PackedScene" id=11]
-[ext_resource path="res://player/abilities/control_vehicle/ControlVehicle.tscn" type="PackedScene" id=12]
 
 [sub_resource type="PrismMesh" id=1]
 size = Vector3( 0.5, 1, 0.05 )
@@ -79,20 +76,13 @@ material/0 = SubResource( 4 )
 
 [node name="Shoot" parent="Head/Camera" instance=ExtResource( 5 )]
 
-[node name="ControlVehicle" parent="Head/Camera" instance=ExtResource( 12 )]
-
 [node name="Crosshair" parent="Head/Camera" instance=ExtResource( 3 )]
-
-[node name="DoubleJump" parent="Head/Camera" instance=ExtResource( 9 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.6, 0 )
 
 [node name="Flashlight" parent="Head/Camera" instance=ExtResource( 4 )]
 
 [node name="FootstepSound" parent="Head/Camera" instance=ExtResource( 6 )]
 
 [node name="Grab" parent="Head/Camera" instance=ExtResource( 2 )]
-
-[node name="Hook" parent="Head/Camera" instance=ExtResource( 8 )]
 
 [node name="Minimap" parent="Head/Camera" instance=ExtResource( 7 )]
 
