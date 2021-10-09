@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://player/Player.gd" type="Script" id=1]
 [ext_resource path="res://player/abilities/grab/Grab.tscn" type="PackedScene" id=2]
@@ -34,13 +34,9 @@ mid_height = 1.2
 
 [sub_resource type="SpatialMaterial" id=7]
 
-[sub_resource type="CylinderShape" id=8]
-radius = 0.4
-height = 1.5
-
 [sub_resource type="CylinderShape" id=9]
 radius = 0.4
-height = 0.5
+height = 0.25
 
 [node name="Player" type="KinematicBody" groups=[
 "player",
@@ -97,17 +93,10 @@ transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 1, 0
 mesh = SubResource( 6 )
 material/0 = SubResource( 7 )
 
-[node name="Area" type="Area" parent="."]
+[node name="CeilingDetection" type="Area" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.875, 0 )
 
-[node name="CollisionShape" type="CollisionShape" parent="Area"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
-shape = SubResource( 8 )
-
-[node name="CanUncrouch" type="Area" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0 )
-visible = false
-
-[node name="CollisionShape" type="CollisionShape" parent="CanUncrouch"]
+[node name="CollisionShape" type="CollisionShape" parent="CeilingDetection"]
 shape = SubResource( 9 )
 
 [node name="CrouchLockedText" type="Label" parent="."]
@@ -129,5 +118,5 @@ __meta__ = {
 
 [node name="LandTween" type="Tween" parent="."]
 
-[connection signal="area_entered" from="Area" to="." method="_on_Area_area_entered"]
-[connection signal="area_exited" from="Area" to="." method="_on_Area_area_exited"]
+[connection signal="body_entered" from="CeilingDetection" to="." method="_on_CeilingDetection_body_entered"]
+[connection signal="body_exited" from="CeilingDetection" to="." method="_on_CeilingDetection_body_exited"]

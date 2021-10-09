@@ -27,8 +27,7 @@ var can_jump = true # Used for the double_jump ability
 var crouched = false
 var toggle_mode_crouch = false # Locks crouching with the C key or B on an Xbox controller
 var can_press_crouch = true
-
-var in_water = false # Detects if we have entered an Area node in the group "water"
+var no_low_ceiling = true # If the ceiling is too low, can't jump and stand up
 
 # Data:
 var player_speed = 0
@@ -49,7 +48,6 @@ func _input(event):
 	direction = Vector3()
 
 func _physics_process(delta):
-	
 	# Look with the right analog of the joystick
 	if Input.get_joy_axis(0, 2) < -joystick_deadzone or Input.get_joy_axis(0, 2) > joystick_deadzone:
 		rotation_degrees.y -= Input.get_joy_axis(0, 2) * 2
@@ -99,10 +97,7 @@ func _physics_process(delta):
 			gravity_vec = Vector3() # Resets the vector, otherwise the player will fall in the direction of the last floor's normal
 			snapped = false
 		else:
-			if not in_water:
-				gravity_vec += Vector3.DOWN * gravity * delta
-			else:
-				gravity_vec = Vector3.ZERO # Note: the player can't swim yet, he is just floating in the air
+			gravity_vec += Vector3.DOWN * gravity * delta
 	
 	if is_on_floor():
 		if Input.is_key_pressed(KEY_SHIFT) or Input.get_joy_axis(0, 6) >= 0.6:
@@ -113,7 +108,7 @@ func _physics_process(delta):
 			current_speed = crouch_speed
 	
 	if Input.is_key_pressed(KEY_SPACE) or Input.is_joy_button_pressed(0, JOY_XBOX_A):
-		if is_on_floor() and can_jump:
+		if is_on_floor() and can_jump and no_low_ceiling:
 			$CrouchLockedText.hide()
 			jump()
 			snapped = false
@@ -131,18 +126,21 @@ func _physics_process(delta):
 		$CrouchLockedText.hide()
 		crouch_animation(true)
 	else:
-		if not toggle_mode_crouch:
+		if not toggle_mode_crouch and no_low_ceiling:
 			crouch_animation(false)
 	
 	if Input.is_key_pressed(KEY_C) or Input.is_joy_button_pressed(0, JOY_XBOX_B):
-		toggle_mode_crouch = true
-		if crouched:
-			$CrouchLockedText.show()
-		else:
-			$CrouchLockedText.hide()
 		if can_press_crouch:
 			can_press_crouch = false
-			crouch_animation(!crouched)
+			toggle_mode_crouch = true
+			if not crouched:
+				$CrouchLockedText.show()
+				crouch_animation(true)
+			else:
+				if no_low_ceiling:
+					toggle_mode_crouch = false
+					$CrouchLockedText.hide()
+					crouch_animation(false)
 	else:
 		can_press_crouch = true
 	
@@ -166,8 +164,8 @@ func land_animation():
 	$LandTween.interpolate_property($Head/Camera, "translation:y", movement_y, 0, 0.25, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 0.1)
 	$LandTween.start()
 
-func crouch_animation(button_pressed):
-	if button_pressed:
+func crouch_animation(crouch):
+	if crouch:
 		if not crouched:
 			$CrouchTween.interpolate_property($MeshInstance, "mesh:mid_height", 1.2, 0.7, 0.2, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
 			$CrouchTween.interpolate_property($CollisionShape, "shape:height", 1.2, 0.7, 0.2, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
@@ -182,10 +180,10 @@ func crouch_animation(button_pressed):
 			$CrouchTween.start()
 			crouched = false
 
-func _on_Area_area_entered(area):
-	if area.is_in_group("water"):
-		in_water = true
+func _on_CeilingDetection_body_entered(body):
+	if not body is KinematicBody:
+		no_low_ceiling = false
 
-func _on_Area_area_exited(area):
-	if area.is_in_group("water"):
-		in_water = false
+func _on_CeilingDetection_body_exited(body):
+	if not body is KinematicBody:
+		no_low_ceiling = true
