@@ -390,12 +390,9 @@ func switch_weapon():
 	$SwitchTween.start()
 	
 	if weapon_selected == 1:
-		#to del
-#		$Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/Weapon/Laser.translation = Vector3(0, 0.05, -0.28)
-		
-		$InterfaceTween.interpolate_property($HUD/BackgroundColor/ColorRect1, "color", Color(1, 1, 1, 0.5), Color(0, 0, 0, 0.5), 0.2)
-		$InterfaceTween.interpolate_property($HUD/WeaponSelected/Primary, "modulate", Color(0, 0, 0, 1), Color(1, 1, 1, 1), 0.2)
-		$InterfaceTween.start()
+		$InterfaceTween.interpolate_property($HUD/BackgroundColor/ColorRect1, "color", Color(1, 1, 1, 0.5), Color(0, 0, 0, 0.5), 0.1)
+		$InterfaceTween.interpolate_property($HUD/WeaponSelected/Primary, "modulate", Color(0, 0, 0, 1), Color(1, 1, 1, 1), 0.1)
+#		$InterfaceTween.start()
 		
 		$HUD/WeaponSelected/Primary.modulate = Color(1, 1, 1, 1)
 		$HUD/WeaponSelected/Secondary.modulate = Color(1, 1, 1, 0.5)
@@ -415,12 +412,9 @@ func switch_weapon():
 		$Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/MagazineSpawn.translation = Vector3(0, -0.11, -0.18)
 	
 	if weapon_selected == 2:
-		# to del
-#		$Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/Weapon/Laser.translation = Vector3(0, 0.013, -0.006)
-		
-		$InterfaceTween.interpolate_property($HUD/BackgroundColor/ColorRect2, "color", Color(1, 1, 1, 0.5), Color(0, 0, 0, 0.5), 0.2)
-		$InterfaceTween.interpolate_property($HUD/WeaponSelected/Secondary, "modulate", Color(0, 0, 0, 0), Color(1, 1, 1, 1), 0.2)
-		$InterfaceTween.start()
+		$InterfaceTween.interpolate_property($HUD/BackgroundColor/ColorRect2, "color", Color(1, 1, 1, 0.5), Color(0, 0, 0, 0.5), 0.1)
+		$InterfaceTween.interpolate_property($HUD/WeaponSelected/Secondary, "modulate", Color(0, 0, 0, 1), Color(1, 1, 1, 1), 0.1)
+#		$InterfaceTween.start()
 		
 		$HUD/WeaponSelected/Primary.modulate = Color(1, 1, 1, 0.5)
 		$HUD/WeaponSelected/Secondary.modulate = Color(1, 1, 1, 1)
@@ -468,20 +462,10 @@ func attack_animation():
 	$AttackTween.interpolate_property($Torso/Position3D/SwitchAndAttack, "rotation_degrees", Vector3(-19.6, 130, 105), Vector3(34.5, 80, 35), 0.45, Tween.TRANS_SINE, Tween.EASE_IN, 0.35)
 	$AttackTween.interpolate_property($Torso/Position3D/SwitchAndAttack, "rotation_degrees", Vector3(34.5, 80, 35), Vector3(), 0.2, Tween.TRANS_SINE, Tween.EASE_OUT, 0.8)
 
-#	$AttackTween.interpolate_property(camera, "rotation_degrees", Vector3(), Vector3(-2, -5, 0), 0.25, Tween.TRANS_SINE, Tween.EASE_IN)
-#	$AttackTween.interpolate_property(camera, "rotation_degrees", Vector3(-2, -5, 0), Vector3(2, 10, 0), 0.1, Tween.TRANS_SINE, Tween.EASE_OUT, 0.25)
-	# Hit
-#	$AttackTween.interpolate_property(camera, "rotation_degrees", Vector3(2, 10, 0), Vector3(-2, -2, 0), 0.4, Tween.TRANS_SINE, Tween.EASE_IN, 0.35)
-#	$AttackTween.interpolate_property(camera, "rotation_degrees", Vector3(-2, -2, 0), Vector3(0, 0, 0), 0.25, Tween.TRANS_SINE, Tween.EASE_OUT, 0.75)
-	
 	$AttackTween.start()
 
 func _on_RecoilTimer_timeout():
 	$BulletSpread/RayCast.rotation_degrees = Vector3()
-
-func _on_SpawnMagazineTimer_timeout():
-#	spawn_magazine()
-	pass
 
 func _on_ReloadTween_tween_all_completed():
 	ammo_animation()
@@ -492,7 +476,7 @@ func ammo_animation():
 	if ammo == 0:
 		color = Color(1, 0, 0, 0.5)
 	
-	$InterfaceTween.interpolate_property($HUD/DisplayAmmo, "modulate", Color(0, 0, 0, 1), Color(1, 1, 1, 1), 0.2)
+	$InterfaceTween.interpolate_property($HUD/DisplayAmmo, "modulate", Color(0, 0, 0, 1), Color(1, 1, 1, 1), 0.1)
 	$InterfaceTween.start()
 
 func update_ammo_HUD():
