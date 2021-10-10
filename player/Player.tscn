@@ -100,7 +100,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.875, 0 )
 shape = SubResource( 9 )
 
 [node name="CrouchLockedText" type="Label" parent="."]
-modulate = Color( 1, 0.6, 0.1, 1 )
+modulate = Color( 1, 0.8, 0.2, 1 )
 anchor_top = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
