@@ -16,14 +16,18 @@ func _ready():
 	$Label.hide()
 
 func _physics_process(delta):
-	if not object_grabbed and get_collider() is RigidBody and get_collider().mass <= mass_limit and not get_collider() is VehicleBody:
+	if not object_grabbed and get_collider() is RigidBody and not get_collider() is VehicleBody:
 		$Label.show()
+		if get_collider().mass <= mass_limit:
+			$Label.text = "[E] or [JOY_XBOX_Y] to grab"
+		else:
+			$Label.text = "Object too heavy"
 	else:
 		$Label.hide()
 	
 	if object_grabbed:
 		var vector = $GrabPosition.global_transform.origin - object_grabbed.global_transform.origin
-		object_grabbed.linear_velocity = vector * 10
+		object_grabbed.linear_velocity = vector * 15
 		object_grabbed.axis_lock_angular_x = true
 		object_grabbed.axis_lock_angular_y = true
 		object_grabbed.axis_lock_angular_z = true
@@ -37,14 +41,16 @@ func _physics_process(delta):
 		if can_use:
 			can_use = false
 			if not object_grabbed:
-				if get_collider() is RigidBody and get_collider().mass <= mass_limit and not get_collider() is VehicleBody:
-					object_grabbed = get_collider()
-					object_grabbed.rotation_degrees.x = 0
-					object_grabbed.rotation_degrees.z = 0
-					if Input.is_mouse_button_pressed(BUTTON_LEFT) or Input.get_joy_axis(0, 7) >= 0.6:
-						throw_pressed = true
+				if get_collider() is RigidBody and not get_collider() is VehicleBody:
+					$GrabSound.play()
+					if get_collider().mass <= mass_limit:
+						object_grabbed = get_collider()
+						object_grabbed.rotation_degrees.x = 0
+						object_grabbed.rotation_degrees.z = 0
+						if Input.is_mouse_button_pressed(BUTTON_LEFT) or Input.get_joy_axis(0, 7) >= 0.6:
+							throw_pressed = true
 				else:
-						$DeniedSound.play()
+						$DenySound.play()
 			else:
 				release()
 	else:

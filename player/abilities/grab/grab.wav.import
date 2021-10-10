@@ -2,12 +2,12 @@
 
 importer="wav"
 type="AudioStreamSample"
-path="res://.import/denied.wav-c49d07068a6aa1e1c14b43a682227908.sample"
+path="res://.import/grab.wav-398ff85ba2541f3ecdd5dfa65ae7c33a.sample"
 
 [deps]
 
-source_file="res://player/abilities/grab/denied.wav"
-dest_files=[ "res://.import/denied.wav-c49d07068a6aa1e1c14b43a682227908.sample" ]
+source_file="res://player/abilities/grab/grab.wav"
+dest_files=[ "res://.import/grab.wav-398ff85ba2541f3ecdd5dfa65ae7c33a.sample" ]
 
 [params]
 
