@@ -38,3 +38,4 @@ volume_db = -5.0
 
 [node name="GrabSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 4 )
+volume_db = -5.0
