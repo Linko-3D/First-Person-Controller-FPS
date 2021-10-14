@@ -195,7 +195,7 @@ func shoot():
 	# Adding echo
 	if shooting_sound_echo:
 		var delay = 0.1
-		var dB = -15
+		var dB = -20
 		for i in 5: # Add an echo effect when shooting by delaying the sound and reducing the volume
 			play_sound(bang_sound, dB, delay)
 			delay += 0.5
