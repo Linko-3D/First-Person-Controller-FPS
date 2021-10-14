@@ -192,12 +192,14 @@ func shoot():
 	$HUD/DisplayAmmo/AmmoText.text = str(ammo)
 	update_visual_ammo()
 	play_sound(shoot_sound, -10, 0)
+	play_sound(bang_sound, -25, 0.1)
 	# Adding echo
 	if shooting_sound_echo:
-		var delay = 0.1
-		var dB = -20
+		var delay = 0.5
+		var dB = -15
 		for i in 5: # Add an echo effect when shooting by delaying the sound and reducing the volume
-			play_sound(bang_sound, dB, delay)
+			play_sound(shoot_sound, dB, delay)
+			play_sound(bang_sound, dB - 15, delay + 0.1)
 			delay += 0.5
 			dB -= 15
 	
