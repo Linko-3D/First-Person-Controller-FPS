@@ -351,7 +351,7 @@ func weapon_bobbing_animation():
 		$VBobbingTween.start()
 
 func switch_weapon():
-	$SelectSound.play()
+	$SwitchSound.play()
 	var text_color_active = Color(1, 1, 1, 1)
 	var text_color_inactive = Color(1, 1, 1, 0.5)
 	

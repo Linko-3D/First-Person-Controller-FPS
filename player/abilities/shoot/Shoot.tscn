@@ -14,9 +14,9 @@
 [ext_resource path="res://font/Theme.tres" type="Theme" id=12]
 [ext_resource path="res://font/Roboto-Medium.ttf" type="DynamicFontData" id=13]
 [ext_resource path="res://player/abilities/shoot/melee_hit.wav" type="AudioStream" id=14]
+[ext_resource path="res://player/abilities/shoot/switch.wav" type="AudioStream" id=15]
 [ext_resource path="res://player/abilities/shoot/AK-47_silhouette.png" type="Texture" id=16]
 [ext_resource path="res://player/abilities/shoot/Beretta_M9_silhouette.png" type="Texture" id=17]
-[ext_resource path="res://player/abilities/shoot/select.wav" type="AudioStream" id=18]
 
 [sub_resource type="SpatialMaterial" id=1]
 albedo_color = Color( 0.501961, 0.501961, 0.501961, 1 )
@@ -369,8 +369,9 @@ one_shot = true
 wait_time = 0.35
 one_shot = true
 
-[node name="SelectSound" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 18 )
+[node name="SwitchSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 15 )
+volume_db = -10.0
 
 [connection signal="tween_all_completed" from="ReloadTween" to="." method="_on_ReloadTween_tween_all_completed"]
 [connection signal="timeout" from="RecoilTimer" to="." method="_on_RecoilTimer_timeout"]
