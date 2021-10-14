@@ -10,6 +10,7 @@ export (PackedScene) var magazine
 
 export (Resource) var rifle_shoot_sound
 export (Resource) var pistol_shoot_sound
+export (Resource) var bang_sound
 export (Resource) var reload_sound
 export (Resource) var empty_sound
 export (Resource) var melee_hit_sound
@@ -190,15 +191,17 @@ func shoot():
 	ammo -= 1
 	$HUD/DisplayAmmo/AmmoText.text = str(ammo)
 	update_visual_ammo()
-	
+	play_sound(shoot_sound, -10, 0)
 	# Adding echo
 	if shooting_sound_echo:
-		var delay = 0
-		var dB = -10
+		var delay = 0.1
+		var dB = -15
 		for i in 5: # Add an echo effect when shooting by delaying the sound and reducing the volume
-			play_sound(shoot_sound, dB, delay)
+			play_sound(bang_sound, dB, delay)
 			delay += 0.5
 			dB -= 15
+	
+#	play_sound(bang_sound, 0, 0)
 	
 	if weapon_selected == 1:
 		rifle_shoot_animation()
