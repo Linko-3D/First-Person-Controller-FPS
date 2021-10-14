@@ -1,8 +1,9 @@
 [gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://player/abilities/flashlight/Flashlight.gd" type="Script" id=1]
-[ext_resource path="res://player/abilities/flashlight/light_on.wav" type="AudioStream" id=2]
-[ext_resource path="res://player/abilities/flashlight/light_off.wav" type="AudioStream" id=3]
+[ext_resource path="res://player/abilities/flashlight/sounds/light_on.wav" type="AudioStream" id=2]
+[ext_resource path="res://player/abilities/flashlight/sounds/light_off.wav" type="AudioStream" id=3]
+
 
 [node name="Flashlight" type="Position3D"]
 script = ExtResource( 1 )

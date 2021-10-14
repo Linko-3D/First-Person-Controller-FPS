@@ -1,16 +1,17 @@
 [gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://player/abilities/footstep_sound/FootstepSound.gd" type="Script" id=1]
-[ext_resource path="res://player/abilities/footstep_sound/footstep4.wav" type="AudioStream" id=2]
-[ext_resource path="res://player/abilities/footstep_sound/footstep6.wav" type="AudioStream" id=3]
-[ext_resource path="res://player/abilities/footstep_sound/footstep3.wav" type="AudioStream" id=4]
-[ext_resource path="res://player/abilities/footstep_sound/footstep2.wav" type="AudioStream" id=5]
-[ext_resource path="res://player/abilities/footstep_sound/footstep1.wav" type="AudioStream" id=6]
-[ext_resource path="res://player/abilities/footstep_sound/footstep10.wav" type="AudioStream" id=7]
-[ext_resource path="res://player/abilities/footstep_sound/footstep7.wav" type="AudioStream" id=8]
-[ext_resource path="res://player/abilities/footstep_sound/footstep8.wav" type="AudioStream" id=9]
-[ext_resource path="res://player/abilities/footstep_sound/footstep5.wav" type="AudioStream" id=10]
-[ext_resource path="res://player/abilities/footstep_sound/footstep9.wav" type="AudioStream" id=11]
+[ext_resource path="res://player/abilities/footstep_sound/sounds/footstep4.wav" type="AudioStream" id=2]
+[ext_resource path="res://player/abilities/footstep_sound/sounds/footstep6.wav" type="AudioStream" id=3]
+[ext_resource path="res://player/abilities/footstep_sound/sounds/footstep3.wav" type="AudioStream" id=4]
+[ext_resource path="res://player/abilities/footstep_sound/sounds/footstep2.wav" type="AudioStream" id=5]
+[ext_resource path="res://player/abilities/footstep_sound/sounds/footstep1.wav" type="AudioStream" id=6]
+[ext_resource path="res://player/abilities/footstep_sound/sounds/footstep10.wav" type="AudioStream" id=7]
+[ext_resource path="res://player/abilities/footstep_sound/sounds/footstep7.wav" type="AudioStream" id=8]
+[ext_resource path="res://player/abilities/footstep_sound/sounds/footstep8.wav" type="AudioStream" id=9]
+[ext_resource path="res://player/abilities/footstep_sound/sounds/footstep5.wav" type="AudioStream" id=10]
+[ext_resource path="res://player/abilities/footstep_sound/sounds/footstep9.wav" type="AudioStream" id=11]
+
 
 [node name="FootstepSound" type="Spatial"]
 script = ExtResource( 1 )

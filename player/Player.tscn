@@ -34,7 +34,7 @@ mid_height = 1.2
 
 [sub_resource type="SpatialMaterial" id=7]
 
-[sub_resource type="CylinderShape" id=9]
+[sub_resource type="CylinderShape" id=8]
 radius = 0.4
 height = 0.25
 
@@ -97,7 +97,7 @@ material/0 = SubResource( 7 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.875, 0 )
 
 [node name="CollisionShape" type="CollisionShape" parent="CeilingDetection"]
-shape = SubResource( 9 )
+shape = SubResource( 8 )
 
 [node name="CrouchLockedText" type="Label" parent="."]
 modulate = Color( 1, 0.8, 0.2, 1 )

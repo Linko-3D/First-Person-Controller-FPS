@@ -13,11 +13,6 @@ func _ready():
 	$ColorTween.interpolate_property(material, "emission_energy", 5, 0, 0.2, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
 	$ColorTween.interpolate_property($Bullet, "scale", Vector3(2, 2, 2), Vector3(0, 0, 0), 0.2, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
 	$ColorTween.start()
-	
-#	yield(get_tree(), "idle_frame")
-#
-#	for i in 5:
-#		spawn_debris(rand_range(1, 5))
 
 func spawn_debris(throw_force):
 	$Position3D.rotation_degrees.z = rand_range(0, 360)
