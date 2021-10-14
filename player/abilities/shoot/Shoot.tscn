@@ -6,7 +6,7 @@
 [ext_resource path="res://player/abilities/shoot/Shoot.gd" type="Script" id=4]
 [ext_resource path="res://player/abilities/shoot/empty.wav" type="AudioStream" id=5]
 [ext_resource path="res://player/abilities/shoot/pistol_shoot.wav" type="AudioStream" id=6]
-[ext_resource path="res://player/abilities/shoot/bang.wav" type="AudioStream" id=7]
+[ext_resource path="res://player/abilities/shoot/rifle_shoot.wav" type="AudioStream" id=7]
 [ext_resource path="res://player/abilities/shoot/reload.wav" type="AudioStream" id=8]
 [ext_resource path="res://player/abilities/shoot/Beretta.obj" type="ArrayMesh" id=9]
 [ext_resource path="res://player/abilities/shoot/AK-47.obj" type="ArrayMesh" id=10]
@@ -17,7 +17,7 @@
 [ext_resource path="res://player/abilities/shoot/switch.wav" type="AudioStream" id=15]
 [ext_resource path="res://player/abilities/shoot/AK-47_silhouette.png" type="Texture" id=16]
 [ext_resource path="res://player/abilities/shoot/Beretta_M9_silhouette.png" type="Texture" id=17]
-[ext_resource path="res://player simple/shoot/rifle_shoot.wav" type="AudioStream" id=18]
+[ext_resource path="res://player/abilities/shoot/bang.wav" type="AudioStream" id=18]
 
 [sub_resource type="SpatialMaterial" id=1]
 albedo_color = Color( 0.501961, 0.501961, 0.501961, 1 )
@@ -46,9 +46,9 @@ knife_model = ExtResource( 11 )
 impact = ExtResource( 2 )
 shell = ExtResource( 1 )
 magazine = ExtResource( 3 )
-rifle_shoot_sound = ExtResource( 18 )
+rifle_shoot_sound = ExtResource( 7 )
 pistol_shoot_sound = ExtResource( 6 )
-bang_sound = ExtResource( 7 )
+bang_sound = ExtResource( 18 )
 reload_sound = ExtResource( 8 )
 empty_sound = ExtResource( 5 )
 melee_hit_sound = ExtResource( 14 )
