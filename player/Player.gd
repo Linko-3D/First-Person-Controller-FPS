@@ -168,12 +168,12 @@ func land_animation():
 func crouch_animation(crouch):
 	if crouch:
 		if not crouched:
-			$CrouchTween.interpolate_property($CollisionShape2, "shape:length", 1, 0.5, 0.2, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+			$CrouchTween.interpolate_property($CollisionShape2, "shape:length", 0.4, 0, 0.2, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
 			$CrouchTween.start()
 			crouched = true
 	else:
 		if crouched:
-			$CrouchTween.interpolate_property($CollisionShape2, "shape:length", 0.5, 1, 0.2, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+			$CrouchTween.interpolate_property($CollisionShape2, "shape:length", 0, 0.4, 0.2, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
 			$CrouchTween.start()
 			crouched = false
 
