@@ -131,7 +131,7 @@ func _physics_process(delta):
 			crouch_animation(false)
 	
 	if Input.is_key_pressed(KEY_C) or Input.is_joy_button_pressed(0, JOY_XBOX_B):
-		if can_press_crouch:
+		if can_press_crouch and no_low_ceiling:
 			can_press_crouch = false
 			toggle_mode_crouch = true
 			if not crouched:
