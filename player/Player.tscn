@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://player/Player.gd" type="Script" id=1]
 [ext_resource path="res://player/abilities/grab/Grab.tscn" type="PackedScene" id=2]
@@ -10,41 +10,43 @@
 [ext_resource path="res://font/Theme.tres" type="Theme" id=10]
 [ext_resource path="res://player/abilities/tutorial/Tutorial.tscn" type="PackedScene" id=11]
 
-[sub_resource type="CylinderMesh" id=9]
-top_radius = 0.41
-bottom_radius = 0.41
+[sub_resource type="CylinderMesh" id=1]
+top_radius = 0.31
+bottom_radius = 0.31
 height = 0.05
 
 [sub_resource type="SpatialMaterial" id=2]
 flags_unshaded = true
 albedo_color = Color( 0, 0, 0, 1 )
 
-[sub_resource type="CubeMesh" id=10]
-size = Vector3( 0.05, 1.2, 0.82 )
+[sub_resource type="CubeMesh" id=3]
+size = Vector3( 0.05, 1.2, 0.62 )
 
-[sub_resource type="PrismMesh" id=1]
+[sub_resource type="PrismMesh" id=4]
 size = Vector3( 0.5, 1, 0.05 )
 
-[sub_resource type="PrismMesh" id=3]
+[sub_resource type="PrismMesh" id=5]
 size = Vector3( 0.4, 0.9, 0.06 )
 
-[sub_resource type="SpatialMaterial" id=4]
+[sub_resource type="SpatialMaterial" id=6]
 albedo_color = Color( 1, 0.8, 0.2, 1 )
 
-[sub_resource type="CapsuleShape" id=5]
-radius = 0.4
-height = 1.2
+[sub_resource type="CapsuleShape" id=7]
+radius = 0.3
+height = 0.4
 
-[sub_resource type="CapsuleMesh" id=6]
-radius = 0.4
-mid_height = 1.2
+[sub_resource type="RayShape" id=11]
 
-[sub_resource type="SpatialMaterial" id=7]
+[sub_resource type="CapsuleMesh" id=8]
+radius = 0.3
+mid_height = 1.4
+
+[sub_resource type="SpatialMaterial" id=9]
 albedo_color = Color( 1, 0.8, 0.2, 1 )
 
-[sub_resource type="CylinderShape" id=8]
+[sub_resource type="CylinderShape" id=10]
 radius = 0.4
-height = 0.25
+height = 0.5
 
 [node name="Player" type="KinematicBody" groups=[
 "player",
@@ -53,60 +55,58 @@ script = ExtResource( 1 )
 
 [node name="HightlightMesh" type="Position3D" parent="."]
 
-[node name="MeshInstance" type="MeshInstance" parent="HightlightMesh"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0 )
-mesh = SubResource( 9 )
+[node name="MeshInstance1" type="MeshInstance" parent="HightlightMesh"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0 )
+mesh = SubResource( 1 )
 material/0 = SubResource( 2 )
 
 [node name="MeshInstance2" type="MeshInstance" parent="HightlightMesh"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
-mesh = SubResource( 9 )
+mesh = SubResource( 1 )
 material/0 = SubResource( 2 )
 
 [node name="MeshInstance3" type="MeshInstance" parent="HightlightMesh"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0 )
-mesh = SubResource( 9 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.7, 0 )
+mesh = SubResource( 1 )
 material/0 = SubResource( 2 )
 
 [node name="MeshInstance4" type="MeshInstance" parent="HightlightMesh"]
-transform = Transform( -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0, 1.6, 0 )
-mesh = SubResource( 9 )
+transform = Transform( -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0, 0.7, 0 )
+mesh = SubResource( 1 )
 material/0 = SubResource( 2 )
 
 [node name="MeshInstance5" type="MeshInstance" parent="HightlightMesh"]
-transform = Transform( -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0, 0.4, 0 )
-mesh = SubResource( 9 )
+transform = Transform( -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0, -0.7, 0 )
+mesh = SubResource( 1 )
 material/0 = SubResource( 2 )
 
 [node name="MeshInstance6" type="MeshInstance" parent="HightlightMesh"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
-mesh = SubResource( 10 )
+mesh = SubResource( 3 )
 material/0 = SubResource( 2 )
 
 [node name="Head" type="Position3D" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0 )
 
 [node name="DirectionIndicator" type="Position3D" parent="Head"]
 
 [node name="Arrow1" type="MeshInstance" parent="Head/DirectionIndicator"]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, -0.5 )
-mesh = SubResource( 1 )
+mesh = SubResource( 4 )
 material/0 = SubResource( 2 )
 
 [node name="Color" type="MeshInstance" parent="Head/DirectionIndicator/Arrow1"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0 )
-mesh = SubResource( 3 )
-material/0 = SubResource( 4 )
+mesh = SubResource( 5 )
+material/0 = SubResource( 6 )
 
 [node name="Arrow2" type="MeshInstance" parent="Head/DirectionIndicator"]
 transform = Transform( -4.37114e-08, -4.37114e-08, 1, -1, 1.91069e-15, -4.37114e-08, 0, -1, -4.37114e-08, 0, 0, -0.5 )
-mesh = SubResource( 1 )
+mesh = SubResource( 4 )
 material/0 = SubResource( 2 )
 
 [node name="Color" type="MeshInstance" parent="Head/DirectionIndicator/Arrow2"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0 )
-mesh = SubResource( 3 )
-material/0 = SubResource( 4 )
+mesh = SubResource( 5 )
+material/0 = SubResource( 6 )
 
 [node name="Camera" type="Camera" parent="Head"]
 
@@ -125,19 +125,23 @@ material/0 = SubResource( 4 )
 [node name="Tutorial" parent="Head/Camera" instance=ExtResource( 11 )]
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 1, 0 )
-shape = SubResource( 5 )
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.5, 0 )
+shape = SubResource( 7 )
+
+[node name="CollisionShape2" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
+shape = SubResource( 11 )
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 1, 0 )
-mesh = SubResource( 6 )
-material/0 = SubResource( 7 )
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0 )
+mesh = SubResource( 8 )
+material/0 = SubResource( 9 )
 
 [node name="CeilingDetection" type="Area" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.875, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, 0 )
 
 [node name="CollisionShape" type="CollisionShape" parent="CeilingDetection"]
-shape = SubResource( 8 )
+shape = SubResource( 10 )
 
 [node name="CrouchLockedText" type="Label" parent="."]
 modulate = Color( 1, 0.8, 0.2, 1 )

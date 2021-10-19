@@ -76,7 +76,6 @@ func _input(event):
 					switch_weapon()
 
 func _process(delta):
-	print(Input.is_key_pressed(KEY_EACUTE))
 	# Animation when falling on the ground
 	if player.is_on_floor() and not player.snapped:
 		var max_rotation = clamp(player.gravity_vec.y, -20, 0) # Use the impact velocity for the angle and clamp the value
