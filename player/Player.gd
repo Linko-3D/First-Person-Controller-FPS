@@ -3,15 +3,15 @@ extends KinematicBody
 var mouse_sensitivity = 1
 var joystick_deadzone = 0.2
 
-var run_speed = 6 # Running speed in m/s
+var run_speed = 8 # Running speed in m/s
 var walk_speed = run_speed / 2
 var crouch_speed = run_speed / 3
 var jump_height = 4
 
 var current_speed = run_speed
 
-var ground_acceleration = 10
-var air_acceleration = 5
+var ground_acceleration = 20
+var air_acceleration = 10
 var current_acceleration = air_acceleration
 
 var direction = Vector3()
@@ -36,7 +36,7 @@ var falling_velocity = 0
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	$Head/DirectionIndicator.hide()
-	$HightlightMesh.hide()
+	$MeshInstance/HightlightMesh.hide()
 	$CrouchLockedText.hide()
 
 func _input(event):

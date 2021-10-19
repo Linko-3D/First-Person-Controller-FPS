@@ -112,10 +112,10 @@ func _process(delta):
 	# Uses a lerp to copy to smoothly copy the rotation on the LookAt node
 	if $BulletSpread/RayCast.is_colliding() and not $LandingTween.is_active():
 		$Torso/Position3D/LookAt.look_at($BulletSpread/RayCast.get_collision_point(), Vector3.UP)
-		$Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp.rotation_degrees = lerp($Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp.rotation_degrees, $Torso/Position3D/LookAt.rotation_degrees, 10 * delta)
+		$Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp.rotation_degrees = lerp($Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp.rotation_degrees, $Torso/Position3D/LookAt.rotation_degrees, 12 * delta)
 	else:
 		$Torso/Position3D/LookAt.rotation_degrees = Vector3()
-		$Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp.rotation_degrees = lerp($Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp.rotation_degrees, $Torso/Position3D/LookAt.rotation_degrees, 10 * delta)
+		$Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp.rotation_degrees = lerp($Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp.rotation_degrees, $Torso/Position3D/LookAt.rotation_degrees, 12 * delta)
 	$Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp.rotation_degrees.z = 0
 
 	# Weapon sway
@@ -172,11 +172,11 @@ func _process(delta):
 			
 			calculate_ammo()
 			
-			# margin right -360 <> -91
-			# spacing 269
-			# 30 ammo = +8.96
+			# margin right -360 <> -90
+			# spacing 270
+			# 30 ammo = +9
 			
-			var step = 269.0 / max_ammo
+			var step = 270.0 / max_ammo
 			var current_position = -360 + (step * ammo)
 			var color_step = (1.0 / max_ammo) * ammo
 			
@@ -384,8 +384,8 @@ func switch_weapon():
 	
 	update_ammo_HUD()
 	
-	$SwitchTween.interpolate_property($Torso/Position3D/SwitchAndAttack, "translation", Vector3(0, -0.25, -0.1), Vector3(), 0.3, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
-	$SwitchTween.interpolate_property($Torso/Position3D/SwitchAndAttack, "rotation_degrees", Vector3(-30, 20, 10), Vector3(), 0.3, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+	$SwitchTween.interpolate_property($Torso/Position3D/SwitchAndAttack, "translation", Vector3(0, -0.25, -0.1), Vector3(), 0.2, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+	$SwitchTween.interpolate_property($Torso/Position3D/SwitchAndAttack, "rotation_degrees", Vector3(-30, 20, 10), Vector3(), 0.2, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
 	$SwitchTween.start()
 	
 	if weapon_selected == 1:
@@ -425,11 +425,11 @@ func switch_weapon():
 		$Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/MagazineSpawn.translation = Vector3(0, -0.06, -0.01)
 
 func update_visual_ammo():
-	# margin right -360 <> -91
-	# spacing 269
-	# 30 ammo = +8.96
+	# margin right -360 <> -90
+	# spacing 270
+	# 30 ammo = +9
 	
-	var step = 269.0 / max_ammo
+	var step = 270.0 / max_ammo
 	var current_position = -360 + (step * ammo)
 	var color_step = (1.0 / max_ammo) * ammo
 	
