@@ -36,6 +36,7 @@ var falling_velocity = 0
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	$Head/DirectionIndicator.hide()
+	$HightlightMesh.hide()
 	$CrouchLockedText.hide()
 
 func _input(event):
@@ -118,7 +119,7 @@ func _physics_process(delta):
 	else:
 		can_jump = true
 	
-	if is_on_ceiling():
+	if is_on_ceiling() and gravity_vec.y >= 0:
 		gravity_vec.y = 0
 	
 	if Input.is_key_pressed(KEY_CONTROL):

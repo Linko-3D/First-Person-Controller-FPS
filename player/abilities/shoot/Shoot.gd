@@ -76,6 +76,7 @@ func _input(event):
 					switch_weapon()
 
 func _process(delta):
+	print(Input.is_key_pressed(KEY_EACUTE))
 	# Animation when falling on the ground
 	if player.is_on_floor() and not player.snapped:
 		var max_rotation = clamp(player.gravity_vec.y, -20, 0) # Use the impact velocity for the angle and clamp the value
@@ -86,12 +87,12 @@ func _process(delta):
 	
 	if not $AttackTween.is_active():
 		if not $ReloadTween.is_active():
-			if Input.is_key_pressed(KEY_1):
+			if Input.is_key_pressed(KEY_1) or Input.is_key_pressed(KEY_AMPERSAND):
 				if weapon_selected != 1:
 					weapon_selected = 1
 					switch_weapon()
 				
-			if Input.is_key_pressed(KEY_2):
+			if Input.is_key_pressed(KEY_2) or Input.is_key_pressed(KEY_EACUTE):
 				if weapon_selected != 2:
 					weapon_selected = 2
 					switch_weapon()
