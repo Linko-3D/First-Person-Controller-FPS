@@ -9,7 +9,6 @@ func _ready():
 
 func _process(delta): # 9.5
 	movement_speed = player.movement.length()
-	print(movement_speed)
 	$Line1.position.x = clamp(-11.5 + (movement_speed * -1.19), -21, -11.5)
 	$Line2.position.y = clamp(-11.5 + (movement_speed * -1.19), -21, -11.5)
 	$Line3.position.x = clamp(11.5 + (movement_speed * 1.19), 11.5, 21)
