@@ -13,17 +13,19 @@ var text_visible = false
 var throw_pressed = false
 
 func _ready():
-	$Label.hide()
+	$Text.hide()
 
 func _physics_process(delta):
 	if not object_grabbed and get_collider() is RigidBody and not get_collider() is VehicleBody:
-		$Label.show()
+		$Text.show()
 		if get_collider().mass <= mass_limit:
-			$Label.text = "[E] or [JOY_XBOX_Y] to grab"
+			$Text/Label.text = "Grab"
+			$Text/Label2.show()
 		else:
-			$Label.text = "Object too heavy"
+			$Text/Label.text = "Object too heavy"
+			$Text/Label2.hide()
 	else:
-		$Label.hide()
+		$Text.hide()
 	
 	if object_grabbed:
 		var vector = $GrabPosition.global_transform.origin - object_grabbed.global_transform.origin

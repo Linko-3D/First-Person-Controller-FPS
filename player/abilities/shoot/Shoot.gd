@@ -133,8 +133,12 @@ func _process(delta):
 		$Torso/Position3D.translation.y = lerp($Torso/Position3D.translation.y, -0.1 + -weapon_movement, 5 * delta)
 		$Torso/Position3D.translation.z = lerp($Torso/Position3D.translation.z, weapon_position_z + weapon_movement, 5 * delta)
 		
-		if player.is_on_floor() and player.player_speed >= 2:
+		
+	if player.is_on_floor():
+		if player.player_speed >= 2:
 			weapon_bobbing_animation()
+		else:
+			weapon_idle_animation()
 	
 	if $ReloadTween.is_active() or $SwitchTween.is_active() or $AttackTween.is_active():
 		return
@@ -355,6 +359,10 @@ func weapon_bobbing_animation():
 		$VBobbingTween.interpolate_property($Torso/Position3D/SwitchAndAttack/Bobbing, "translation:z", -animation_value / 10, 0, animation_speed / 2, Tween.TRANS_SINE, Tween.EASE_IN_OUT, (animation_speed / 2) * 3)
 		$VBobbingTween.start()
 
+func weapon_idle_animation():
+	# ici
+	pass
+
 func switch_weapon():
 	$SwitchSound.play()
 	var text_color_active = Color(1, 1, 1, 1)
@@ -384,8 +392,8 @@ func switch_weapon():
 	
 	update_ammo_HUD()
 	
-	$SwitchTween.interpolate_property($Torso/Position3D/SwitchAndAttack, "translation", Vector3(0, -0.25, -0.1), Vector3(), 0.2, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
-	$SwitchTween.interpolate_property($Torso/Position3D/SwitchAndAttack, "rotation_degrees", Vector3(-30, 20, 10), Vector3(), 0.2, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+	$SwitchTween.interpolate_property($Torso/Position3D/SwitchAndAttack, "translation:y", -0.1, 0, 0.1, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+	$SwitchTween.interpolate_property($Torso/Position3D/SwitchAndAttack, "rotation_degrees:x", -25, 0, 0.2, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
 	$SwitchTween.start()
 	
 	if weapon_selected == 1:

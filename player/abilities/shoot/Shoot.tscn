@@ -282,7 +282,7 @@ margin_bottom = 54.0
 text = "1"
 
 [node name="Secondary" type="HBoxContainer" parent="HUD/WeaponSelected"]
-modulate = Color( 1, 1, 1, 0.5 )
+modulate = Color( 1, 1, 1, 0.501961 )
 margin_top = 146.0
 margin_right = 238.0
 margin_bottom = 231.0
