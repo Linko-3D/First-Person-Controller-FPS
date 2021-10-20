@@ -49,15 +49,17 @@ func _physics_process(delta):
 			can_use = false
 			if not object_grabbed:
 				if get_collider() is RigidBody and not get_collider() is VehicleBody:
-					$GrabSound.play()
 					if get_collider().mass <= mass_limit:
+						$GrabSound.play()
 						object_grabbed = get_collider()
 						object_grabbed.rotation_degrees.x = 0
 						object_grabbed.rotation_degrees.z = 0
 						if Input.is_mouse_button_pressed(BUTTON_LEFT) or Input.get_joy_axis(0, 7) >= 0.6:
 							throw_pressed = true
-				else:
+					else:
 						$DenySound.play()
+				else:
+					$DenySound.play()
 			else:
 				release()
 	else:
