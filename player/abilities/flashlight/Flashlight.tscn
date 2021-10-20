@@ -23,5 +23,4 @@ light_energy = 0.5
 light_indirect_energy = 0.5
 shadow_enabled = true
 spot_range = 15.0
-spot_attenuation = 0.0272047
 spot_angle = 15.0

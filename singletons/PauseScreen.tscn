@@ -21,7 +21,7 @@ __meta__ = {
 }
 
 [node name="Label" type="Label" parent="."]
-modulate = Color( 1, 0.6, 0.1, 1 )
+modulate = Color( 1, 0.8, 0.2, 1 )
 anchor_left = 0.5
 anchor_right = 0.5
 margin_left = -138.0
