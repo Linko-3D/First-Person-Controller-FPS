@@ -360,8 +360,13 @@ func weapon_bobbing_animation():
 		$VBobbingTween.start()
 
 func weapon_idle_animation():
-	# ici
-	pass
+	if not $VBobbingTween.is_active():
+		$VBobbingTween.interpolate_property($Torso/Position3D/SwitchAndAttack/Bobbing, "translation:y", 0, -0.001, 0.5, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+		$VBobbingTween.interpolate_property($Torso/Position3D/SwitchAndAttack/Bobbing, "translation:y", -0.001, 0, 0.5, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 0.5)
+		var value =  rand_range(-0.001, 0.001)
+		$VBobbingTween.interpolate_property($Torso/Position3D/SwitchAndAttack/Bobbing, "translation:x", 0, value, 0.5, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+		$VBobbingTween.interpolate_property($Torso/Position3D/SwitchAndAttack/Bobbing, "translation:x", value, 0, 0.5, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 0.5)
+		$VBobbingTween.start()
 
 func switch_weapon():
 	$SwitchSound.play()

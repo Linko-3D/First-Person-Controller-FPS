@@ -1,5 +1,11 @@
 extends Control
 
+export var tutorial_enabled = true
+
+func _ready():
+	set_process(tutorial_enabled)
+	visible = tutorial_enabled
+
 func _process(delta):
 	if Input.is_key_pressed(KEY_SPACE) or Input.is_joy_button_pressed(0, JOY_XBOX_A):
 		hide()

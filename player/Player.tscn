@@ -94,6 +94,7 @@ material/0 = SubResource( 4 )
 [node name="Minimap" parent="Head/Camera" instance=ExtResource( 7 )]
 
 [node name="Tutorial" parent="Head/Camera" instance=ExtResource( 11 )]
+visible = false
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.8, 0 )
