@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://player/abilities/shoot/Impact.tscn" type="PackedScene" id=2]
 [ext_resource path="res://player/abilities/shoot/Shoot.gd" type="Script" id=4]
@@ -95,16 +95,19 @@ _bundled = {
 "version": 2
 }
 
-[sub_resource type="DynamicFont" id=9]
+[sub_resource type="DynamicFont" id=12]
 size = 25
-outline_size = 2
-outline_color = Color( 0.501961, 0.301961, 0, 1 )
+outline_size = 1
+outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 13 )
+
+[sub_resource type="Theme" id=13]
+default_font = SubResource( 12 )
 
 [sub_resource type="DynamicFont" id=10]
 size = 50
-outline_size = 2
-outline_color = Color( 0.501961, 0.301961, 0, 1 )
+outline_size = 1
+outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 13 )
 
 [sub_resource type="Theme" id=11]
@@ -168,7 +171,7 @@ omni_range = 2.0
 [node name="LookAt" type="Position3D" parent="Torso/Position3D"]
 
 [node name="HUD" type="Control" parent="."]
-modulate = Color( 1, 0.8, 0.2, 1 )
+modulate = Color( 1, 0.705882, 0, 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 theme = ExtResource( 12 )
@@ -323,10 +326,10 @@ text = "2"
 anchor_top = 1.0
 anchor_bottom = 1.0
 margin_left = 100.0
-margin_top = -40.0
-margin_right = 173.0
+margin_top = -48.0
+margin_right = 416.0
 margin_bottom = -9.0
-custom_fonts/font = SubResource( 9 )
+theme = SubResource( 13 )
 text = "Health"
 valign = 2
 __meta__ = {
@@ -339,9 +342,9 @@ anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = -350.0
-margin_top = -71.0
+margin_top = -42.0
 margin_bottom = -9.0
-custom_fonts/font = SubResource( 9 )
+theme = SubResource( 13 )
 text = "Ammo"
 valign = 2
 __meta__ = {
@@ -410,6 +413,21 @@ __meta__ = {
 margin_right = 84.0
 margin_bottom = 60.0
 text = "100"
+
+[node name="ReferenceRect" type="ReferenceRect" parent="."]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -360.0
+margin_top = -10.0
+margin_right = -90.0
+margin_bottom = -4.0
+border_color = Color( 0, 0, 0, 1 )
+editor_only = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="ShootTween" type="Tween" parent="."]
 

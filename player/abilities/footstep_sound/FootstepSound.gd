@@ -16,10 +16,12 @@ onready var footstep_sounds = [footstep_sound1, footstep_sound2, footstep_sound3
 onready var player = get_tree().get_root().find_node("Player", true ,false)
 
 func _process(delta):
+	print(player.player_speed)
 	if $Timer.is_stopped():
 		if player.is_on_floor() and player.player_speed >= 2:
 			var animation_speed = 1.0 / (player.player_speed / 2)
-			if round(player.player_speed) > 3:
+			
+			if round(player.player_speed) > 4:
 				play_sound(-20)
 			else:
 				play_sound(-40)
