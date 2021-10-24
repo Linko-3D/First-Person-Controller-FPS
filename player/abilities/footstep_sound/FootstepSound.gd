@@ -16,18 +16,17 @@ onready var footstep_sounds = [footstep_sound1, footstep_sound2, footstep_sound3
 onready var player = get_tree().get_root().find_node("Player", true ,false)
 
 func _process(delta):
+	print(player.player_speed)
+	# 8, *-2.5
+	# -60 + (8 * 5)
 	if $Timer.is_stopped():
 		if player.is_on_floor() and player.player_speed >= 2:
 			var animation_speed = 1.0 / (player.player_speed / 2)
-			
-			if round(player.player_speed) > 4:
-				play_sound(-20)
-			else:
-				play_sound(-40)
+			play_sound(-60 + (player.player_speed * 5))
 			$Timer.wait_time = animation_speed
 			$Timer.start()
 	
-	if player.is_on_floor() and player.snapped == false:
+	if player.is_on_floor() and player.snapped == false: # Landing sound
 		play_sound(-10)
 
 func play_sound(volume): # To avoid the sound from clipping, we generate a new audio node each time then we delete it

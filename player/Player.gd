@@ -67,6 +67,8 @@ func _physics_process(delta):
 	if Input.is_key_pressed(KEY_D) or Input.is_key_pressed(KEY_RIGHT):
 		direction.x += 1
 	
+	direction = direction.normalized()
+	
 	#If we aren't using the keyboard, take the input from the left analog of the joystick
 	if direction == Vector3():
 		direction.z = Input.get_joy_axis(0, 1)
@@ -78,7 +80,6 @@ func _physics_process(delta):
 		if direction.x < joystick_deadzone and direction.x > -joystick_deadzone:
 			direction.x = 0
 	
-	direction = direction.normalized()
 	# Rotates the direction from the Y axis to move forward
 	direction = direction.rotated(Vector3.UP, rotation.y)
 	
