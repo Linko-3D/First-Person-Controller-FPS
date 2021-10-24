@@ -28,7 +28,7 @@ radius = 0.4
 height = 0.8
 
 [sub_resource type="RayShape" id=6]
-length = 0.0
+length = 4.0
 
 [sub_resource type="CapsuleMesh" id=7]
 radius = 0.4
@@ -106,6 +106,7 @@ shape = SubResource( 6 )
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.6, 0 )
+visible = false
 mesh = SubResource( 7 )
 material/0 = SubResource( 8 )
 
