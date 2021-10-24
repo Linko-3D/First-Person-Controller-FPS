@@ -12,8 +12,18 @@ projection = 1
 current = true
 size = 50.0
 
+[node name="ColorRect" type="ColorRect" parent="."]
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 260.0
+margin_bottom = 260.0
+color = Color( 0.25098, 0.501961, 0, 0.501961 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Display" type="Position2D" parent="."]
-position = Vector2( 128, 128 )
+position = Vector2( 132, 132 )
 __meta__ = {
 "_edit_group_": true
 }
