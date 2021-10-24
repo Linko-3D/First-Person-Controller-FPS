@@ -17,12 +17,11 @@ onready var player = get_tree().get_root().find_node("Player", true ,false)
 
 func _process(delta):
 	print(player.player_speed)
-	# 8, *-2.5
-	# -60 + (8 * 5)
 	if $Timer.is_stopped():
 		if player.is_on_floor() and player.player_speed >= 2:
 			var animation_speed = 1.0 / (player.player_speed / 2)
-			play_sound(-60 + (player.player_speed * 5))
+			# -40 dB base, -30 when walking and -20 when running, player runs at 8
+			play_sound(-40 + (player.player_speed * 2.5))
 			$Timer.wait_time = animation_speed
 			$Timer.start()
 	
