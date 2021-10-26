@@ -14,6 +14,7 @@ var throw_pressed = false
 
 func _ready():
 	$Text.hide()
+	$ColorRect.hide()
 
 func _physics_process(delta):
 	if not $Tween.is_active():
@@ -23,14 +24,18 @@ func _physics_process(delta):
 
 	if not object_grabbed and get_collider() is RigidBody and not get_collider() is VehicleBody:
 		$Text.show()
+		$ColorRect.show()
 		if get_collider().mass <= mass_limit:
 			$Text/Label.text = "Grab"
 			$Text/Label2.show()
+			$ColorRect.margin_bottom = 90
 		else:
 			$Text/Label.text = "Object too heavy"
 			$Text/Label2.hide()
+			$ColorRect.margin_bottom = 60
 	else:
 		$Text.hide()
+		$ColorRect.hide()
 	
 	if object_grabbed:
 		var vector = $GrabPosition.global_transform.origin - object_grabbed.global_transform.origin
