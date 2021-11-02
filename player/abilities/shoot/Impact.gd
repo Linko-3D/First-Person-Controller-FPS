@@ -2,14 +2,15 @@ extends Position3D
 
 export (PackedScene) var debris
 
+onready var material = $Bullet.get_active_material(0)
+
 func _ready():
 	$Particles.emitting = true
 	
 	$ImpactSound.pitch_scale = rand_range(0.95, 1.05)
 	
-	var material = $Bullet.get_active_material(0)
-	$ColorTween.interpolate_property(material, "emission", Color(1, 0.71, 0), Color(1, 0.71, 0), 0.1, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
-	$ColorTween.interpolate_property(material, "emission", Color(1, 0.71, 0), Color(0, 0, 0), 0.1, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 0.1)
+	$ColorTween.interpolate_property(material, "emission", Color(1, 0.6, 0.1), Color(1, 0.6, 0.1), 0.1, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+	$ColorTween.interpolate_property(material, "emission", Color(1, 0.6, 0.1), Color(0, 0, 0), 0.1, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 0.1)
 	$ColorTween.interpolate_property(material, "emission_energy", 16, 0, 0.2, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
 	$ColorTween.interpolate_property($Bullet, "scale", Vector3(2, 2, 2), Vector3(0, 0, 0), 0.2, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
 	$ColorTween.start()

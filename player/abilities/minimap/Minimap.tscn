@@ -8,10 +8,10 @@ __meta__ = {
 }
 
 [node name="ViewportContainer" type="ViewportContainer" parent="."]
-margin_left = 4.0
-margin_top = 4.0
-margin_right = 260.0
-margin_bottom = 260.0
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 261.0
+margin_bottom = 261.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -26,8 +26,8 @@ render_target_update_mode = 3
 [node name="ReferenceRect" type="ReferenceRect" parent="."]
 margin_left = 4.0
 margin_top = 4.0
-margin_right = 260.0
-margin_bottom = 260.0
+margin_right = 262.0
+margin_bottom = 262.0
 border_color = Color( 0, 0, 0, 1 )
 border_width = 2.0
 editor_only = false

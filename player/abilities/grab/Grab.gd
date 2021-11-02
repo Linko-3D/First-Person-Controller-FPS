@@ -12,10 +12,6 @@ var text_visible = false
 # This variable has been made to avoid grabbing and throwing at the same time
 var throw_pressed = false
 
-func _ready():
-	$Text.hide()
-	$ColorRect.hide()
-
 func _physics_process(delta):
 	if not $Tween.is_active():
 		$Tween.interpolate_property($Text/Label2, "modulate", Color(1, 1, 1, 1), Color(1, 1, 1, 0.5), 0.4, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
@@ -55,7 +51,7 @@ func _physics_process(delta):
 			if not object_grabbed:
 				if get_collider() is RigidBody and not get_collider() is VehicleBody:
 					if get_collider().mass <= mass_limit:
-						$GrabSound.play()
+						$AcceptSound.play()
 						object_grabbed = get_collider()
 						object_grabbed.rotation_degrees.x = 0
 						object_grabbed.rotation_degrees.z = 0
@@ -64,7 +60,8 @@ func _physics_process(delta):
 					else:
 						$DenySound.play()
 				else:
-					$DenySound.play()
+					if not get_collider() is VehicleBody:
+						$DenySound.play()
 			else:
 				release()
 	else:

@@ -1,5 +1,7 @@
 extends KinematicBody
 
+export var enable = true
+
 var mouse_sensitivity = 1
 var joystick_deadzone = 0.2
 
@@ -40,15 +42,19 @@ func _ready():
 	$CrouchLockedText.hide()
 
 func _input(event):
+	if not enable:
+		return
+	
 	# Look with the mouse
 	if event is InputEventMouseMotion:
 		rotation_degrees.y -= event.relative.x * mouse_sensitivity / 18
 		$Head.rotation_degrees.x -= event.relative.y * mouse_sensitivity / 18
 		$Head.rotation_degrees.x = clamp($Head.rotation_degrees.x, -90, 90)
-		
-	direction = Vector3()
 
 func _physics_process(delta):
+	if not enable:
+		return
+	
 	# Look with the right analog of the joystick
 	if Input.get_joy_axis(0, 2) < -joystick_deadzone or Input.get_joy_axis(0, 2) > joystick_deadzone:
 		rotation_degrees.y -= Input.get_joy_axis(0, 2) * 2
@@ -100,7 +106,7 @@ func _physics_process(delta):
 		else:
 			gravity_vec += Vector3.DOWN * gravity * delta
 	
-	if Input.is_key_pressed(KEY_SHIFT) or Input.get_joy_axis(0, 6) >= 0.6:
+	if Input.is_key_pressed(KEY_SHIFT) or Input.get_joy_axis(0, JOY_L2) >= 0.6:
 		current_speed = walk_speed
 	else:
 		current_speed = run_speed

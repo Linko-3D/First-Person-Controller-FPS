@@ -76,6 +76,9 @@ func _input(event):
 					switch_weapon()
 
 func _process(delta):
+	if not player.enable:
+		return
+	
 	# Animation when falling on the ground
 	if player.is_on_floor() and not player.snapped:
 		var max_rotation = clamp(player.gravity_vec.y, -20, 0) # Use the impact velocity for the angle and clamp the value
@@ -150,10 +153,10 @@ func _process(delta):
 	else:
 		can_attack = true
 	
-	if Input.is_mouse_button_pressed(BUTTON_LEFT) or Input.get_joy_axis(0, 7) >= 0.6:
+	if Input.is_mouse_button_pressed(BUTTON_LEFT) or Input.get_joy_axis(0, JOY_R2) >= 0.6:
 		if $FireRateTimer.is_stopped() and can_shoot:
 			if ammo > 0:
-				if Input.get_joy_axis(0, 7) >= 0.5:
+				if Input.get_joy_axis(0, JOY_R2) >= 0.5:
 						Input.start_joy_vibration(0, 0, 0.2, 0.1)
 				shoot()
 				$FireRateTimer.start()
@@ -162,7 +165,7 @@ func _process(delta):
 				$FireRateTimer.start()
 	
 	if singleshot:
-		if Input.is_mouse_button_pressed(BUTTON_LEFT) or Input.get_joy_axis(0, 7) >= 0.6:
+		if Input.is_mouse_button_pressed(BUTTON_LEFT) or Input.get_joy_axis(0, JOY_R2) >= 0.6:
 			can_shoot = false
 		else:
 			can_shoot = true
@@ -402,11 +405,11 @@ func switch_weapon():
 	$SwitchTween.start()
 	
 	if weapon_selected == 1:
-		$HUD/WeaponSelected/Primary.modulate = Color(1, 1, 1, 1)
-		$HUD/WeaponSelected/Secondary.modulate = Color(1, 1, 1, 0.5)
+		$HUD/WeaponSelected/Slot1.modulate = Color(1, 1, 1, 1)
+		$HUD/WeaponSelected/Slot2.modulate = Color(1, 1, 1, 0.5)
 		
-		$HUD/WeaponSelected/Primary/Selector.color = Color(1, 1, 1, 1)
-		$HUD/WeaponSelected/Secondary/Selector.color = Color(1, 1, 1, 0)
+		$HUD/WeaponSelected/Slot1/Selector.color = Color(1, 1, 1, 1)
+		$HUD/WeaponSelected/Slot2/Selector.color = Color(1, 1, 1, 0)
 		
 		weapon_position_z = -0.2
 		weapon.mesh = rifle_model
@@ -420,11 +423,11 @@ func switch_weapon():
 		$Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/MagazineSpawn.translation = Vector3(0, -0.11, -0.18)
 	
 	if weapon_selected == 2:
-		$HUD/WeaponSelected/Primary.modulate = Color(1, 1, 1, 0.5)
-		$HUD/WeaponSelected/Secondary.modulate = Color(1, 1, 1, 1)
+		$HUD/WeaponSelected/Slot1.modulate = Color(1, 1, 1, 0.5)
+		$HUD/WeaponSelected/Slot2.modulate = Color(1, 1, 1, 1)
 		
-		$HUD/WeaponSelected/Primary/Selector.color = Color(1, 1, 1, 0)
-		$HUD/WeaponSelected/Secondary/Selector.color = Color(1, 1, 1, 1)
+		$HUD/WeaponSelected/Slot1/Selector.color = Color(1, 1, 1, 0)
+		$HUD/WeaponSelected/Slot2/Selector.color = Color(1, 1, 1, 1)
 		
 		weapon_position_z = -0.3
 		weapon.mesh = pistol_model
