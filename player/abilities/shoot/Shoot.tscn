@@ -101,7 +101,7 @@ outline_size = 1
 outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 13 )
 
-[sub_resource type="Theme" id=13]
+[sub_resource type="Theme" id=10]
 default_font = SubResource( 9 )
 
 [sub_resource type="DynamicFont" id=11]
@@ -164,6 +164,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.025, 0.01, -0.2 )
 
 [node name="OmniLight" type="OmniLight" parent="Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/Weapon"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.7 )
+light_color = Color( 1, 0.6, 0.1, 1 )
 light_energy = 0.0
 shadow_enabled = true
 omni_range = 2.0
@@ -344,7 +345,7 @@ margin_left = 100.0
 margin_top = -80.0
 margin_right = 416.0
 margin_bottom = -15.0
-theme = SubResource( 13 )
+theme = SubResource( 10 )
 text = "Health"
 valign = 2
 __meta__ = {
@@ -359,7 +360,7 @@ anchor_bottom = 1.0
 margin_left = -350.0
 margin_top = -79.0
 margin_bottom = -15.0
-theme = SubResource( 13 )
+theme = SubResource( 10 )
 text = "Ammo"
 valign = 2
 __meta__ = {

@@ -1,7 +1,5 @@
 extends KinematicBody
 
-export var enable = true
-
 var mouse_sensitivity = 1
 var joystick_deadzone = 0.2
 
@@ -42,8 +40,6 @@ func _ready():
 	$CrouchLockedText.hide()
 
 func _input(event):
-	if not enable:
-		return
 	
 	# Look with the mouse
 	if event is InputEventMouseMotion:
@@ -52,9 +48,6 @@ func _input(event):
 		$Head.rotation_degrees.x = clamp($Head.rotation_degrees.x, -90, 90)
 
 func _physics_process(delta):
-	if not enable:
-		return
-	
 	# Look with the right analog of the joystick
 	if Input.get_joy_axis(0, 2) < -joystick_deadzone or Input.get_joy_axis(0, 2) > joystick_deadzone:
 		rotation_degrees.y -= Input.get_joy_axis(0, 2) * 2

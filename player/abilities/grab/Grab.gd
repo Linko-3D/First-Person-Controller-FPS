@@ -1,18 +1,27 @@
 extends RayCast
 
+var script_enabled = false
+
 var mass_limit = 50
 var throw_force = 5
 
 var object_grabbed = null
 
-var can_use = true
+var can_use = false
 
 var text_visible = false
 
 # This variable has been made to avoid grabbing and throwing at the same time
 var throw_pressed = false
 
+func _ready():
+	$Text.hide()
+	$ColorRect.hide()
+
 func _physics_process(delta):
+	if not script_enabled:
+		return
+	
 	if not $Tween.is_active():
 		$Tween.interpolate_property($Text/Label2, "modulate", Color(1, 1, 1, 1), Color(1, 1, 1, 0.5), 0.4, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
 		$Tween.interpolate_property($Text/Label2, "modulate", Color(1, 1, 1, 0.5), Color(1, 1, 1, 1), 0.4, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 0.4)
@@ -81,3 +90,6 @@ func release():
 	object_grabbed.axis_lock_angular_y = false
 	object_grabbed.axis_lock_angular_z = false
 	object_grabbed = null
+
+func _on_Timer_timeout():
+	script_enabled = true

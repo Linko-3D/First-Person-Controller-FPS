@@ -10,11 +10,11 @@ light_on_sound = ExtResource( 2 )
 light_off_sound = ExtResource( 3 )
 
 [node name="SpotLight" type="SpotLight" parent="."]
-light_color = Color( 1, 0.94902, 0.901961, 1 )
+light_color = Color( 1, 0.901961, 0.701961, 1 )
 light_energy = 0.5
 light_indirect_energy = 0.5
 shadow_enabled = true
-spot_range = 15.0
+spot_range = 30.0
 spot_angle = 25.0
 
 [node name="SpotLight2" type="SpotLight" parent="SpotLight"]
@@ -22,5 +22,5 @@ light_color = Color( 1, 0.94902, 0.901961, 1 )
 light_energy = 0.5
 light_indirect_energy = 0.5
 shadow_enabled = true
-spot_range = 15.0
+spot_range = 30.0
 spot_angle = 15.0
