@@ -172,7 +172,7 @@ omni_range = 2.0
 [node name="LookAt" type="Position3D" parent="Torso/Position3D"]
 
 [node name="HUD" type="Control" parent="."]
-modulate = Color( 1, 0.6, 0.101961, 1 )
+modulate = Color( 1, 0.764706, 0, 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 theme = ExtResource( 12 )

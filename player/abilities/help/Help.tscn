@@ -23,7 +23,7 @@ __meta__ = {
 }
 
 [node name="Control" type="Control" parent="."]
-modulate = Color( 1, 0.6, 0.101961, 1 )
+modulate = Color( 1, 0.764706, 0, 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 __meta__ = {
@@ -93,7 +93,7 @@ __meta__ = {
 }
 
 [node name="Control2" type="Control" parent="."]
-modulate = Color( 1, 0.6, 0.101961, 1 )
+modulate = Color( 1, 0.764706, 0, 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 __meta__ = {

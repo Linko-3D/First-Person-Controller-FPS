@@ -36,7 +36,7 @@ radius = 0.4
 mid_height = 1.2
 
 [sub_resource type="SpatialMaterial" id=8]
-albedo_color = Color( 1, 0.8, 0.2, 1 )
+albedo_color = Color( 1, 0.764706, 0, 1 )
 
 [sub_resource type="CylinderMesh" id=9]
 top_radius = 0.41
