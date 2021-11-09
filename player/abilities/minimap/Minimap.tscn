@@ -8,7 +8,6 @@ __meta__ = {
 }
 
 [node name="ViewportContainer" type="ViewportContainer" parent="."]
-modulate = Color( 1, 1, 1, 0.75 )
 margin_left = 5.0
 margin_top = 5.0
 margin_right = 261.0

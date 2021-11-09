@@ -2,23 +2,22 @@
 
 [node name="Line" type="Position2D"]
 
+[node name="Contour" type="ColorRect" parent="."]
+margin_left = -6.0
+margin_top = -2.0
+margin_right = 6.0
+margin_bottom = 2.0
+color = Color( 0, 0, 0, 0.501961 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Inline" type="ColorRect" parent="."]
 margin_left = -5.0
 margin_top = -1.0
 margin_right = 5.0
 margin_bottom = 1.0
-color = Color( 1, 0.76, 0, 0.5 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="ReferenceRect" type="ReferenceRect" parent="."]
-margin_left = -5.0
-margin_top = -1.0
-margin_right = 5.0
-margin_bottom = 1.0
-border_color = Color( 0, 0, 0, 0.501961 )
-editor_only = false
+color = Color( 1, 0.764706, 0, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }

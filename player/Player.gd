@@ -1,6 +1,7 @@
 extends KinematicBody
 
 var mouse_sensitivity = 1
+var divide_mouse_sensitivity = 1 # The mouse sensitivity is divided by 2 when the character is walking or crouching
 var joystick_deadzone = 0.2
 
 var run_speed = 8 # Running speed in m/s
@@ -38,21 +39,21 @@ func _ready():
 	$Head/DirectionIndicator.hide()
 	$MeshInstance/HightlightMesh.hide()
 	$CrouchLockedText.hide()
+	$Head/Camera.current = true
 
 func _input(event):
-	
-	# Look with the mouse
+	# Look around with the mouse
 	if event is InputEventMouseMotion:
-		rotation_degrees.y -= event.relative.x * mouse_sensitivity / 18
-		$Head.rotation_degrees.x -= event.relative.y * mouse_sensitivity / 18
+		rotation_degrees.y -= event.relative.x * mouse_sensitivity / 18 / divide_mouse_sensitivity
+		$Head.rotation_degrees.x -= event.relative.y * mouse_sensitivity / 18 / divide_mouse_sensitivity
 		$Head.rotation_degrees.x = clamp($Head.rotation_degrees.x, -90, 90)
 
 func _physics_process(delta):
 	# Look with the right analog of the joystick
 	if Input.get_joy_axis(0, 2) < -joystick_deadzone or Input.get_joy_axis(0, 2) > joystick_deadzone:
-		rotation_degrees.y -= Input.get_joy_axis(0, 2) * 2
+		rotation_degrees.y -= Input.get_joy_axis(0, 2) * 2 / divide_mouse_sensitivity
 	if Input.get_joy_axis(0, 3) < -joystick_deadzone or Input.get_joy_axis(0, 3) > joystick_deadzone:
-		$Head.rotation_degrees.x = clamp($Head.rotation_degrees.x - Input.get_joy_axis(0, 3) * 2, -90, 90)
+		$Head.rotation_degrees.x = clamp($Head.rotation_degrees.x - Input.get_joy_axis(0, 3) * 2 / divide_mouse_sensitivity, -90, 90)
 	
 	# Direction inputs
 	direction = Vector3()
@@ -101,11 +102,14 @@ func _physics_process(delta):
 	
 	if Input.is_key_pressed(KEY_SHIFT) or Input.get_joy_axis(0, JOY_L2) >= 0.6:
 		current_speed = walk_speed
+		divide_mouse_sensitivity = 2
 	else:
 		current_speed = run_speed
+		divide_mouse_sensitivity = 1
 	if is_on_floor():
 		if crouched:
 			current_speed = crouch_speed
+			divide_mouse_sensitivity = 2
 	
 	if Input.is_key_pressed(KEY_SPACE) or Input.is_joy_button_pressed(0, JOY_XBOX_A):
 		if is_on_floor() and can_jump and no_low_ceiling:

@@ -26,7 +26,7 @@ __meta__ = {
 "_edit_group_": true
 }
 
-[node name="Player" type="ColorRect" parent="Display"]
+[node name="PlayerOutline" type="ColorRect" parent="Display"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -40,7 +40,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Player2" type="ColorRect" parent="Display"]
+[node name="Player" type="ColorRect" parent="Display"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -54,7 +54,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Direction" type="ColorRect" parent="Display"]
+[node name="DirectionOutline" type="ColorRect" parent="Display"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -68,7 +68,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Direction2" type="ColorRect" parent="Display"]
+[node name="Direction" type="ColorRect" parent="Display"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5

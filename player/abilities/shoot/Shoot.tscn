@@ -164,7 +164,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.025, 0.01, -0.2 )
 
 [node name="OmniLight" type="OmniLight" parent="Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/Weapon"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.7 )
-light_color = Color( 1, 0.6, 0.1, 1 )
+light_color = Color( 1, 0.8, 0, 1 )
 light_energy = 0.0
 shadow_enabled = true
 omni_range = 2.0

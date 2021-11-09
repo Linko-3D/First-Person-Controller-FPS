@@ -37,6 +37,7 @@ margin_left = -123.0
 margin_top = 35.0
 margin_right = 124.0
 margin_bottom = 187.0
+rect_pivot_offset = Vector2( 659.683, 250.513 )
 __meta__ = {
 "_edit_use_anchors_": false
 }

@@ -36,7 +36,7 @@ radius = 0.4
 mid_height = 1.2
 
 [sub_resource type="SpatialMaterial" id=8]
-albedo_color = Color( 1, 0.764706, 0, 1 )
+albedo_color = Color( 1, 0.8, 0, 1 )
 
 [sub_resource type="CylinderMesh" id=9]
 top_radius = 0.41
@@ -50,9 +50,7 @@ size = Vector3( 0.05, 1.2, 0.82 )
 radius = 0.3
 height = 0.5
 
-[node name="Player" type="KinematicBody" groups=[
-"player",
-]]
+[node name="Player" type="KinematicBody" groups=["player"]]
 script = ExtResource( 1 )
 
 [node name="Head" type="Position3D" parent="."]
@@ -151,7 +149,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, 0 )
 shape = SubResource( 11 )
 
 [node name="CrouchLockedText" type="Label" parent="."]
-modulate = Color( 1, 0.8, 0.2, 1 )
+modulate = Color( 1, 0.764706, 0, 1 )
 anchor_top = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
