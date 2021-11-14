@@ -35,6 +35,9 @@ var player_speed = 0
 var falling_velocity = 0
 
 func _ready():
+	rotation_degrees.x = 0
+	rotation_degrees.y = 0
+	
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	$Head/DirectionIndicator.hide()
 	$MeshInstance/HightlightMesh.hide()
