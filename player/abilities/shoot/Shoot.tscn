@@ -164,10 +164,10 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.025, 0.01, -0.2 )
 
 [node name="OmniLight" type="OmniLight" parent="Torso/Position3D/SwitchAndAttack/Bobbing/LookAtLerp/Sway/Weapon"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.7 )
-light_color = Color( 1, 0.8, 0, 1 )
-light_energy = 0.0
+light_color = Color( 1, 0.764706, 0, 1 )
+light_energy = 0.2
+light_indirect_energy = 0.2
 shadow_enabled = true
-omni_range = 2.0
 
 [node name="LookAt" type="Position3D" parent="Torso/Position3D"]
 
@@ -198,7 +198,7 @@ __meta__ = {
 [node name="ReferenceRect" type="ReferenceRect" parent="HUD/AmmoBackgroundColor"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-border_color = Color( 0, 0, 0, 1 )
+border_color = Color( 1, 1, 1, 1 )
 editor_only = false
 __meta__ = {
 "_edit_use_anchors_": false
@@ -219,8 +219,11 @@ __meta__ = {
 [node name="ReferenceRect" type="ReferenceRect" parent="HUD/HealthBackgroundColor"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-border_color = Color( 0, 0, 0, 1 )
+border_color = Color( 1, 1, 1, 1 )
 editor_only = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="BackgroundColor" type="VBoxContainer" parent="HUD"]
 anchor_left = 1.0
@@ -428,7 +431,7 @@ margin_left = -360.0
 margin_top = -15.0
 margin_right = -90.0
 margin_bottom = -5.0
-border_color = Color( 0, 0, 0, 1 )
+border_color = Color( 1, 1, 1, 1 )
 editor_only = false
 __meta__ = {
 "_edit_use_anchors_": false
@@ -452,7 +455,7 @@ margin_left = 90.0
 margin_top = -15.0
 margin_right = 305.0
 margin_bottom = -5.0
-border_color = Color( 0, 0, 0, 1 )
+border_color = Color( 1, 1, 1, 1 )
 editor_only = false
 __meta__ = {
 "_edit_use_anchors_": false

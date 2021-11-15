@@ -68,7 +68,10 @@ autoplay = true
 
 [node name="Position3D" type="Position3D" parent="."]
 
-[node name="Position3D2" type="Position3D" parent="Position3D"]
+[node name="OmniLight" type="OmniLight" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.15 )
+light_color = Color( 1, 0.764706, 0, 1 )
+shadow_enabled = true
 
 [node name="ColorTween" type="Tween" parent="."]
 
