@@ -2,12 +2,12 @@
 
 importer="wav"
 type="AudioStreamSample"
-path="res://.import/deny.wav-fd96197a60ea6910956c1c6cb84b7116.sample"
+path="res://.import/deny.wav-e9c2946ed2321b84884731e09e5f1a6c.sample"
 
 [deps]
 
-source_file="res://puppet2/sounds/deny.wav"
-dest_files=[ "res://.import/deny.wav-fd96197a60ea6910956c1c6cb84b7116.sample" ]
+source_file="res://player/sounds/deny.wav"
+dest_files=[ "res://.import/deny.wav-e9c2946ed2321b84884731e09e5f1a6c.sample" ]
 
 [params]
 

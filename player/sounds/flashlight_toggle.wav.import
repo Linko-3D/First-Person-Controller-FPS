@@ -2,12 +2,12 @@
 
 importer="wav"
 type="AudioStreamSample"
-path="res://.import/flashlight_toggle.wav-6226888b82d4ba4374a02a8cf82ef614.sample"
+path="res://.import/flashlight_toggle.wav-00da5af7ea9ba0cdf63826a37d993eb3.sample"
 
 [deps]
 
-source_file="res://puppet2/sounds/flashlight_toggle.wav"
-dest_files=[ "res://.import/flashlight_toggle.wav-6226888b82d4ba4374a02a8cf82ef614.sample" ]
+source_file="res://player/sounds/flashlight_toggle.wav"
+dest_files=[ "res://.import/flashlight_toggle.wav-00da5af7ea9ba0cdf63826a37d993eb3.sample" ]
 
 [params]
 

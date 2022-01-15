@@ -2,14 +2,14 @@
 
 importer="wavefront_obj"
 type="Mesh"
-path="res://.import/AK-47.obj-0cd882569172990125c19a98f2ea2a9d.mesh"
+path="res://.import/AK-47.obj-68999ed0ea695770cd87a300c773e556.mesh"
 
 [deps]
 
-files=[ "res://.import/AK-47.obj-0cd882569172990125c19a98f2ea2a9d.mesh" ]
+files=[ "res://.import/AK-47.obj-68999ed0ea695770cd87a300c773e556.mesh" ]
 
-source_file="res://puppet2/models/AK-47.obj"
-dest_files=[ "res://.import/AK-47.obj-0cd882569172990125c19a98f2ea2a9d.mesh", "res://.import/AK-47.obj-0cd882569172990125c19a98f2ea2a9d.mesh" ]
+source_file="res://player/models/AK-47.obj"
+dest_files=[ "res://.import/AK-47.obj-68999ed0ea695770cd87a300c773e556.mesh", "res://.import/AK-47.obj-68999ed0ea695770cd87a300c773e556.mesh" ]
 
 [params]
 

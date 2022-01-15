@@ -2,12 +2,12 @@
 
 importer="wav"
 type="AudioStreamSample"
-path="res://.import/bang.wav-59b379e28cf26f37ecbae849d6781bf3.sample"
+path="res://.import/bang.wav-fee3684b1f816cc3b703491503f80f6a.sample"
 
 [deps]
 
-source_file="res://puppet2/sounds/bang.wav"
-dest_files=[ "res://.import/bang.wav-59b379e28cf26f37ecbae849d6781bf3.sample" ]
+source_file="res://player/sounds/bang.wav"
+dest_files=[ "res://.import/bang.wav-fee3684b1f816cc3b703491503f80f6a.sample" ]
 
 [params]
 

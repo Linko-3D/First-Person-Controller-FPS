@@ -2,12 +2,12 @@
 
 importer="wav"
 type="AudioStreamSample"
-path="res://.import/accept.wav-9fa128fc2feda11214276312779a9a92.sample"
+path="res://.import/accept.wav-a26b264e5964704111f7d36e74e1aaf5.sample"
 
 [deps]
 
-source_file="res://puppet2/sounds/accept.wav"
-dest_files=[ "res://.import/accept.wav-9fa128fc2feda11214276312779a9a92.sample" ]
+source_file="res://player/sounds/accept.wav"
+dest_files=[ "res://.import/accept.wav-a26b264e5964704111f7d36e74e1aaf5.sample" ]
 
 [params]
 

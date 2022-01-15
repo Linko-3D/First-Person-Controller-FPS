@@ -2,12 +2,12 @@
 
 importer="wav"
 type="AudioStreamSample"
-path="res://.import/gun_shoot.wav-c67cd338ab95ab3f66f33cdf9fb0a976.sample"
+path="res://.import/gun_shoot.wav-ae8cbeec5b8bde16bb4e9008bcd5050d.sample"
 
 [deps]
 
-source_file="res://puppet2/sounds/gun_shoot.wav"
-dest_files=[ "res://.import/gun_shoot.wav-c67cd338ab95ab3f66f33cdf9fb0a976.sample" ]
+source_file="res://player/sounds/gun_shoot.wav"
+dest_files=[ "res://.import/gun_shoot.wav-ae8cbeec5b8bde16bb4e9008bcd5050d.sample" ]
 
 [params]
 

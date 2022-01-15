@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=2]
 
-[ext_resource path="res://puppet2/sounds/bullet_impact.wav" type="AudioStream" id=1]
-[ext_resource path="res://puppet2/instances/Impact.gd" type="Script" id=2]
+[ext_resource path="res://player/sounds/bullet_impact.wav" type="AudioStream" id=1]
+[ext_resource path="res://player/instances/Impact.gd" type="Script" id=2]
 
 [sub_resource type="SpatialMaterial" id=6]
 flags_transparent = true

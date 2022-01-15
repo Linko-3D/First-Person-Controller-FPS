@@ -2,12 +2,12 @@
 
 importer="wav"
 type="AudioStreamSample"
-path="res://.import/footstep10.wav-ae34abe91edb9450d4dde46b68d10c82.sample"
+path="res://.import/footstep10.wav-053d479951d632e99c4feffe789f149a.sample"
 
 [deps]
 
-source_file="res://puppet2/sounds/footsteps/footstep10.wav"
-dest_files=[ "res://.import/footstep10.wav-ae34abe91edb9450d4dde46b68d10c82.sample" ]
+source_file="res://player/sounds/footsteps/footstep10.wav"
+dest_files=[ "res://.import/footstep10.wav-053d479951d632e99c4feffe789f149a.sample" ]
 
 [params]
 

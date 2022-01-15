@@ -2,12 +2,12 @@
 
 importer="wav"
 type="AudioStreamSample"
-path="res://.import/bullet_impact.wav-cf5427db33b844d2b1ba2b88041bbd5a.sample"
+path="res://.import/bullet_impact.wav-dc90e4fdebc2b4d2bcab5084e109041c.sample"
 
 [deps]
 
-source_file="res://puppet2/sounds/bullet_impact.wav"
-dest_files=[ "res://.import/bullet_impact.wav-cf5427db33b844d2b1ba2b88041bbd5a.sample" ]
+source_file="res://player/sounds/bullet_impact.wav"
+dest_files=[ "res://.import/bullet_impact.wav-dc90e4fdebc2b4d2bcab5084e109041c.sample" ]
 
 [params]
 
