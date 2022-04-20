@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://player/abilities/grab/grab.gd" id="1_sbve8"]
+[ext_resource type="AudioStream" path="res://player/abilities/grab/sounds/accept.wav" id="2_m0vas"]
+[ext_resource type="AudioStream" path="res://player/abilities/grab/sounds/deny.wav" id="3_ulopu"]
+
+[node name="Grab" type="RayCast3D"]
+target_position = Vector3(0, 0, -2.5)
+script = ExtResource( "1_sbve8" )
+
+[node name="GrabPosition3D" type="Position3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.5)
+
+[node name="AcceptSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( "2_m0vas" )
+volume_db = -5.0
+max_polyphony = 100
+
+[node name="DenySound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( "3_ulopu" )
+volume_db = -10.0
+max_polyphony = 100

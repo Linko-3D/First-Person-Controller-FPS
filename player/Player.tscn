@@ -1,168 +1,63 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=10 format=3 uid="uid://bfb7rkw17fj60"]
 
-[ext_resource path="res://player/Player.gd" type="Script" id=1]
-[ext_resource path="res://player/instances/Impact.tscn" type="PackedScene" id=2]
-[ext_resource path="res://player/sounds/gun_shoot.wav" type="AudioStream" id=3]
-[ext_resource path="res://player/instances/MuzzleFlash.tscn" type="PackedScene" id=4]
-[ext_resource path="res://player/sounds/footsteps/footstep1.wav" type="AudioStream" id=5]
-[ext_resource path="res://player/sounds/footsteps/footstep8.wav" type="AudioStream" id=6]
-[ext_resource path="res://player/sounds/footsteps/footstep7.wav" type="AudioStream" id=7]
-[ext_resource path="res://player/sounds/footsteps/footstep6.wav" type="AudioStream" id=8]
-[ext_resource path="res://player/sounds/footsteps/footstep5.wav" type="AudioStream" id=9]
-[ext_resource path="res://player/sounds/footsteps/footstep4.wav" type="AudioStream" id=10]
-[ext_resource path="res://player/sounds/footsteps/footstep2.wav" type="AudioStream" id=11]
-[ext_resource path="res://player/sounds/footsteps/footstep3.wav" type="AudioStream" id=12]
-[ext_resource path="res://player/sounds/footsteps/footstep10.wav" type="AudioStream" id=13]
-[ext_resource path="res://player/sounds/footsteps/footstep9.wav" type="AudioStream" id=14]
-[ext_resource path="res://player/sounds/bang.wav" type="AudioStream" id=15]
-[ext_resource path="res://player/sounds/accept.wav" type="AudioStream" id=16]
-[ext_resource path="res://player/sounds/deny.wav" type="AudioStream" id=17]
-[ext_resource path="res://player/instances/Flashlight.tscn" type="PackedScene" id=18]
-[ext_resource path="res://player/sounds/flashlight_toggle.wav" type="AudioStream" id=19]
-[ext_resource path="res://player/models/AK-47.obj" type="ArrayMesh" id=20]
+[ext_resource type="Script" path="res://player/player.gd" id="1_8gq78"]
+[ext_resource type="AudioStream" uid="uid://dj5emwcywffib" path="res://player/footstep.wav" id="2_5skmh"]
+[ext_resource type="PackedScene" uid="uid://q75wr7kan18a" path="res://player/abilities/shoot/shoot.tscn" id="2_bpvta"]
+[ext_resource type="PackedScene" uid="uid://cdaunukqnm73e" path="res://player/abilities/flashlight/flashlight.tscn" id="3_7t864"]
+[ext_resource type="AudioStream" uid="uid://bi1gyj2ipyyux" path="res://player/land.wav" id="3_xgg1x"]
+[ext_resource type="PackedScene" path="res://player/abilities/grab/grab.tscn" id="4_p00qc"]
+[ext_resource type="AudioStream" uid="uid://dph6b5v78fpt1" path="res://player/jump.wav" id="5_l3v0x"]
 
-[sub_resource type="CylinderShape" id=5]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_hcso2"]
 radius = 0.4
-height = 1.0
 
-[sub_resource type="CapsuleMesh" id=3]
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_ejccf"]
 radius = 0.4
-mid_height = 1.2
 
-[sub_resource type="CylinderMesh" id=4]
-top_radius = 0.1
-bottom_radius = 0.1
-height = 0.75
+[node name="Player" type="CharacterBody3D" groups=["player"]]
+script = ExtResource( "1_8gq78" )
 
-[node name="Player" type="KinematicBody" groups=["player"]]
-script = ExtResource( 1 )
-impact = ExtResource( 2 )
-muzzle_flash = ExtResource( 4 )
-flashlight = ExtResource( 18 )
-gun_shoot_sound = ExtResource( 3 )
-bang_sound = ExtResource( 15 )
-flashlight_toggle_sound = ExtResource( 19 )
-accept_sound = ExtResource( 16 )
-deny_sound = ExtResource( 17 )
-footstep_sound1 = ExtResource( 5 )
-footstep_sound2 = ExtResource( 11 )
-footstep_sound3 = ExtResource( 12 )
-footstep_sound4 = ExtResource( 10 )
-footstep_sound5 = ExtResource( 9 )
-footstep_sound6 = ExtResource( 8 )
-footstep_sound7 = ExtResource( 7 )
-footstep_sound8 = ExtResource( 6 )
-footstep_sound9 = ExtResource( 14 )
-footstep_sound10 = ExtResource( 13 )
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource( "CapsuleShape3D_hcso2" )
 
-[node name="FeetRayCast" type="RayCast" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.18557e-08 )
-enabled = true
-cast_to = Vector3( 0, -2, 0 )
-
-[node name="CollisionShape" type="CollisionShape" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0 )
-shape = SubResource( 5 )
-
-[node name="MeshInstance" type="MeshInstance" parent="."]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, -1, 0 )
-mesh = SubResource( 3 )
-material/0 = null
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+cast_shadow = 0
+mesh = SubResource( "CapsuleMesh_ejccf" )
 
 [node name="Head" type="Position3D" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.2, 0 )
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
 
-[node name="ShootRayCast" type="RayCast" parent="Head"]
-enabled = true
-cast_to = Vector3( 0, 0, -1000 )
-
-[node name="InteractiveRayCast" type="RayCast" parent="Head"]
-enabled = true
-cast_to = Vector3( 0, 0, -2.5 )
-
-[node name="RightHand" type="Position3D" parent="Head"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.15, -0.1, -0.2 )
-
-[node name="GunAnimation" type="Position3D" parent="Head/RightHand"]
-
-[node name="Gun" type="MeshInstance" parent="Head/RightHand/GunAnimation"]
-cast_shadow = 0
-mesh = ExtResource( 20 )
-skeleton = NodePath("../..")
-material/0 = null
-
-[node name="MuzzleFlashPosition" type="Position3D" parent="Head/RightHand/GunAnimation"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.68 )
-
-[node name="ClippedCamera" type="ClippedCamera" parent="Head"]
+[node name="Camera3D" type="Camera3D" parent="Head"]
 current = true
-far = 1000.0
 
-[node name="DirectionIndicator" type="MeshInstance" parent="Head"]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, -0.375 )
-cast_shadow = 0
-mesh = SubResource( 4 )
-skeleton = NodePath("../ClippedCamera")
-material/0 = null
+[node name="RayCast3D" type="RayCast3D" parent="Head/Camera3D"]
+target_position = Vector3(0, 0, -1000)
 
-[node name="Crosshair" type="ColorRect" parent="."]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -3.0
-margin_top = -3.0
-margin_right = 3.0
-margin_bottom = 3.0
-color = Color( 0, 0, 0, 0.5 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="RightHand" type="Position3D" parent="Head/Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.15, -0.1, -0.2)
 
-[node name="Crosshair" type="ColorRect" parent="Crosshair"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -2.0
-margin_top = -2.0
-margin_right = 2.0
-margin_bottom = 2.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="RightHandLookAtLerp" type="Position3D" parent="Head/Camera3D/RightHand"]
 
-[node name="DeathTransition" type="ColorRect" parent="."]
-anchor_right = 1.0
-anchor_bottom = 1.0
-color = Color( 0, 0, 0, 0 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="RightHandSway" type="Position3D" parent="Head/Camera3D/RightHand/RightHandLookAtLerp"]
 
-[node name="LandTween" type="Tween" parent="."]
+[node name="Shoot" parent="Head/Camera3D/RightHand/RightHandLookAtLerp/RightHandSway" instance=ExtResource( "2_bpvta" )]
 
-[node name="DeathTween" type="Tween" parent="."]
+[node name="Grab" parent="Head/Camera3D/RightHand/RightHandLookAtLerp/RightHandSway" instance=ExtResource( "4_p00qc" )]
 
-[node name="ShootTween" type="Tween" parent="."]
+[node name="Flashlight" parent="Head/Camera3D/RightHand/RightHandLookAtLerp/RightHandSway" instance=ExtResource( "3_7t864" )]
 
-[node name="CanStillJumpTimer" type="Timer" parent="."]
-wait_time = 0.25
-one_shot = true
+[node name="LookAt" type="Position3D" parent="Head/Camera3D/RightHand"]
 
-[node name="DoubleJumpTimer" type="Timer" parent="."]
-wait_time = 0.2
-one_shot = true
+[node name="FootstepSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( "2_5skmh" )
+volume_db = -25.0
+max_polyphony = 100
 
-[node name="FireRateTimer" type="Timer" parent="."]
-wait_time = 0.1
-one_shot = true
+[node name="LandSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( "3_xgg1x" )
+volume_db = -20.0
 
-[node name="CanUseTimer" type="Timer" parent="."]
-wait_time = 0.1
-one_shot = true
-autostart = true
-
-[connection signal="timeout" from="CanStillJumpTimer" to="." method="_on_CanStillJumpTimer_timeout"]
-[connection signal="timeout" from="DoubleJumpTimer" to="." method="_on_DoubleJumpTimer_timeout"]
-[connection signal="timeout" from="CanUseTimer" to="." method="_on_CanUseTimer_timeout"]
+[node name="JumpSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( "5_l3v0x" )
+volume_db = -20.0
+pitch_scale = 1.1

@@ -1,0 +1,47 @@
+[gd_scene load_steps=7 format=3 uid="uid://sgtofiaaxs1b"]
+
+[ext_resource type="Script" path="res://player/abilities/shoot/instances/impact.gd" id="1_ketbq"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m3mnd"]
+resource_local_to_scene = true
+albedo_color = Color(1, 1, 0.501961, 1)
+emission_enabled = true
+emission = Color(1, 1, 0.501961, 1)
+emission_energy = 16.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_xtit1"]
+top_radius = 0.05
+bottom_radius = 0.1
+height = 0.01
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_s8tp7"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="ParticlesMaterial" id="ParticlesMaterial_umde7"]
+direction = Vector3(0, 0, 1)
+initial_velocity_min = 2.5
+initial_velocity_max = 3.5
+
+[sub_resource type="SphereMesh" id="SphereMesh_v14vq"]
+radius = 0.005
+height = 0.01
+
+[node name="Impact" type="Position3D"]
+script = ExtResource( "1_ketbq" )
+
+[node name="Bullet" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, -0.0127072, 0, 0)
+material_override = SubResource( "StandardMaterial3D_m3mnd" )
+cast_shadow = 0
+mesh = SubResource( "CylinderMesh_xtit1" )
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+material_override = SubResource( "StandardMaterial3D_s8tp7" )
+emitting = false
+amount = 16
+lifetime = 2.0
+one_shot = true
+explosiveness = 1.0
+local_coords = false
+process_material = SubResource( "ParticlesMaterial_umde7" )
+draw_pass_1 = SubResource( "SphereMesh_v14vq" )

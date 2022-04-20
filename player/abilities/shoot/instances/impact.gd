@@ -1,0 +1,10 @@
+extends Position3D
+
+func _ready():
+	$Bullet.scale = Vector3()
+	$GPUParticles3D.emitting = true
+
+	var tween = get_tree().create_tween()
+	tween.tween_property( $Bullet, "scale", Vector3(1, 1, 1), 0.1 ).set_trans(Tween.TRANS_SINE)
+	tween.tween_property( $Bullet, "scale", Vector3(), 0.1 ).set_trans(Tween.TRANS_SINE)
+	tween.tween_callback(queue_free).set_delay(0.8)
