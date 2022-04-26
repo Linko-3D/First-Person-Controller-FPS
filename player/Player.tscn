@@ -10,6 +10,7 @@
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_hcso2"]
 radius = 0.4
+height = 1.4
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_ejccf"]
 radius = 0.4
@@ -21,32 +22,35 @@ script = ExtResource( "1_8gq78" )
 shape = SubResource( "CapsuleShape3D_hcso2" )
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+visible = false
 cast_shadow = 0
 mesh = SubResource( "CapsuleMesh_ejccf" )
 
 [node name="Head" type="Position3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.300112, 0)
 
-[node name="Camera3D" type="Camera3D" parent="Head"]
+[node name="LandingAnimation" type="Position3D" parent="Head"]
+
+[node name="Camera3D" type="Camera3D" parent="Head/LandingAnimation"]
 current = true
 
-[node name="RayCast3D" type="RayCast3D" parent="Head/Camera3D"]
+[node name="RayCast3D" type="RayCast3D" parent="Head/LandingAnimation/Camera3D"]
 target_position = Vector3(0, 0, -1000)
 
-[node name="RightHand" type="Position3D" parent="Head/Camera3D"]
+[node name="RightHand" type="Position3D" parent="Head/LandingAnimation/Camera3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.15, -0.1, -0.2)
 
-[node name="RightHandLookAtLerp" type="Position3D" parent="Head/Camera3D/RightHand"]
+[node name="RightHandLookAtLerp" type="Position3D" parent="Head/LandingAnimation/Camera3D/RightHand"]
 
-[node name="RightHandSway" type="Position3D" parent="Head/Camera3D/RightHand/RightHandLookAtLerp"]
+[node name="RightHandSway" type="Position3D" parent="Head/LandingAnimation/Camera3D/RightHand/RightHandLookAtLerp"]
 
-[node name="Shoot" parent="Head/Camera3D/RightHand/RightHandLookAtLerp/RightHandSway" instance=ExtResource( "2_bpvta" )]
+[node name="Shoot" parent="Head/LandingAnimation/Camera3D/RightHand/RightHandLookAtLerp/RightHandSway" instance=ExtResource( "2_bpvta" )]
 
-[node name="Grab" parent="Head/Camera3D/RightHand/RightHandLookAtLerp/RightHandSway" instance=ExtResource( "4_p00qc" )]
+[node name="Grab" parent="Head/LandingAnimation/Camera3D/RightHand/RightHandLookAtLerp/RightHandSway" instance=ExtResource( "4_p00qc" )]
 
-[node name="Flashlight" parent="Head/Camera3D/RightHand/RightHandLookAtLerp/RightHandSway" instance=ExtResource( "3_7t864" )]
+[node name="Flashlight" parent="Head/LandingAnimation/Camera3D/RightHand/RightHandLookAtLerp/RightHandSway" instance=ExtResource( "3_7t864" )]
 
-[node name="LookAt" type="Position3D" parent="Head/Camera3D/RightHand"]
+[node name="LookAt" type="Position3D" parent="Head/LandingAnimation/Camera3D/RightHand"]
 
 [node name="FootstepSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( "2_5skmh" )
