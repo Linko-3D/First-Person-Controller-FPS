@@ -39,11 +39,13 @@ func _physics_process(delta):
 		rotation.y -= deg2rad( Input.get_joy_axis(0, 2) * 4.3 )
 	if Input.get_joy_axis(0, 3) < -0.2 or Input.get_joy_axis(0, 3) > 0.2:
 		$Head/LandingAnimation/Camera3D.rotation.x -= deg2rad( Input.get_joy_axis(0, 3) * 4.3 )
-
+	
+	# Hand look at the raycast collision point to be able to put an object like a gun in the arm that shoots the center of the screen
 	if $Head/LandingAnimation/Camera3D/RayCast3D.is_colliding():
 		$Head/LandingAnimation/Camera3D/RightHand/LookAt.look_at( $Head/LandingAnimation/Camera3D/RayCast3D.get_collision_point(), Vector3.UP )
 	else:
 		$Head/LandingAnimation/Camera3D/RightHand/LookAt.rotation = Vector3()
+	
 	$Head/LandingAnimation/Camera3D/RightHand/RightHandLookAtLerp.rotation.x = lerp( $Head/LandingAnimation/Camera3D/RightHand/RightHandLookAtLerp.rotation.x, $Head/LandingAnimation/Camera3D/RightHand/LookAt.rotation.x, 10 * delta )
 	$Head/LandingAnimation/Camera3D/RightHand/RightHandLookAtLerp.rotation.y = lerp( $Head/LandingAnimation/Camera3D/RightHand/RightHandLookAtLerp.rotation.y, $Head/LandingAnimation/Camera3D/RightHand/LookAt.rotation.y, 10 * delta )
 	$Head/LandingAnimation/Camera3D/RightHand/RightHandLookAtLerp.rotation.z = lerp( $Head/LandingAnimation/Camera3D/RightHand/RightHandLookAtLerp.rotation.z, $Head/LandingAnimation/Camera3D/RightHand/LookAt.rotation.z, 10 * delta )

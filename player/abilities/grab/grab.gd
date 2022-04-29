@@ -7,14 +7,12 @@ var throw_force = 5
 var can_use = true
 
 func _process(delta):
-	
 	$CanGrabNotification.hide()
-	
+
 	if get_collider() is RigidDynamicBody3D and not get_collider() is VehicleBody3D and get_collider().mass <= mass_limit:
 		if not object_grabbed:
 			$CanGrabNotification.show()
 
-	
 	if Input.is_key_pressed(KEY_E) or Input.is_joy_button_pressed(0, JOY_BUTTON_Y):
 		if can_use:
 			can_use = false
@@ -44,4 +42,5 @@ func release():
 	object_grabbed.axis_lock_angular_x = false
 	object_grabbed.axis_lock_angular_y = false
 	object_grabbed.axis_lock_angular_z = false
+	object_grabbed.linear_velocity = Vector3()
 	object_grabbed = null
