@@ -7,16 +7,20 @@ var throw_force = 5
 var can_use = true
 
 func _process(delta):
+	
+	$CanGrabNotification.hide()
+	
+	if get_collider() is RigidDynamicBody3D and not get_collider() is VehicleBody3D and get_collider().mass <= mass_limit:
+		if not object_grabbed:
+			$CanGrabNotification.show()
+
+	
 	if Input.is_key_pressed(KEY_E) or Input.is_joy_button_pressed(0, JOY_BUTTON_Y):
 		if can_use:
 			can_use = false
 			if not object_grabbed:
 				if get_collider() is RigidDynamicBody3D and not get_collider() is VehicleBody3D and get_collider().mass <= mass_limit:
 					object_grabbed = get_collider()
-					$AcceptSound.play()
-				else:
-					$DenySound.pitch_scale = randf_range(0.95, 1.05)
-					$DenySound.play()
 			else:
 				release()
 	else:

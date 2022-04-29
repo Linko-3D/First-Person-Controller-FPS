@@ -1,22 +1,54 @@
-[gd_scene load_steps=6 format=3 uid="uid://q75wr7kan18a"]
+[gd_scene load_steps=8 format=3 uid="uid://q75wr7kan18a"]
 
 [ext_resource type="Script" path="res://player/abilities/shoot/shoot.gd" id="1_clt7p"]
 [ext_resource type="ArrayMesh" uid="uid://ceq3jqdfswbwd" path="res://player/abilities/shoot/models/AK-47.obj" id="1_f1ns5"]
 [ext_resource type="AudioStream" uid="uid://ck8qfneq14pbr" path="res://player/abilities/shoot/sounds/shoot.wav" id="3_au4kn"]
+[ext_resource type="FontData" uid="uid://bo8rpp6613inh" path="res://fonts/LilitaOne-Regular.ttf" id="3_iisqv"]
 [ext_resource type="AudioStream" uid="uid://di3jqq1rg0ef6" path="res://player/abilities/shoot/sounds/trigger.wav" id="4_4j42y"]
 [ext_resource type="AudioStream" uid="uid://dq2itmb5ugfp5" path="res://player/abilities/shoot/sounds/bang.wav" id="4_6ic6c"]
+
+[sub_resource type="Font" id="Font_gq7r8"]
+data/0 = ExtResource( "3_iisqv" )
 
 [node name="Shoot" type="Position3D"]
 script = ExtResource( "1_clt7p" )
 
+[node name="AmmoLabel3D" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0773394, -0.280203)
+pixel_size = 0.0003
+text = "30"
+font = SubResource( "Font_gq7r8" )
+font_size = 127
+outline_size = 20
+
+[node name="AmmoLabel3D2" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0395775, -0.108539, -0.177957)
+pixel_size = 0.0003
+text = "90"
+font = SubResource( "Font_gq7r8" )
+font_size = 127
+outline_size = 20
+
 [node name="Weapon" type="MeshInstance3D" parent="."]
-cast_shadow = 0
 mesh = ExtResource( "1_f1ns5" )
 
 [node name="BulletSpread" type="Position3D" parent="."]
 
 [node name="RayCast3D" type="RayCast3D" parent="BulletSpread"]
 target_position = Vector3(0, 0, -1000)
+
+[node name="CrosshairBorder" type="ColorRect" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -2.0
+offset_top = -2.0
+offset_right = 2.0
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.5)
 
 [node name="Crosshair" type="ColorRect" parent="."]
 anchor_left = 0.5

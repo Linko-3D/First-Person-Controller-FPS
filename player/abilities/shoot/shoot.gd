@@ -2,13 +2,28 @@ extends Position3D
 
 var impact = preload("res://player/abilities/shoot/instances/impact.tscn")
 
+var ammo = 30
+
 func _process(delta):
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) or Input.get_joy_axis(0, JOY_AXIS_TRIGGER_RIGHT) >= 0.6:
 		if $FireRateTimer.is_stopped():
-			shoot()
+			if ammo > 0:
+				shoot()
+			$TriggerSound.pitch_scale = randf_range(0.95, 1.05)
+			$TriggerSound.play()
 			$FireRateTimer.start()
 
+	if Input.is_key_pressed(KEY_R) or Input.is_joy_button_pressed(0, JOY_BUTTON_X):
+#		var tween = create_tween()
+#		tween.tween_property( $Weapon, "rotation:x", deg2rad(360), 1 ).set_trans(Tween.TRANS_BACK)
+#		tween.tween_property( $Weapon, "rotation:x", 0.0, 0 )
+		ammo = 30
+		$AmmoLabel3D.text = str(ammo)
+
 func shoot():
+	ammo -= 1
+	$AmmoLabel3D.text = str(ammo)
+	
 	$BulletSpread.rotation.z = randf_range( 0, deg2rad(360) )
 	$BulletSpread/RayCast3D.rotation.x = randf_range(0, deg2rad(5)) * $RecoilStabilizationTimer.time_left * 5
 	$RecoilStabilizationTimer.start()
@@ -18,9 +33,6 @@ func shoot():
 
 	$BangSound.pitch_scale = randf_range(0.95, 1.05)
 	$BangSound.play()
-	
-	$BangSound.pitch_scale = randf_range(0.95, 1.05)
-	$TriggerSound.play()
 
 	var tween = get_tree().create_tween()
 	tween.tween_property( $Weapon, "position:z", randf_range(0.035, 0.045), 0.05 ).set_trans(Tween.TRANS_SINE)

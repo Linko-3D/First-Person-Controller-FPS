@@ -92,13 +92,15 @@ func _physics_process(delta):
 
 	current_speed = run_speed
 
+	# Crouching
 	if Input.is_key_pressed(KEY_CTRL) or Input.is_joy_button_pressed(0, JOY_BUTTON_B):
 		$CollisionShape3D.shape.height = lerp($CollisionShape3D.shape.height, 1.4, 10 * delta)
 		$Head.position.y = lerp($Head.position.y, 0.3, 10 * delta)
 		current_speed = walk_speed
 	else:
-		$CollisionShape3D.shape.height = lerp($CollisionShape3D.shape.height, 2, 10 * delta)
-		$Head.position.y = lerp($Head.position.y, 0.75, 10 * delta)
+		if not $UncrouchRayCast3D.is_colliding():
+			$CollisionShape3D.shape.height = lerp($CollisionShape3D.shape.height, 2, 10 * delta)
+			$Head.position.y = lerp($Head.position.y, 0.75, 10 * delta)
 
 	if Input.is_key_pressed(KEY_SHIFT) or Input.get_joy_axis(0, JOY_AXIS_TRIGGER_LEFT) >= 0.6:
 		current_speed = walk_speed

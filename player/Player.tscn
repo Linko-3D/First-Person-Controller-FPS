@@ -5,12 +5,11 @@
 [ext_resource type="PackedScene" uid="uid://q75wr7kan18a" path="res://player/abilities/shoot/shoot.tscn" id="2_bpvta"]
 [ext_resource type="PackedScene" uid="uid://cdaunukqnm73e" path="res://player/abilities/flashlight/flashlight.tscn" id="3_7t864"]
 [ext_resource type="AudioStream" uid="uid://bi1gyj2ipyyux" path="res://player/land.wav" id="3_xgg1x"]
-[ext_resource type="PackedScene" path="res://player/abilities/grab/grab.tscn" id="4_p00qc"]
+[ext_resource type="PackedScene" uid="uid://dbejyhrt5yc6m" path="res://player/abilities/grab/grab.tscn" id="4_p00qc"]
 [ext_resource type="AudioStream" uid="uid://dph6b5v78fpt1" path="res://player/jump.wav" id="5_l3v0x"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_hcso2"]
 radius = 0.4
-height = 1.4
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_ejccf"]
 radius = 0.4
@@ -22,12 +21,10 @@ script = ExtResource( "1_8gq78" )
 shape = SubResource( "CapsuleShape3D_hcso2" )
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-visible = false
-cast_shadow = 0
 mesh = SubResource( "CapsuleMesh_ejccf" )
 
 [node name="Head" type="Position3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.300112, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
 
 [node name="LandingAnimation" type="Position3D" parent="Head"]
 
@@ -46,11 +43,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.15, -0.1, -0.2)
 
 [node name="Shoot" parent="Head/LandingAnimation/Camera3D/RightHand/RightHandLookAtLerp/RightHandSway" instance=ExtResource( "2_bpvta" )]
 
-[node name="Grab" parent="Head/LandingAnimation/Camera3D/RightHand/RightHandLookAtLerp/RightHandSway" instance=ExtResource( "4_p00qc" )]
-
-[node name="Flashlight" parent="Head/LandingAnimation/Camera3D/RightHand/RightHandLookAtLerp/RightHandSway" instance=ExtResource( "3_7t864" )]
-
 [node name="LookAt" type="Position3D" parent="Head/LandingAnimation/Camera3D/RightHand"]
+
+[node name="Flashlight" parent="Head/LandingAnimation/Camera3D" instance=ExtResource( "3_7t864" )]
+
+[node name="Grab" parent="Head/LandingAnimation/Camera3D" instance=ExtResource( "4_p00qc" )]
+
+[node name="UncrouchRayCast3D" type="RayCast3D" parent="."]
+target_position = Vector3(0, 1, 0)
 
 [node name="FootstepSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( "2_5skmh" )
