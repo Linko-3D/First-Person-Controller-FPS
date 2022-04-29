@@ -18,7 +18,7 @@ offset_left = -10.0
 offset_top = -10.0
 offset_right = 10.0
 offset_bottom = 10.0
-border_color = Color(0, 0, 0, 1)
+border_color = Color(0, 0, 0, 0.5)
 border_width = 3.0
 editor_only = false
 
@@ -31,5 +31,5 @@ offset_left = -10.0
 offset_top = -10.0
 offset_right = 10.0
 offset_bottom = 10.0
-border_color = Color(1, 1, 1, 1)
+border_color = Color(1, 1, 1, 0.5)
 editor_only = false
