@@ -2,7 +2,7 @@ extends Position3D
 
 var impact = preload("res://player/abilities/shoot/instances/impact.tscn")
 
-var ammo = 30
+var ammo = 30.0
 
 func _process(delta):
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) or Input.get_joy_axis(0, JOY_AXIS_TRIGGER_RIGHT) >= 0.6:
@@ -13,16 +13,25 @@ func _process(delta):
 			$TriggerSound.play()
 			$FireRateTimer.start()
 
+
 	if Input.is_key_pressed(KEY_R) or Input.is_joy_button_pressed(0, JOY_BUTTON_X):
 #		var tween = create_tween()
 #		tween.tween_property( $Weapon, "rotation:x", deg2rad(360), 1 ).set_trans(Tween.TRANS_BACK)
 #		tween.tween_property( $Weapon, "rotation:x", 0.0, 0 )
 		ammo = 30
 		$AmmoLabel3D.text = str(ammo)
+		$AmmoLabel3D.modulate = Color(1, 1, 1)
 
 func shoot():
 	ammo -= 1
 	$AmmoLabel3D.text = str(ammo)
+
+	var ammo_tween = create_tween()
+	$AmmoLabel3D.pixel_size = 0.0001
+	ammo_tween.set_parallel().tween_property( $AmmoLabel3D, "pixel_size",  0.0002, 0.1 ).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	
+	var color_value = ammo * (1.0 / 30.0)
+	$AmmoLabel3D.modulate = Color(1, color_value, color_value)
 	
 	$BulletSpread.rotation.z = randf_range( 0, deg2rad(360) )
 	$BulletSpread/RayCast3D.rotation.x = randf_range(0, deg2rad(5)) * $RecoilStabilizationTimer.time_left * 5
