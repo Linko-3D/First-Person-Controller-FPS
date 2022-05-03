@@ -18,18 +18,6 @@ offset_left = -10.0
 offset_top = -10.0
 offset_right = 10.0
 offset_bottom = 10.0
-border_color = Color(0, 0, 0, 1)
-border_width = 3.0
-editor_only = false
-
-[node name="CanGrabNotification2" type="ReferenceRect" parent="CanGrabNotification"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -10.0
-offset_top = -10.0
-offset_right = 10.0
-offset_bottom = 10.0
-border_color = Color(1, 1, 1, 1)
+border_color = Color(0, 1, 1, 1)
+border_width = 2.0
 editor_only = false

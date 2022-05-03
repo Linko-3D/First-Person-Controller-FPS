@@ -23,6 +23,7 @@ outline_size = 25
 
 [node name="AmmoLabel3D2" type="Label3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.037004, -0.120978, -0.177957)
+visible = false
 pixel_size = 0.0003
 text = "90"
 font = SubResource( "Font_gq7r8" )
