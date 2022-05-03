@@ -27,12 +27,12 @@ func shoot():
 	$AmmoLabel3D.text = str(ammo)
 
 	var ammo_tween = create_tween()
-	$AmmoLabel3D.pixel_size = 0.0001
-	ammo_tween.set_parallel().tween_property( $AmmoLabel3D, "pixel_size",  0.0002, 0.1 ).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-	
+	$AmmoLabel3D.pixel_size = 0.0002
+	ammo_tween.tween_property( $AmmoLabel3D, "pixel_size",  0.0003, 0.1 ).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+
 	var color_value = ammo * (1.0 / 30.0)
 	$AmmoLabel3D.modulate = Color(1, color_value, color_value)
-	
+
 	$BulletSpread.rotation.z = randf_range( 0, deg2rad(360) )
 	$BulletSpread/RayCast3D.rotation.x = randf_range(0, deg2rad(5)) * $RecoilStabilizationTimer.time_left * 5
 	$RecoilStabilizationTimer.start()
@@ -63,3 +63,7 @@ func shoot():
 		get_tree().get_root().add_child(impact_instance)
 		impact_instance.position = $BulletSpread/RayCast3D.get_collision_point()
 		impact_instance.look_at( $BulletSpread/RayCast3D.get_collision_point() - $BulletSpread/RayCast3D.get_collision_normal(), Vector3.UP )
+		if $BulletSpread/RayCast3D.get_collision_normal() == Vector3.UP:
+			impact_instance.rotation.x = deg2rad(-90)
+		if $BulletSpread/RayCast3D.get_collision_normal() == Vector3.DOWN:
+			impact_instance.rotation.x = deg2rad(90)

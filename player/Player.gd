@@ -96,19 +96,20 @@ func _physics_process(delta):
 
 	# Crouching
 	if Input.is_key_pressed(KEY_CTRL) or Input.is_joy_button_pressed(0, JOY_BUTTON_B):
-		$CollisionShape3D.shape.height = lerp($CollisionShape3D.shape.height, 1.4, 10 * delta)
-		$MeshInstance3D.mesh.height = lerp($MeshInstance3D.mesh.height, 1.4, 10 * delta)
-		$Head.position.y = lerp($Head.position.y, 0.3, 10 * delta)
+		$CollisionShape3D.shape.height = lerp($CollisionShape3D.shape.height, 1.4, 15 * delta)
+		$MeshInstance3D.mesh.height = lerp($MeshInstance3D.mesh.height, 1.4, 15 * delta)
+		$Head.position.y = lerp($Head.position.y, 0.3, 15 * delta)
 		current_speed = walk_speed
 	else:
 		if not $UncrouchRayCast3D.is_colliding():
-			$CollisionShape3D.shape.height = lerp($CollisionShape3D.shape.height, 2, 10 * delta)
-			$MeshInstance3D.mesh.height = lerp($MeshInstance3D.mesh.height,2, 10 * delta)
-			$Head.position.y = lerp($Head.position.y, 0.75, 10 * delta)
+			$CollisionShape3D.shape.height = lerp($CollisionShape3D.shape.height, 2, 15 * delta)
+			$MeshInstance3D.mesh.height = lerp($MeshInstance3D.mesh.height,2, 15 * delta)
+			$Head.position.y = lerp($Head.position.y, 0.75, 15 * delta)
 
 	if Input.is_key_pressed(KEY_SHIFT) or Input.get_joy_axis(0, JOY_AXIS_TRIGGER_LEFT) >= 0.6:
 		current_speed = walk_speed
-		
+	if $CollisionShape3D.shape.height <= 1.9:
+		current_speed = walk_speed
 
 	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	if direction:

@@ -60,8 +60,10 @@ max_polyphony = 100
 [node name="LandSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( "3_xgg1x" )
 volume_db = -20.0
+max_polyphony = 100
 
 [node name="JumpSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( "5_l3v0x" )
 volume_db = -20.0
 pitch_scale = 1.1
+max_polyphony = 100

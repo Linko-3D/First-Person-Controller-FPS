@@ -14,20 +14,20 @@ data/0 = ExtResource( "3_iisqv" )
 script = ExtResource( "1_clt7p" )
 
 [node name="AmmoLabel3D" type="Label3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.069, -0.28)
-pixel_size = 0.0002
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0737181, -0.28)
+pixel_size = 0.0003
 text = "30"
 font = SubResource( "Font_gq7r8" )
 font_size = 127
-outline_size = 20
+outline_size = 25
 
 [node name="AmmoLabel3D2" type="Label3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0344305, -0.113686, -0.175812)
-pixel_size = 0.0002
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.037004, -0.120978, -0.177957)
+pixel_size = 0.0003
 text = "90"
 font = SubResource( "Font_gq7r8" )
 font_size = 127
-outline_size = 20
+outline_size = 25
 
 [node name="Weapon" type="MeshInstance3D" parent="."]
 mesh = ExtResource( "1_f1ns5" )
@@ -48,7 +48,7 @@ offset_right = 2.0
 offset_bottom = 2.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0, 0, 0, 0.5)
+color = Color(0, 0, 0, 1)
 
 [node name="Crosshair" type="ColorRect" parent="."]
 anchor_left = 0.5

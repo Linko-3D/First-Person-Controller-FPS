@@ -12,10 +12,13 @@ emission_energy = 16.0
 [sub_resource type="CylinderMesh" id="CylinderMesh_xtit1"]
 top_radius = 0.05
 bottom_radius = 0.1
-height = 0.01
+height = 0.05
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_s8tp7"]
 albedo_color = Color(0, 0, 0, 1)
+emission_enabled = true
+emission = Color(1, 1, 0.501961, 1)
+emission_energy = 16.0
 
 [sub_resource type="ParticlesMaterial" id="ParticlesMaterial_umde7"]
 direction = Vector3(0, 0, 1)
@@ -23,14 +26,16 @@ initial_velocity_min = 2.5
 initial_velocity_max = 3.5
 
 [sub_resource type="SphereMesh" id="SphereMesh_v14vq"]
-radius = 0.005
-height = 0.01
+radius = 0.002
+height = 0.004
+radial_segments = 32
+rings = 16
 
 [node name="Impact" type="Position3D"]
 script = ExtResource( "1_ketbq" )
 
 [node name="Bullet" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, -0.0127072, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 0, 0)
 material_override = SubResource( "StandardMaterial3D_m3mnd" )
 cast_shadow = 0
 mesh = SubResource( "CylinderMesh_xtit1" )
