@@ -1,0 +1,73 @@
+[gd_scene load_steps=10 format=3 uid="uid://bfwbi0jcococt"]
+
+[ext_resource type="Script" path="res://addons/fps-controller/Player.gd" id="1_v5eu5"]
+[ext_resource type="PackedScene" uid="uid://q75wr7kan18a" path="res://player/abilities/shoot/shoot.tscn" id="2_bpvta"]
+[ext_resource type="PackedScene" uid="uid://cdaunukqnm73e" path="res://player/abilities/flashlight/flashlight.tscn" id="3_7t864"]
+[ext_resource type="PackedScene" uid="uid://dbejyhrt5yc6m" path="res://player/abilities/grab/grab.tscn" id="4_p00qc"]
+[ext_resource type="AudioStream" uid="uid://dj5emwcywffib" path="res://addons/fps-controller/footstep.wav" id="5_48prk"]
+[ext_resource type="AudioStream" uid="uid://bi1gyj2ipyyux" path="res://addons/fps-controller/land.wav" id="6_eepkk"]
+[ext_resource type="AudioStream" uid="uid://dph6b5v78fpt1" path="res://addons/fps-controller/jump.wav" id="7_ye5au"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_hcso2"]
+radius = 0.4
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_ejccf"]
+radius = 0.4
+
+[node name="Player" type="CharacterBody3D" groups=["player"]]
+script = ExtResource( "1_v5eu5" )
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource( "CapsuleShape3D_hcso2" )
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource( "CapsuleMesh_ejccf" )
+
+[node name="Head" type="Position3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
+
+[node name="LandingAnimation" type="Position3D" parent="Head"]
+
+[node name="Camera3D" type="Camera3D" parent="Head/LandingAnimation"]
+current = true
+
+[node name="RayCast3D" type="RayCast3D" parent="Head/LandingAnimation/Camera3D"]
+target_position = Vector3(0, 0, -1000)
+
+[node name="RightHand" type="Position3D" parent="Head/LandingAnimation/Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.15, -0.1, -0.2)
+
+[node name="RightHandLookAtLerp" type="Position3D" parent="Head/LandingAnimation/Camera3D/RightHand"]
+
+[node name="RightHandSway" type="Position3D" parent="Head/LandingAnimation/Camera3D/RightHand/RightHandLookAtLerp"]
+
+[node name="Shoot" parent="Head/LandingAnimation/Camera3D/RightHand/RightHandLookAtLerp/RightHandSway" instance=ExtResource( "2_bpvta" )]
+
+[node name="LookAt" type="Position3D" parent="Head/LandingAnimation/Camera3D/RightHand"]
+
+[node name="Flashlight" parent="Head/LandingAnimation/Camera3D" instance=ExtResource( "3_7t864" )]
+
+[node name="Grab" parent="Head/LandingAnimation/Camera3D" instance=ExtResource( "4_p00qc" )]
+
+[node name="UncrouchRayCast3D" type="RayCast3D" parent="."]
+target_position = Vector3(0, 1, 0)
+
+[node name="FootstepSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( "5_48prk" )
+volume_db = -25.0
+max_polyphony = 100
+
+[node name="LandSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( "6_eepkk" )
+volume_db = -20.0
+max_polyphony = 100
+
+[node name="JumpSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( "7_ye5au" )
+volume_db = -20.0
+pitch_scale = 1.1
+max_polyphony = 100
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true

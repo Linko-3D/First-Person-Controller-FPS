@@ -1,6 +1,6 @@
 extends Position3D
 
-var impact = preload("res://player/abilities/shoot/instances/impact.tscn")
+var impact = preload("res://addons/fps-controller/abilities/shoot/instances/impact.tscn")
 
 var ammo = 30.0
 
@@ -13,11 +13,7 @@ func _process(delta):
 			$TriggerSound.play()
 			$FireRateTimer.start()
 
-
 	if Input.is_key_pressed(KEY_R) or Input.is_joy_button_pressed(0, JOY_BUTTON_X):
-#		var tween = create_tween()
-#		tween.tween_property( $Weapon, "rotation:x", deg2rad(360), 1 ).set_trans(Tween.TRANS_BACK)
-#		tween.tween_property( $Weapon, "rotation:x", 0.0, 0 )
 		ammo = 30
 		$AmmoLabel3D.text = str(ammo)
 		$AmmoLabel3D.modulate = Color(1, 1, 1)

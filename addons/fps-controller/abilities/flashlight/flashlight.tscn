@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://cdaunukqnm73e"]
 
-[ext_resource type="Script" path="res://player/abilities/flashlight/flashlight.gd" id="1_6tvtb"]
-[ext_resource type="AudioStream" uid="uid://daju75g57rvfv" path="res://player/abilities/flashlight/sounds/flashlight_toggle.wav" id="2_iofni"]
+[ext_resource type="Script" path="res://addons/fps-controller/abilities/flashlight/flashlight.gd" id="1_8ttnh"]
+[ext_resource type="AudioStream" uid="uid://daju75g57rvfv" path="res://addons/fps-controller/abilities/flashlight/sounds/flashlight_toggle.wav" id="2_si0y4"]
 
 [node name="Flashlight" type="SpotLight3D"]
 light_color = Color(1, 1, 0.74902, 1)
@@ -10,7 +10,7 @@ light_indirect_energy = 0.5
 shadow_enabled = true
 spot_range = 30.0
 spot_angle = 30.0
-script = ExtResource( "1_6tvtb" )
+script = ExtResource( "1_8ttnh" )
 
 [node name="SpotLight3D" type="SpotLight3D" parent="."]
 light_color = Color(1, 1, 0.75, 1)
@@ -20,6 +20,6 @@ spot_range = 30.0
 spot_angle = 20.0
 
 [node name="FlashlightToggleSound" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( "2_iofni" )
+stream = ExtResource( "2_si0y4" )
 volume_db = -10.0
 max_polyphony = 100

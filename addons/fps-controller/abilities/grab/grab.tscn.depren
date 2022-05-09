@@ -1,0 +1,23 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://addons/fps-controller/abilities/grab/grab.gd" id="1_sbve8"]
+
+[node name="Grab" type="RayCast3D"]
+target_position = Vector3(0, 0, -2.5)
+script = ExtResource( "1_sbve8" )
+
+[node name="GrabPosition3D" type="Position3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.5)
+
+[node name="CanGrabNotification" type="ReferenceRect" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 10.0
+offset_bottom = 10.0
+border_color = Color(0, 1, 1, 1)
+border_width = 2.0
+editor_only = false

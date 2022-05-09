@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamSample"
 uid="uid://dj5emwcywffib"
-path="res://.godot/imported/footstep.wav-fd5090dc2666726aca6d8d6690ec84dc.sample"
+path="res://.godot/imported/footstep.wav-96d4c79d52f1a43f05f3e3db96dd2d8c.sample"
 
 [deps]
 
-source_file="res://player/footstep.wav"
-dest_files=["res://.godot/imported/footstep.wav-fd5090dc2666726aca6d8d6690ec84dc.sample"]
+source_file="res://addons/fps-controller/footstep.wav"
+dest_files=["res://.godot/imported/footstep.wav-96d4c79d52f1a43f05f3e3db96dd2d8c.sample"]
 
 [params]
 
