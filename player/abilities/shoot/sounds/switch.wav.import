@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamSample"
 uid="uid://ddjcgfwgay218"
-path="res://.godot/imported/switch.wav-fc88765a2b655805160390dc7e776d16.sample"
+path="res://.godot/imported/switch.wav-a4e6f339183be8c5df33fa5a95e9af39.sample"
 
 [deps]
 
-source_file="res://addons/fps-controller/abilities/shoot/sounds/switch.wav"
-dest_files=["res://.godot/imported/switch.wav-fc88765a2b655805160390dc7e776d16.sample"]
+source_file="res://player/abilities/shoot/sounds/switch.wav"
+dest_files=["res://.godot/imported/switch.wav-a4e6f339183be8c5df33fa5a95e9af39.sample"]
 
 [params]
 

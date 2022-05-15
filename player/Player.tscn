@@ -1,12 +1,12 @@
-[gd_scene load_steps=10 format=3]
+[gd_scene load_steps=10 format=3 uid="uid://bfb7rkw17fj60"]
 
-[ext_resource type="Script" path="res://addons/fps-controller/Player.gd" id="1_v5eu5"]
-[ext_resource type="PackedScene" path="res://addons/fps-controller/abilities/shoot/shoot.tscn" id="2_bpvta"]
-[ext_resource type="PackedScene" path="res://addons/fps-controller/abilities/flashlight/flashlight.tscn" id="3_7t864"]
-[ext_resource type="PackedScene" path="res://addons/fps-controller/abilities/grab/grab.tscn" id="4_p00qc"]
-[ext_resource type="AudioStream" uid="uid://dj5emwcywffib" path="res://addons/fps-controller/footstep.wav" id="5_48prk"]
-[ext_resource type="AudioStream" uid="uid://bi1gyj2ipyyux" path="res://addons/fps-controller/land.wav" id="6_eepkk"]
-[ext_resource type="AudioStream" uid="uid://dph6b5v78fpt1" path="res://addons/fps-controller/jump.wav" id="7_ye5au"]
+[ext_resource type="Script" path="res://player/player.gd" id="1_8gq78"]
+[ext_resource type="AudioStream" uid="uid://dj5emwcywffib" path="res://player/footstep.wav" id="2_5skmh"]
+[ext_resource type="PackedScene" uid="uid://q75wr7kan18a" path="res://player/abilities/shoot/shoot.tscn" id="2_bpvta"]
+[ext_resource type="PackedScene" uid="uid://cdaunukqnm73e" path="res://player/abilities/flashlight/flashlight.tscn" id="3_7t864"]
+[ext_resource type="AudioStream" uid="uid://bi1gyj2ipyyux" path="res://player/land.wav" id="3_xgg1x"]
+[ext_resource type="PackedScene" uid="uid://dbejyhrt5yc6m" path="res://player/abilities/grab/grab.tscn" id="4_p00qc"]
+[ext_resource type="AudioStream" uid="uid://dph6b5v78fpt1" path="res://player/jump.wav" id="5_l3v0x"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_hcso2"]
 radius = 0.4
@@ -15,7 +15,7 @@ radius = 0.4
 radius = 0.4
 
 [node name="Player" type="CharacterBody3D" groups=["player"]]
-script = ExtResource( "1_v5eu5" )
+script = ExtResource( "1_8gq78" )
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource( "CapsuleShape3D_hcso2" )
@@ -53,17 +53,17 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.15, -0.1, -0.2)
 target_position = Vector3(0, 1, 0)
 
 [node name="FootstepSound" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( "5_48prk" )
+stream = ExtResource( "2_5skmh" )
 volume_db = -25.0
 max_polyphony = 100
 
 [node name="LandSound" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( "6_eepkk" )
+stream = ExtResource( "3_xgg1x" )
 volume_db = -20.0
 max_polyphony = 100
 
 [node name="JumpSound" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( "7_ye5au" )
+stream = ExtResource( "5_l3v0x" )
 volume_db = -20.0
 pitch_scale = 1.1
 max_polyphony = 100

@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamSample"
 uid="uid://dpplc44r533wc"
-path="res://.godot/imported/bullet_impact.wav-b2f52c651111f1b59951ebc075e8a86c.sample"
+path="res://.godot/imported/bullet_impact.wav-8b5565ca55d2789d9136fd474bc1546c.sample"
 
 [deps]
 
-source_file="res://addons/fps-controller/abilities/shoot/sounds/bullet_impact.wav"
-dest_files=["res://.godot/imported/bullet_impact.wav-b2f52c651111f1b59951ebc075e8a86c.sample"]
+source_file="res://player/abilities/shoot/sounds/bullet_impact.wav"
+dest_files=["res://.godot/imported/bullet_impact.wav-8b5565ca55d2789d9136fd474bc1546c.sample"]
 
 [params]
 

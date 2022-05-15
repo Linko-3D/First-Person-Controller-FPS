@@ -2,13 +2,13 @@
 
 importer="wav"
 type="AudioStreamSample"
-uid="uid://bi1gyj2ipyyux"
-path="res://.godot/imported/land.wav-af1a2f8703c29a2f6731c6df8a61c065.sample"
+uid="uid://ck8qfneq14pbr"
+path="res://.godot/imported/shoot.wav-3129adaca815685680fb9d6653c4715c.sample"
 
 [deps]
 
-source_file="res://addons/fps-controller/land.wav"
-dest_files=["res://.godot/imported/land.wav-af1a2f8703c29a2f6731c6df8a61c065.sample"]
+source_file="res://player/abilities/shoot/sounds/shoot.wav"
+dest_files=["res://.godot/imported/shoot.wav-3129adaca815685680fb9d6653c4715c.sample"]
 
 [params]
 
