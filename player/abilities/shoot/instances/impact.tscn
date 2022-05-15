@@ -1,11 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://sgtofiaaxs1b"]
+[gd_scene load_steps=4 format=3 uid="uid://sgtofiaaxs1b"]
 
 [ext_resource type="Script" path="res://player/abilities/shoot/instances/impact.gd" id="1_ketbq"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b2wh4"]
-albedo_color = Color(0, 1, 1, 1)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0cnah"]
+albedo_color = Color(1, 0.6, 0, 1)
 emission_enabled = true
-emission = Color(0, 1, 1, 1)
+emission = Color(1, 0.6, 0, 1)
 emission_energy = 16.0
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_xtit1"]
@@ -13,56 +13,11 @@ top_radius = 0.05
 bottom_radius = 0.05
 height = 0.01
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_s8tp7"]
-albedo_color = Color(0, 1, 1, 1)
-emission_enabled = true
-emission = Color(0, 1, 1, 1)
-emission_energy = 16.0
-
-[sub_resource type="ParticlesMaterial" id="ParticlesMaterial_umde7"]
-direction = Vector3(0, 0, 1)
-initial_velocity_min = 2.5
-initial_velocity_max = 3.5
-
-[sub_resource type="SphereMesh" id="SphereMesh_v14vq"]
-radius = 0.002
-height = 0.004
-radial_segments = 32
-rings = 16
-
-[sub_resource type="ParticlesMaterial" id="ParticlesMaterial_qhfbk"]
-direction = Vector3(0, 0, 1)
-spread = 5.0
-initial_velocity_min = 3.5
-initial_velocity_max = 4.5
-
 [node name="Impact" type="Position3D"]
 script = ExtResource( "1_ketbq" )
 
 [node name="Bullet" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 0, 0)
-material_override = SubResource( "StandardMaterial3D_b2wh4" )
+material_overlay = SubResource( "StandardMaterial3D_0cnah" )
 cast_shadow = 0
 mesh = SubResource( "CylinderMesh_xtit1" )
-
-[node name="GPUParticles3D1" type="GPUParticles3D" parent="."]
-material_override = SubResource( "StandardMaterial3D_s8tp7" )
-cast_shadow = 0
-amount = 64
-lifetime = 0.5
-explosiveness = 1.0
-local_coords = false
-process_material = SubResource( "ParticlesMaterial_umde7" )
-draw_pass_1 = SubResource( "SphereMesh_v14vq" )
-
-[node name="GPUParticles3D2" type="GPUParticles3D" parent="."]
-material_override = SubResource( "StandardMaterial3D_s8tp7" )
-cast_shadow = 0
-emitting = false
-amount = 32
-lifetime = 0.5
-one_shot = true
-explosiveness = 1.0
-local_coords = false
-process_material = SubResource( "ParticlesMaterial_qhfbk" )
-draw_pass_1 = SubResource( "SphereMesh_v14vq" )

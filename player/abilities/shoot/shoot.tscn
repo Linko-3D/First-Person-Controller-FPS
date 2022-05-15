@@ -15,6 +15,7 @@ script = ExtResource( "1_clt7p" )
 
 [node name="AmmoLabel3D" type="Label3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0737181, -0.28)
+visible = false
 pixel_size = 0.0003
 text = "30"
 font = SubResource( "Font_gq7r8" )
@@ -85,3 +86,26 @@ one_shot = true
 [node name="RecoilStabilizationTimer" type="Timer" parent="."]
 wait_time = 0.2
 one_shot = true
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 12.0
+offset_top = -15.0
+offset_right = 17.0
+offset_bottom = 15.0
+color = Color(1, 0.6, 0, 0.5)
+
+[node name="ReferenceRect" type="ReferenceRect" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 12.0
+offset_top = -15.0
+offset_right = 17.0
+offset_bottom = 15.0
+border_color = Color(0, 0, 0, 0.5)
+editor_only = false
