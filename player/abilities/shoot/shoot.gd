@@ -15,19 +15,11 @@ func _process(delta):
 
 	if Input.is_key_pressed(KEY_R) or Input.is_joy_button_pressed(0, JOY_BUTTON_X):
 		ammo = 30
-		$AmmoLabel3D.text = str(ammo)
-		$AmmoLabel3D.modulate = Color(1, 1, 1)
+		$AmmoLeft.size.x = ammo
 
 func shoot():
 	ammo -= 1
-	$AmmoLabel3D.text = str(ammo)
-
-	var ammo_tween = create_tween()
-	$AmmoLabel3D.pixel_size = 0.0002
-	ammo_tween.tween_property( $AmmoLabel3D, "pixel_size",  0.0003, 0.1 ).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-
-	var color_value = ammo * (1.0 / 30.0)
-	$AmmoLabel3D.modulate = Color(1, color_value, color_value)
+	$AmmoLeft.size.x = ammo
 
 	$BulletSpread.rotation.z = randf_range( 0, deg2rad(360) )
 	$BulletSpread/RayCast3D.rotation.x = randf_range(0, deg2rad(5)) * $RecoilStabilizationTimer.time_left * 5
@@ -38,6 +30,9 @@ func shoot():
 
 	$BangSound.pitch_scale = randf_range(0.95, 1.05)
 	$BangSound.play()
+	
+	$ShellSound.pitch_scale = randf_range(0.95, 1.05)
+	$ShellSound.play()
 
 	var tween = get_tree().create_tween()
 	tween.tween_property( $Weapon, "position:z", randf_range(0.035, 0.045), 0.05 ).set_trans(Tween.TRANS_SINE)
