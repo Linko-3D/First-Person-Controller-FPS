@@ -1,0 +1,21 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://2mixsn8tsbjl"
+path="res://.godot/imported/shell.obj-1c3b86151ede80156726446694987afe.mesh"
+
+[deps]
+
+files=["res://.godot/imported/shell.obj-1c3b86151ede80156726446694987afe.mesh"]
+
+source_file="res://player/abilities/shoot/models/shell.obj"
+dest_files=["res://.godot/imported/shell.obj-1c3b86151ede80156726446694987afe.mesh", "res://.godot/imported/shell.obj-1c3b86151ede80156726446694987afe.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true

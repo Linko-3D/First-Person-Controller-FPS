@@ -1,6 +1,7 @@
 extends Position3D
 
 var impact = preload("res://player/abilities/shoot/instances/impact.tscn")
+var shell = preload( "res://player/abilities/shoot/instances/shell.tscn" )
 
 var ammo = 30.0
 
@@ -47,6 +48,7 @@ func shoot():
 
 	if $BulletSpread/RayCast3D.get_collider() is RigidDynamicBody3D:
 		$BulletSpread/RayCast3D.get_collider().apply_central_impulse( -$BulletSpread/RayCast3D.get_collision_normal() * 20 )
+#		$BulletSpread/RayCast3D.get_collider().apply_impulse( -$BulletSpread/RayCast3D.get_collision_normal(), $BulletSpread/RayCast3D.get_collision_point() )
 
 	if $BulletSpread/RayCast3D.is_colliding():
 		var impact_instance = impact.instantiate()
@@ -54,7 +56,12 @@ func shoot():
 		get_tree().get_root().add_child(impact_instance)
 		impact_instance.position = $BulletSpread/RayCast3D.get_collision_point()
 		impact_instance.look_at( $BulletSpread/RayCast3D.get_collision_point() - $BulletSpread/RayCast3D.get_collision_normal(), Vector3.UP )
-		if $BulletSpread/RayCast3D.get_collision_normal() == Vector3.UP:
-			impact_instance.rotation.x = deg2rad(-90)
-		if $BulletSpread/RayCast3D.get_collision_normal() == Vector3.DOWN:
-			impact_instance.rotation.x = deg2rad(90)
+		if $BulletSpread/RayCast3D.get_collider() is StaticBody3D: # Orientation is bugged on static bodies
+			if $BulletSpread/RayCast3D.get_collision_normal() == Vector3.UP:
+				impact_instance.rotation.x = deg2rad(-90)
+			if $BulletSpread/RayCast3D.get_collision_normal() == Vector3.DOWN:
+				impact_instance.rotation.x = deg2rad(90)
+
+	var shell_instance = shell.instantiate()
+	
+	$ShellSpawn.add_child(shell_instance)

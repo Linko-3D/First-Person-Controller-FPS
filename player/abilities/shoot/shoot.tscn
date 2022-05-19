@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://q75wr7kan18a"]
+[gd_scene load_steps=7 format=3 uid="uid://d24mj0ngvldoq"]
 
 [ext_resource type="Script" path="res://player/abilities/shoot/shoot.gd" id="1_clt7p"]
 [ext_resource type="ArrayMesh" uid="uid://ceq3jqdfswbwd" path="res://player/abilities/shoot/models/AK-47.obj" id="1_f1ns5"]
@@ -17,6 +17,9 @@ mesh = ExtResource( "1_f1ns5" )
 
 [node name="RayCast3D" type="RayCast3D" parent="BulletSpread"]
 target_position = Vector3(0, 0, -1000)
+
+[node name="ShellSpawn" type="Position3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0336234, 0.0122839, -0.186682)
 
 [node name="CrosshairBorder" type="ColorRect" parent="."]
 anchor_left = 0.5
@@ -43,6 +46,19 @@ offset_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="CrosshairBorder2" type="ColorRect" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -16.0
+offset_top = 9.0
+offset_right = 16.0
+offset_bottom = 15.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
 [node name="AmmoLeft" type="ColorRect" parent="."]
 anchor_left = 0.5
 anchor_top = 0.5
@@ -52,7 +68,7 @@ offset_left = -15.0
 offset_top = 10.0
 offset_right = 15.0
 offset_bottom = 14.0
-color = Color(0, 1, 1, 1)
+color = Color(1, 0.74902, 0, 1)
 
 [node name="ShootSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( "3_au4kn" )
