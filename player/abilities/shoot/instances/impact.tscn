@@ -30,7 +30,7 @@ cast_shadow = 0
 mesh = SubResource( "CylinderMesh_xtit1" )
 
 [node name="Bullet" type="MeshInstance3D" parent="Flash"]
-transform = Transform3D(10, 0, 0, 0, 0, -10, 0, 10, 0, 0, 0.00814943, 0)
+transform = Transform3D(5, 0, 0, 0, 0, -5, 0, 5, 0, 0, 0, 0)
 material_overlay = SubResource( "StandardMaterial3D_ir1me" )
 mesh = ExtResource( "2_qrspk" )
 skeleton = NodePath("../..")
