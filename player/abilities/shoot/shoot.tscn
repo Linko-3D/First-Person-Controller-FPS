@@ -87,7 +87,8 @@ max_polyphony = 100
 
 [node name="ShellSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( "6_g7gsq" )
-volume_db = -20.0
+volume_db = -15.0
+max_polyphony = 100
 
 [node name="FireRateTimer" type="Timer" parent="."]
 wait_time = 0.1
