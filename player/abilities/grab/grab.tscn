@@ -18,6 +18,6 @@ offset_left = -5.0
 offset_top = -5.0
 offset_right = 5.0
 offset_bottom = 5.0
-border_color = Color(1, 0.25, 0, 1)
+border_color = Color(1, 0.25098, 0, 1)
 border_width = 2.0
 editor_only = false

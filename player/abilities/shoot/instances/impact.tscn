@@ -1,7 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://sgtofiaaxs1b"]
+[gd_scene load_steps=4 format=3 uid="uid://sgtofiaaxs1b"]
 
 [ext_resource type="Script" path="res://player/abilities/shoot/instances/impact.gd" id="1_ketbq"]
-[ext_resource type="ArrayMesh" uid="uid://dwdolgji736pr" path="res://player/abilities/shoot/models/bullet.obj" id="2_qrspk"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0cnah"]
 albedo_color = Color(1, 0.74902, 0, 1)
@@ -14,12 +13,6 @@ top_radius = 0.05
 bottom_radius = 0.05
 height = 0.01
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ir1me"]
-albedo_color = Color(1, 0.74902, 0, 1)
-emission_enabled = true
-emission = Color(1, 0.74902, 0, 1)
-emission_energy = 16.0
-
 [node name="Impact" type="Position3D"]
 script = ExtResource( "1_ketbq" )
 
@@ -28,9 +21,3 @@ transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 0, 0)
 material_overlay = SubResource( "StandardMaterial3D_0cnah" )
 cast_shadow = 0
 mesh = SubResource( "CylinderMesh_xtit1" )
-
-[node name="Bullet" type="MeshInstance3D" parent="Flash"]
-transform = Transform3D(5, 0, 0, 0, 0, -5, 0, 5, 0, 0, 0, 0)
-material_overlay = SubResource( "StandardMaterial3D_ir1me" )
-mesh = ExtResource( "2_qrspk" )
-skeleton = NodePath("../..")
