@@ -1,7 +1,6 @@
 extends CharacterBody3D
 
 var run_speed = 8.0
-var walk_speed = run_speed / 2
 
 var current_speed = run_speed
 
@@ -55,13 +54,10 @@ func _physics_process(delta):
 	if Input.is_key_pressed(KEY_D) or Input.is_key_pressed(KEY_RIGHT):
 		input_dir.x = 1
 
-	current_speed = run_speed
-	if Input.is_key_pressed(KEY_SHIFT) or Input.get_joy_axis(0, JOY_AXIS_TRIGGER_LEFT) >= 0.6:
-		current_speed = walk_speed
-	if Input.is_key_pressed(KEY_CTRL) or Input.is_joy_button_pressed(0, JOY_BUTTON_B):
-		current_speed = walk_speed
-	if $CollisionShape3D.shape.height < 1.8 and is_on_floor():
-		current_speed = walk_speed
+	if is_on_floor():
+		current_speed = (run_speed / 2) * $CollisionShape3D.shape.height
+	else:
+		current_speed = run_speed
 
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
