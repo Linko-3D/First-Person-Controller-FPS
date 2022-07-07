@@ -1,73 +1,65 @@
-[gd_scene load_steps=10 format=3 uid="uid://bfb7rkw17fj60"]
+[gd_scene load_steps=7 format=3 uid="uid://bs8wh4wj1q8oy"]
 
-[ext_resource type="Script" path="res://player/player.gd" id="1_8gq78"]
-[ext_resource type="AudioStream" uid="uid://dj5emwcywffib" path="res://player/footstep.wav" id="2_5skmh"]
-[ext_resource type="PackedScene" uid="uid://d24mj0ngvldoq" path="res://player/abilities/shoot/shoot.tscn" id="2_bpvta"]
-[ext_resource type="PackedScene" uid="uid://cdaunukqnm73e" path="res://player/abilities/flashlight/flashlight.tscn" id="3_7t864"]
-[ext_resource type="AudioStream" uid="uid://bi1gyj2ipyyux" path="res://player/land.wav" id="3_xgg1x"]
-[ext_resource type="PackedScene" uid="uid://dbejyhrt5yc6m" path="res://player/abilities/grab/grab.tscn" id="4_p00qc"]
-[ext_resource type="AudioStream" uid="uid://dph6b5v78fpt1" path="res://player/jump.wav" id="5_l3v0x"]
+[ext_resource type="Script" path="res://player/player.gd" id="1_iqdp1"]
+[ext_resource type="AudioStream" uid="uid://b87t3qo74x6eg" path="res://player/jump.wav" id="2_ng7jf"]
+[ext_resource type="AudioStream" uid="uid://kwj04x0wx6ge" path="res://player/land.wav" id="3_vl0s2"]
+[ext_resource type="AudioStream" uid="uid://cso5c65fmxx1k" path="res://player/footstep.wav" id="4_qyg02"]
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_hcso2"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fd0nu"]
 radius = 0.4
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_ejccf"]
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_wvmgb"]
 radius = 0.4
 
-[node name="Player" type="CharacterBody3D" groups=["player"]]
-script = ExtResource( "1_8gq78" )
+[node name="Player" type="CharacterBody3D"]
+script = ExtResource( "1_iqdp1" )
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-shape = SubResource( "CapsuleShape3D_hcso2" )
+shape = SubResource( "CapsuleShape3D_fd0nu" )
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-mesh = SubResource( "CapsuleMesh_ejccf" )
+mesh = SubResource( "CapsuleMesh_wvmgb" )
 
-[node name="Head" type="Position3D" parent="."]
+[node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
-
-[node name="LandingAnimation" type="Position3D" parent="Head"]
-
-[node name="Camera3D" type="Camera3D" parent="Head/LandingAnimation"]
 current = true
 
-[node name="RayCast3D" type="RayCast3D" parent="Head/LandingAnimation/Camera3D"]
-target_position = Vector3(0, 0, -1000)
-
-[node name="RightHand" type="Position3D" parent="Head/LandingAnimation/Camera3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.15, -0.1, -0.2)
-
-[node name="RightHandLookAtLerp" type="Position3D" parent="Head/LandingAnimation/Camera3D/RightHand"]
-
-[node name="RightHandSway" type="Position3D" parent="Head/LandingAnimation/Camera3D/RightHand/RightHandLookAtLerp"]
-
-[node name="Shoot" parent="Head/LandingAnimation/Camera3D/RightHand/RightHandLookAtLerp/RightHandSway" instance=ExtResource( "2_bpvta" )]
-
-[node name="LookAt" type="Position3D" parent="Head/LandingAnimation/Camera3D/RightHand"]
-
-[node name="Flashlight" parent="Head/LandingAnimation/Camera3D" instance=ExtResource( "3_7t864" )]
-
-[node name="Grab" parent="Head/LandingAnimation/Camera3D" instance=ExtResource( "4_p00qc" )]
-
 [node name="UncrouchRayCast3D" type="RayCast3D" parent="."]
-target_position = Vector3(0, 1, 0)
-
-[node name="FootstepSound" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( "2_5skmh" )
-volume_db = -25.0
-max_polyphony = 100
-
-[node name="LandSound" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( "3_xgg1x" )
-volume_db = -20.0
-max_polyphony = 100
+target_position = Vector3(0, 1.1, 0)
 
 [node name="JumpSound" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( "5_l3v0x" )
+stream = ExtResource( "2_ng7jf" )
 volume_db = -20.0
 pitch_scale = 1.1
 max_polyphony = 100
 
-[node name="Timer" type="Timer" parent="."]
-wait_time = 0.1
-one_shot = true
+[node name="LandSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( "3_vl0s2" )
+volume_db = -20.0
+max_polyphony = 100
+
+[node name="FootstepSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( "4_qyg02" )
+volume_db = -25.0
+max_polyphony = 100
+
+[node name="CrosshairBorder" type="ColorRect" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -2.0
+offset_top = -2.0
+offset_right = 2.0
+offset_bottom = 2.0
+color = Color(0, 0, 0, 1)
+
+[node name="Crosshair" type="ColorRect" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -1.0
+offset_top = -1.0
+offset_right = 1.0
+offset_bottom = 1.0
