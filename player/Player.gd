@@ -21,7 +21,9 @@ func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	rotation.x = 0
 	rotation.z = 0
-	
+
+	$Camera3D/DirectionIndicator.hide()
+
 func _input(event):
 	if event is InputEventMouseMotion:
 		rotation.y -= event.relative.x / 1000
