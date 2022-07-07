@@ -81,7 +81,7 @@ func _physics_process(delta):
 	else:
 		footstep_sound(false)
 		on_ground = false
-		landing_velocity = velocity.y
+		landing_velocity = -velocity.y
 
 	if Input.is_key_pressed(KEY_CTRL) or Input.is_joy_button_pressed(0, JOY_BUTTON_B):
 		crouch(delta)
@@ -116,3 +116,12 @@ func uncrouch(delta):
 		$CollisionShape3D.position.y = lerp( $CollisionShape3D.position.y, 0.0, 10 * delta )
 		$MeshInstance3D.mesh.height = $CollisionShape3D.shape.height
 		$MeshInstance3D.position.y = $CollisionShape3D.position.y
+
+func spawn_animation():
+	var tween = create_tween()
+	$Camera3D.fov = 75 * 1.1
+	tween.tween_property($Camera3D, "fov", 75.0, 1.0).set_trans(Tween.TRANS_SINE)
+
+
+func _on_timer_timeout():
+	spawn_animation()
