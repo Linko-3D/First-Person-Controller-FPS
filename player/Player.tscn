@@ -39,18 +39,18 @@ target_position = Vector3(0, 1.1, 0)
 
 [node name="JumpSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_ng7jf")
-volume_db = -20.0
+volume_db = -15.0
 pitch_scale = 1.1
 max_polyphony = 100
 
 [node name="LandSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_vl0s2")
-volume_db = -20.0
+volume_db = -10.0
 max_polyphony = 100
 
 [node name="FootstepSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_qyg02")
-volume_db = -25.0
+volume_db = -20.0
 max_polyphony = 100
 
 [node name="CrosshairBorder" type="ColorRect" parent="."]
