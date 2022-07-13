@@ -31,9 +31,9 @@ func _input(event):
 		$Camera3D.rotation.x = clamp( $Camera3D.rotation.x, deg2rad(-90), deg2rad(90) )
 
 func _physics_process(delta):
-	if Input.get_joy_axis(0, 2) < -0.2 or Input.get_joy_axis(0, 2) > 0.2:
+	if Input.get_joy_axis(0, JOY_AXIS_RIGHT_X) < -0.2 or Input.get_joy_axis(0, JOY_AXIS_RIGHT_X) > 0.2:
 		rotation.y -= deg2rad( Input.get_joy_axis(0, 2) * 4.3 )
-	if Input.get_joy_axis(0, 3) < -0.2 or Input.get_joy_axis(0, 3) > 0.2:
+	if Input.get_joy_axis(0, JOY_AXIS_RIGHT_Y) < -0.2 or Input.get_joy_axis(0, JOY_AXIS_RIGHT_Y) > 0.2:
 		$Camera3D.rotation.x -= deg2rad( Input.get_joy_axis(0, 3) * 4.3 )
 
 	# Add the gravity.
@@ -55,14 +55,21 @@ func _physics_process(delta):
 		input_dir.x = -1
 	if Input.is_key_pressed(KEY_D) or Input.is_key_pressed(KEY_RIGHT):
 		input_dir.x = 1
+	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 
+	if input_dir == Vector2():
+		if Input.get_joy_axis(0, JOY_AXIS_LEFT_X) < -0.2 or Input.get_joy_axis(0, JOY_AXIS_LEFT_X) > 0.2:
+			input_dir.x = Input.get_joy_axis(0, JOY_AXIS_LEFT_X)
+		if Input.get_joy_axis(0, JOY_AXIS_LEFT_Y) < -0.2 or Input.get_joy_axis(0, JOY_AXIS_LEFT_Y) > 0.2:
+			input_dir.y = Input.get_joy_axis(0, JOY_AXIS_LEFT_Y)
+		direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y))
+		
 	if is_on_floor():
 		current_speed = (run_speed / 2) * $CollisionShape3D.shape.height
 	else:
 		current_speed = run_speed
 
 	# As good practice, you should replace UI actions with custom gameplay actions.
-	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	if direction:
 		velocity.x = direction.x * current_speed
 		velocity.z = direction.z * current_speed
@@ -116,12 +123,3 @@ func uncrouch(delta):
 		$CollisionShape3D.position.y = lerp( $CollisionShape3D.position.y, 0.0, 10 * delta )
 		$MeshInstance3D.mesh.height = $CollisionShape3D.shape.height
 		$MeshInstance3D.position.y = $CollisionShape3D.position.y
-
-func spawn_animation():
-	var tween = create_tween()
-	$Camera3D.fov = 75 * 1.1
-	tween.tween_property($Camera3D, "fov", 75.0, 1.0).set_trans(Tween.TRANS_SINE)
-
-
-func _on_timer_timeout():
-	spawn_animation()
