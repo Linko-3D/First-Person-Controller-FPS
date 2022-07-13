@@ -2,10 +2,11 @@ extends CharacterBody3D
 
 @export_range(6, 10, 0.5) var run_speed = 8.0
 @export_range(6.5, 8, 0.5) var jump_velocity = 6.5
+@export_range(0, 10, 1) var air_jumps = 0
 
 var current_speed = run_speed
+var remaining_air_jumps = air_jumps
 
-# Get the gravity from the project settings to be synced with RigidDynamicBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity") * 2
 
 var on_ground = false
@@ -35,15 +36,23 @@ func _physics_process(delta):
 	if Input.get_joy_axis(0, JOY_AXIS_RIGHT_Y) < -0.2 or Input.get_joy_axis(0, JOY_AXIS_RIGHT_Y) > 0.2:
 		$Camera3D.rotation.x -= deg2rad( Input.get_joy_axis(0, 3) * 4.3 )
 
-	# Add the gravity.
 	if not is_on_floor():
 		velocity.y -= gravity * delta
-
-	# Handle Jump.
-	if ( Input.is_action_just_pressed("ui_accept") or Input.is_joy_button_pressed(0, JOY_BUTTON_A) ) and is_on_floor():
-		velocity.y = jump_velocity
-		$JumpSound.play()
-
+		if remaining_air_jumps > 0:
+			if not $UncrouchRayCast3D.is_colliding():
+				if ( Input.is_action_just_pressed("ui_accept") or Input.is_joy_button_pressed(0, JOY_BUTTON_A) ):
+					if remaining_air_jumps > 0:
+						remaining_air_jumps -= 1
+						velocity.y = jump_velocity
+						print("air jumps remaining: ", remaining_air_jumps)
+	else:
+		remaining_air_jumps = air_jumps
+		if not $UncrouchRayCast3D.is_colliding():
+			if ( Input.is_action_just_pressed("ui_accept") or Input.is_joy_button_pressed(0, JOY_BUTTON_A) ):
+				velocity.y = jump_velocity
+				$JumpSound.play()
+	if $UncrouchRayCast3D.is_colliding():
+		remaining_air_jumps = 0
 	# Get the input direction and handle the movement/deceleration
 	var input_dir = Vector2()
 	if Input.is_key_pressed(KEY_W) or Input.is_key_pressed(KEY_Z) or Input.is_key_pressed(KEY_UP):
@@ -87,7 +96,8 @@ func _physics_process(delta):
 	else:
 		footstep_sound(false)
 		on_ground = false
-		landing_velocity = -velocity.y
+		if not  velocity.y >= 0:
+			landing_velocity = -velocity.y
 
 	if Input.is_key_pressed(KEY_CTRL) or Input.is_joy_button_pressed(0, JOY_BUTTON_B):
 		crouch(delta)
