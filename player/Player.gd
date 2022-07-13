@@ -1,10 +1,9 @@
 extends CharacterBody3D
 
-var run_speed = 8.0
+@export_range(6, 10, 0.5) var run_speed = 8.0
+@export_range(6.5, 8, 0.5) var jump_velocity = 6.5
 
 var current_speed = run_speed
-
-var jump_velocity = 6.5
 
 # Get the gravity from the project settings to be synced with RigidDynamicBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity") * 2
@@ -93,7 +92,7 @@ func _physics_process(delta):
 	if Input.is_key_pressed(KEY_CTRL) or Input.is_joy_button_pressed(0, JOY_BUTTON_B):
 		crouch(delta)
 		return
-
+	
 	if is_on_floor():
 		uncrouch(delta)
 	else:

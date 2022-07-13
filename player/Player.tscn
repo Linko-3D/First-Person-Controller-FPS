@@ -15,13 +15,13 @@ radius = 0.4
 size = Vector3(0.5, 0.5, 0.1)
 
 [node name="Player" type="CharacterBody3D"]
-script = ExtResource( "1_iqdp1" )
+script = ExtResource("1_iqdp1")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-shape = SubResource( "CapsuleShape3D_fd0nu" )
+shape = SubResource("CapsuleShape3D_fd0nu")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-mesh = SubResource( "CapsuleMesh_wvmgb" )
+mesh = SubResource("CapsuleMesh_wvmgb")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
@@ -29,24 +29,24 @@ current = true
 
 [node name="DirectionIndicator" type="MeshInstance3D" parent="Camera3D"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, -0.5)
-mesh = SubResource( "PrismMesh_43kvk" )
+mesh = SubResource("PrismMesh_43kvk")
 
 [node name="UncrouchRayCast3D" type="RayCast3D" parent="."]
 target_position = Vector3(0, 1.1, 0)
 
 [node name="JumpSound" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( "2_ng7jf" )
+stream = ExtResource("2_ng7jf")
 volume_db = -20.0
 pitch_scale = 1.1
 max_polyphony = 100
 
 [node name="LandSound" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( "3_vl0s2" )
+stream = ExtResource("3_vl0s2")
 volume_db = -20.0
 max_polyphony = 100
 
 [node name="FootstepSound" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( "4_qyg02" )
+stream = ExtResource("4_qyg02")
 volume_db = -25.0
 max_polyphony = 100
 
