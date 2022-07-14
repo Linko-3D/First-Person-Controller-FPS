@@ -32,3 +32,24 @@ max_polyphony = 100
 [node name="FireRateTimer" type="Timer" parent="."]
 wait_time = 0.1
 one_shot = true
+
+[node name="AmmoLeftBorder" type="ColorRect" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -16.0
+offset_top = 9.0
+offset_right = 16.0
+offset_bottom = 15.0
+color = Color(0, 0, 0, 1)
+
+[node name="AmmoLeft" type="ColorRect" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -15.0
+offset_top = 10.0
+offset_right = 15.0
+offset_bottom = 14.0
