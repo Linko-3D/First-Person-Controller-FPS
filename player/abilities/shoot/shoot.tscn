@@ -16,7 +16,7 @@ max_polyphony = 100
 
 [node name="BangSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_ng852")
-volume_db = -35.0
+volume_db = -30.0
 max_polyphony = 100
 
 [node name="TriggerSound" type="AudioStreamPlayer" parent="."]
