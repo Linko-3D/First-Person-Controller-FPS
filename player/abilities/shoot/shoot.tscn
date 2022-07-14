@@ -1,0 +1,34 @@
+[gd_scene load_steps=6 format=3 uid="uid://dqom4f33x47bb"]
+
+[ext_resource type="Script" path="res://player/abilities/shoot/shoot.gd" id="1_spjot"]
+[ext_resource type="AudioStream" uid="uid://wurmo7bhfkfd" path="res://player/abilities/shoot/audio/shoot.wav" id="2_3fxkv"]
+[ext_resource type="AudioStream" uid="uid://b5jknt70mvwwm" path="res://player/abilities/shoot/audio/bang.wav" id="3_ng852"]
+[ext_resource type="AudioStream" uid="uid://x5mjykmn3yqk" path="res://player/abilities/shoot/audio/trigger.wav" id="4_1rhmh"]
+[ext_resource type="AudioStream" uid="uid://dyuuk1xumppep" path="res://player/abilities/shoot/audio/shell.wav" id="5_br804"]
+
+[node name="Shoot" type="Position3D"]
+script = ExtResource("1_spjot")
+
+[node name="ShootSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_3fxkv")
+volume_db = -15.0
+max_polyphony = 100
+
+[node name="BangSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_ng852")
+volume_db = -35.0
+max_polyphony = 100
+
+[node name="TriggerSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_1rhmh")
+volume_db = -20.0
+max_polyphony = 100
+
+[node name="ShellSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_br804")
+volume_db = -15.0
+max_polyphony = 100
+
+[node name="FireRateTimer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true

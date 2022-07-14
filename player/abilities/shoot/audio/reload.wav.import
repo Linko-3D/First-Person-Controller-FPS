@@ -2,13 +2,13 @@
 
 importer="wav"
 type="AudioStreamSample"
-uid="uid://kwj04x0wx6ge"
-path="res://.godot/imported/land.wav-91162414806a7409ae49bd1c57d6eb44.sample"
+uid="uid://dawjk4vcd5lv7"
+path="res://.godot/imported/reload.wav-1bde27b544f13ad590d0d65ff29bc28b.sample"
 
 [deps]
 
-source_file="res://player/land.wav"
-dest_files=["res://.godot/imported/land.wav-91162414806a7409ae49bd1c57d6eb44.sample"]
+source_file="res://player/abilities/shoot/audio/reload.wav"
+dest_files=["res://.godot/imported/reload.wav-1bde27b544f13ad590d0d65ff29bc28b.sample"]
 
 [params]
 
