@@ -1,15 +1,15 @@
-[gd_scene load_steps=3 format=3 uid="uid://dsesgt5gybbsw"]
+[gd_scene load_steps=3 format=3 uid="uid://clxraigt200dr"]
 
-[ext_resource type="Script" path="res://player/abilities/spot_light_3d.gd" id="1_5jvmx"]
-[ext_resource type="AudioStream" uid="uid://cbkeoey8jjh4i" path="res://player/abilities/sounds/flashlight_toggle.wav" id="2_sdoq3"]
+[ext_resource type="Script" path="res://player/abilities/flashlight/flashlight.gd" id="1_pstps"]
+[ext_resource type="AudioStream" uid="uid://cbkeoey8jjh4i" path="res://player/abilities/flashlight/flashlight_toggle.wav" id="2_r3r8n"]
 
-[node name="SpotLight3D" type="SpotLight3D"]
+[node name="Flashlight" type="SpotLight3D"]
 light_color = Color(1, 1, 0.901961, 1)
 light_energy = 0.5
 light_indirect_energy = 0.5
 spot_range = 30.0
 spot_angle = 30.0
-script = ExtResource("1_5jvmx")
+script = ExtResource("1_pstps")
 
 [node name="SpotLight3D" type="SpotLight3D" parent="."]
 light_color = Color(1, 1, 0.901961, 1)
@@ -19,6 +19,6 @@ spot_range = 30.0
 spot_angle = 20.0
 
 [node name="FlashlightToggleSound" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("2_sdoq3")
+stream = ExtResource("2_r3r8n")
 volume_db = -10.0
 max_polyphony = 100

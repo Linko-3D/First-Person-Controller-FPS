@@ -1,7 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://bs8wh4wj1q8oy"]
+[gd_scene load_steps=9 format=3 uid="uid://cs5tdg2bh6e5t"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_iqdp1"]
-[ext_resource type="PackedScene" uid="uid://dsesgt5gybbsw" path="res://player/abilities/spot_light_3d.tscn" id="2_7m6j2"]
+[ext_resource type="PackedScene" uid="uid://clxraigt200dr" path="res://player/abilities/flashlight/flashlight.tscn" id="2_7m6j2"]
 [ext_resource type="AudioStream" uid="uid://b87t3qo74x6eg" path="res://player/jump.wav" id="2_ng7jf"]
 [ext_resource type="AudioStream" uid="uid://kwj04x0wx6ge" path="res://player/land.wav" id="3_vl0s2"]
 [ext_resource type="AudioStream" uid="uid://cso5c65fmxx1k" path="res://player/footstep.wav" id="4_qyg02"]
