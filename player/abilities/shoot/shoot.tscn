@@ -8,6 +8,7 @@
 
 [node name="Shoot" type="Position3D"]
 script = ExtResource("1_spjot")
+impact = "res://player/abilities/shoot/instances/impact.tscn"
 
 [node name="ShootSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_3fxkv")
@@ -41,7 +42,7 @@ anchor_bottom = 0.5
 offset_left = -16.0
 offset_top = 9.0
 offset_right = 16.0
-offset_bottom = 15.0
+offset_bottom = 14.0
 color = Color(0, 0, 0, 1)
 
 [node name="AmmoLeft" type="ColorRect" parent="."]
@@ -52,4 +53,7 @@ anchor_bottom = 0.5
 offset_left = -15.0
 offset_top = 10.0
 offset_right = 15.0
-offset_bottom = 14.0
+offset_bottom = 13.0
+
+[node name="RayCast3D" type="RayCast3D" parent="."]
+target_position = Vector3(0, 0, -100)

@@ -22,19 +22,19 @@ func _ready():
 	rotation.x = 0
 	rotation.z = 0
 
-	$Camera3D/DirectionIndicator.hide()
+	$Head/Camera3D/DirectionIndicator.hide()
 
 func _input(event):
 	if event is InputEventMouseMotion:
 		rotation.y -= event.relative.x / 1000
-		$Camera3D.rotation.x -= event.relative.y / 1000
-		$Camera3D.rotation.x = clamp( $Camera3D.rotation.x, deg2rad(-90), deg2rad(90) )
+		$Head/Camera3D.rotation.x -= event.relative.y / 1000
+		$Head/Camera3D.rotation.x = clamp( $Head/Camera3D.rotation.x, deg2rad(-90), deg2rad(90) )
 
 func _physics_process(delta):
 	if Input.get_joy_axis(0, JOY_AXIS_RIGHT_X) < -0.2 or Input.get_joy_axis(0, JOY_AXIS_RIGHT_X) > 0.2:
 		rotation.y -= deg2rad( Input.get_joy_axis(0, 2) * 4.3 )
 	if Input.get_joy_axis(0, JOY_AXIS_RIGHT_Y) < -0.2 or Input.get_joy_axis(0, JOY_AXIS_RIGHT_Y) > 0.2:
-		$Camera3D.rotation.x -= deg2rad( Input.get_joy_axis(0, 3) * 4.3 )
+		$Head/Camera3D.rotation.x -= deg2rad( Input.get_joy_axis(0, 3) * 4.3 )
 
 	if not is_on_floor():
 		velocity.y -= gravity * delta
@@ -117,6 +117,10 @@ func footstep_sound(add):
 			distance_total = 0
 			$FootstepSound.pitch_scale = randf_range(0.9, 1.1)
 			$FootstepSound.play()
+			var tween = create_tween()
+			tween.tween_property($Head, "position:y", 0.75 - (current_speed / 100), 0.1).set_trans(Tween.TRANS_SINE)
+			tween.tween_property($Head, "position:y", 0.75, 0.1).set_trans(Tween.TRANS_SINE)
+			
 	else:
 		distance_total = 0
 
