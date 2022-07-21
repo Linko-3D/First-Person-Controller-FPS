@@ -1,0 +1,21 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://daau33dtra4xe"
+path="res://.godot/imported/AK-47.obj-68999ed0ea695770cd87a300c773e556.mesh"
+
+[deps]
+
+files=["res://.godot/imported/AK-47.obj-68999ed0ea695770cd87a300c773e556.mesh"]
+
+source_file="res://player/models/AK-47.obj"
+dest_files=["res://.godot/imported/AK-47.obj-68999ed0ea695770cd87a300c773e556.mesh", "res://.godot/imported/AK-47.obj-68999ed0ea695770cd87a300c773e556.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
