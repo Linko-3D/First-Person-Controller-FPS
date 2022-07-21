@@ -1,6 +1,7 @@
 extends Position3D
 
-@export_file(Resource) var impact
+var impact = preload( "res://player/abilities/shoot/instances/impact.tscn" )
+
 
 var ammo = 30
 
@@ -39,10 +40,9 @@ func shoot():
 	$ShellSound.play()
 
 	if $RayCast3D.is_colliding():
-		var impact_instance = impact
-
-#		var impact_instance = impact.instantiate()
-#
-#		get_tree().get_root().add_child(impact_instance)
-#		impact_instance.position = $BulletSpread/RayCast3D.get_collision_point()
-#		impact_instance.look_at( $BulletSpread/RayCast3D.get_collision_point() - $BulletSpread/RayCast3D.get_collision_normal(), Vector3.UP )
+		var impact_instance = impact.instantiate()
+		
+		get_tree().get_root().add_child(impact_instance)
+		impact_instance.position = $RayCast3D.get_collision_point()
+		impact_instance.rotation = global_transform.basis.get_euler()
+#		impact_instance.look_at( $RayCast3D.get_collision_point() - $RayCast3D.get_collision_normal(), Vector3.UP )

@@ -53,6 +53,7 @@ func _physics_process(delta):
 				$JumpSound.play()
 	if $UncrouchRayCast3D.is_colliding():
 		remaining_air_jumps = 0
+		
 	# Get the input direction and handle the movement/deceleration
 	var input_dir = Vector2()
 	if Input.is_key_pressed(KEY_W) or Input.is_key_pressed(KEY_Z) or Input.is_key_pressed(KEY_UP):
@@ -71,7 +72,6 @@ func _physics_process(delta):
 		if Input.get_joy_axis(0, JOY_AXIS_LEFT_Y) < -0.2 or Input.get_joy_axis(0, JOY_AXIS_LEFT_Y) > 0.2:
 			input_dir.y = Input.get_joy_axis(0, JOY_AXIS_LEFT_Y)
 		direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y))
-		
 	if is_on_floor():
 		current_speed = (run_speed / 2) * $CollisionShape3D.shape.height
 	else:
@@ -117,10 +117,6 @@ func footstep_sound(add):
 			distance_total = 0
 			$FootstepSound.pitch_scale = randf_range(0.9, 1.1)
 			$FootstepSound.play()
-			var tween = create_tween()
-			tween.tween_property($Head, "position:y", 0.75 - (current_speed / 100), 0.1).set_trans(Tween.TRANS_SINE)
-			tween.tween_property($Head, "position:y", 0.75, 0.1).set_trans(Tween.TRANS_SINE)
-			
 	else:
 		distance_total = 0
 

@@ -8,7 +8,6 @@
 
 [node name="Shoot" type="Position3D"]
 script = ExtResource("1_spjot")
-impact = "res://player/abilities/shoot/instances/impact.tscn"
 
 [node name="ShootSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_3fxkv")
