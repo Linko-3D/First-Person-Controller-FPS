@@ -22,7 +22,6 @@ func _process(delta):
 		if ammo != 30:
 			$ReloadTimer.start()
 			$AmmoLeft.show()
-			$AmmoLeft.color = Color.BLACK
 			ammo = 30
 			print("ammo: "  , ammo)
 
@@ -48,7 +47,6 @@ func shoot():
 
 	if ammo <= 0:
 		$AmmoLeft.size.x = 30
-		$AmmoLeft.color = Color.RED
 
 		var tween = create_tween()
 		tween.tween_callback($AmmoLeft.show)

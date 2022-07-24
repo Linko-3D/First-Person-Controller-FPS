@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://bdokvtreqislu"]
+[gd_scene load_steps=11 format=3 uid="uid://bdokvtreqislu"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_iqdp1"]
 [ext_resource type="PackedScene" uid="uid://brqwy1df85k7m" path="res://player/abilities/flashlight/flashlight.tscn" id="2_7m6j2"]
 [ext_resource type="AudioStream" uid="uid://b87t3qo74x6eg" path="res://player/audio/jump.wav" id="2_ng7jf"]
 [ext_resource type="PackedScene" uid="uid://dqom4f33x47bb" path="res://player/abilities/shoot/shoot.tscn" id="3_p7cc4"]
 [ext_resource type="AudioStream" uid="uid://kwj04x0wx6ge" path="res://player/audio/land.wav" id="3_vl0s2"]
+[ext_resource type="PackedScene" uid="uid://7rpywehig4hb" path="res://player/abilities/grab/grab.tscn" id="4_fanx5"]
 [ext_resource type="AudioStream" uid="uid://cso5c65fmxx1k" path="res://player/audio/footstep.wav" id="4_qyg02"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fd0nu"]
@@ -38,6 +39,8 @@ mesh = SubResource("PrismMesh_43kvk")
 [node name="Flashlight" parent="Head/Camera3D" instance=ExtResource("2_7m6j2")]
 
 [node name="Shoot" parent="Head/Camera3D" instance=ExtResource("3_p7cc4")]
+
+[node name="Grab" parent="Head/Camera3D" instance=ExtResource("4_fanx5")]
 
 [node name="UncrouchRayCast3D" type="RayCast3D" parent="."]
 target_position = Vector3(0, 1.1, 0)

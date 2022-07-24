@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://7rpywehig4hb"]
+
+[ext_resource type="Script" path="res://player/abilities/grab/grab.gd" id="1_5lder"]
+
+[node name="Grab" type="RayCast3D"]
+target_position = Vector3(0, 0, -2.5)
+script = ExtResource("1_5lder")
+
+[node name="GrabPosition3D" type="Position3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.5)
