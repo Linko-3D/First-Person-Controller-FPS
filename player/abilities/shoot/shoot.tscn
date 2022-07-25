@@ -49,7 +49,7 @@ offset_left = -15.0
 offset_top = 11.0
 offset_right = 15.0
 offset_bottom = 14.0
-color = Color(0.25098, 0.188235, 0, 1)
+color = Color(0, 0, 0, 0.501961)
 
 [node name="AmmoLeft" type="ColorRect" parent="."]
 anchor_left = 0.5

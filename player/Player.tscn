@@ -70,7 +70,7 @@ offset_left = -2.0
 offset_top = -2.0
 offset_right = 2.0
 offset_bottom = 2.0
-color = Color(0.25, 0.1875, 0, 1)
+color = Color(0, 0, 0, 0.501961)
 
 [node name="Crosshair" type="ColorRect" parent="."]
 anchor_left = 0.5
