@@ -10,7 +10,11 @@ func _ready():
 func _process(delta):
 	$BulletSpread/RayCast3D.rotation.x = randf_range(0, deg2rad(5)) * $RecoilStabilizationTimer.time_left * 5
 
-	$LookAt.look_at( $BulletSpread/RayCast3D.get_collision_point(), Vector3.UP )
+	if $BulletSpread/RayCast3D.is_colliding():
+		$LookAt.look_at( $BulletSpread/RayCast3D.get_collision_point(), Vector3.UP )
+	else:
+		$LookAt.rotation = Vector3()
+
 	$Position3D.rotation.x = lerp( $Position3D.rotation.x, $LookAt.rotation.x, 10 * delta )
 	$Position3D.rotation.y = lerp( $Position3D.rotation.y, $LookAt.rotation.y, 10 * delta )
 	$Position3D.rotation.z = lerp( $Position3D.rotation.z, $LookAt.rotation.z, 10 * delta )
