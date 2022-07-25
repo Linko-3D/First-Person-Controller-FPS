@@ -36,7 +36,6 @@ func _process(delta):
 			$AmmoLeft.size.x = 0
 			tween.tween_property( $AmmoLeft, "size:x", float(ammo), 1.0 )
 			tween.parallel().tween_property( $Position3D/Weapon, "rotation:x", deg2rad(360), 1 ).set_trans(Tween.TRANS_BACK)
-			tween.parallel().tween_callback($AmmoLeft.show).set_delay(0.1)
 			tween.tween_property( $Position3D/Weapon, "rotation:x", deg2rad(0), 0 )
 
 func shoot():
@@ -50,12 +49,10 @@ func shoot():
 	$TriggerSound.play()
 
 	if ammo <= 0:
-		$AmmoLeft.size.x = 30
-
 		var tween = create_tween()
-		tween.tween_callback($AmmoLeft.show)
-		tween.tween_callback($AmmoLeft.hide).set_delay(0.1)
-
+		tween.tween_property( $AmmoBackground, "color", Color(1, 0.75, 0), 0.05 )
+		tween.tween_property( $AmmoBackground, "color", Color(0.25, 0.19, 0), 0.05 )
+		# ici
 		return
 
 	var tween = create_tween()
