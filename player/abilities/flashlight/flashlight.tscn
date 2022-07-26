@@ -4,7 +4,7 @@
 [ext_resource type="AudioStream" uid="uid://cbkeoey8jjh4i" path="res://player/abilities/flashlight/audio/flashlight_toggle.wav" id="2_33tqs"]
 
 [node name="Flashlight" type="SpotLight3D"]
-light_color = Color(1, 0.74902, 0, 1)
+light_color = Color(1, 0.901961, 0.8, 1)
 light_energy = 0.5
 light_indirect_energy = 0.5
 shadow_enabled = true
@@ -13,7 +13,7 @@ spot_angle = 30.0
 script = ExtResource("1_pstps")
 
 [node name="SpotLight3D" type="SpotLight3D" parent="."]
-light_color = Color(1, 0.74902, 0, 1)
+light_color = Color(1, 0.901961, 0.8, 1)
 light_energy = 0.5
 light_indirect_energy = 0.5
 shadow_enabled = true
