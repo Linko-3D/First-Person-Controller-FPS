@@ -45,6 +45,7 @@ func shoot():
 		return
 
 	$FireRateTimer.start()
+
 	$TriggerSound.pitch_scale = randf_range(0.95, 1.05)
 	$TriggerSound.play()
 
