@@ -19,4 +19,5 @@ script = ExtResource("1_m81p1")
 [node name="Flash" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
 material_overlay = SubResource("StandardMaterial3D_yo1u4")
+cast_shadow = 0
 mesh = SubResource("CylinderMesh_gf77l")
