@@ -13,17 +13,17 @@ script = ExtResource("1_spjot")
 
 [node name="ShootSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_3fxkv")
-volume_db = -10.0
+volume_db = -15.0
 max_polyphony = 100
 
 [node name="BangSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_ng852")
-volume_db = -20.0
+volume_db = -25.0
 max_polyphony = 100
 
 [node name="TriggerSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_1rhmh")
-volume_db = -5.0
+volume_db = -10.0
 max_polyphony = 100
 
 [node name="ShellSound" type="AudioStreamPlayer" parent="."]
@@ -33,7 +33,7 @@ max_polyphony = 100
 
 [node name="ReloadSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_ib3ji")
-volume_db = -5.0
+volume_db = -10.0
 max_polyphony = 100
 
 [node name="FireRateTimer" type="Timer" parent="."]
