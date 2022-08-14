@@ -3,9 +3,9 @@
 [ext_resource type="Script" path="res://addons/fps_controller/abilities/shoot/instances/impact.gd" id="1_noxe0"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yo1u4"]
-albedo_color = Color(1, 0.6, 0, 1)
+albedo_color = Color(1, 0.901961, 0.8, 1)
 emission_enabled = true
-emission = Color(1, 0.6, 0, 1)
+emission = Color(1, 0.901961, 0.8, 1)
 emission_energy = 16.0
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_gf77l"]
@@ -35,7 +35,6 @@ mesh = SubResource("CylinderMesh_gf77l")
 
 [node name="GPUParticles3D" type="GPUParticles3D" parent="."]
 material_override = SubResource("StandardMaterial3D_pmjaa")
-amount = 16
 explosiveness = 1.0
 local_coords = false
 process_material = SubResource("ParticlesMaterial_0lj0k")
