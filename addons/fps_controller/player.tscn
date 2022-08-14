@@ -1,13 +1,13 @@
-[gd_scene load_steps=12 format=3 uid="uid://bdokvtreqislu"]
+[gd_scene load_steps=12 format=3 uid="uid://cwxwoy4msjxrh"]
 
-[ext_resource type="Script" path="res://player/player.gd" id="1_iqdp1"]
-[ext_resource type="PackedScene" uid="uid://brqwy1df85k7m" path="res://player/abilities/flashlight/flashlight.tscn" id="2_7m6j2"]
-[ext_resource type="AudioStream" uid="uid://b87t3qo74x6eg" path="res://player/audio/jump.wav" id="2_ng7jf"]
-[ext_resource type="PackedScene" uid="uid://dqom4f33x47bb" path="res://player/abilities/shoot/shoot.tscn" id="3_p7cc4"]
-[ext_resource type="AudioStream" uid="uid://kwj04x0wx6ge" path="res://player/audio/land.wav" id="3_vl0s2"]
-[ext_resource type="PackedScene" uid="uid://7rpywehig4hb" path="res://player/abilities/grab/grab.tscn" id="4_fanx5"]
-[ext_resource type="AudioStream" uid="uid://cso5c65fmxx1k" path="res://player/audio/footstep.wav" id="4_qyg02"]
-[ext_resource type="PackedScene" uid="uid://cbujch5bwwxtc" path="res://player/abilities/grappling_hook/grappling_hook.tscn" id="5_hpumn"]
+[ext_resource type="Script" path="res://addons/fps_controller/player.gd" id="1_fqfik"]
+[ext_resource type="PackedScene" uid="uid://dtk06p2raurdp" path="res://addons/fps_controller/abilities/grab/grab.tscn" id="2_m1anw"]
+[ext_resource type="PackedScene" uid="uid://cbujch5bwwxtc" path="res://addons/fps_controller/abilities/grappling_hook/grappling_hook.tscn" id="3_leue1"]
+[ext_resource type="PackedScene" uid="uid://ccqa7mttvtffe" path="res://addons/fps_controller/abilities/shoot/shoot.tscn" id="4_j6flt"]
+[ext_resource type="PackedScene" uid="uid://4k8374vs107s" path="res://addons/fps_controller/abilities/flashlight/flashlight.tscn" id="5_l1m2c"]
+[ext_resource type="AudioStream" uid="uid://b87t3qo74x6eg" path="res://addons/fps_controller/audio/jump.wav" id="6_lpbe2"]
+[ext_resource type="AudioStream" uid="uid://kwj04x0wx6ge" path="res://addons/fps_controller/audio/land.wav" id="7_og8mt"]
+[ext_resource type="AudioStream" uid="uid://cso5c65fmxx1k" path="res://addons/fps_controller/audio/footstep.wav" id="8_l1o34"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fd0nu"]
 radius = 0.4
@@ -19,7 +19,7 @@ radius = 0.4
 size = Vector3(0.5, 0.5, 0.1)
 
 [node name="Player" type="CharacterBody3D"]
-script = ExtResource("1_iqdp1")
+script = ExtResource("1_fqfik")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_fd0nu")
@@ -37,9 +37,9 @@ current = true
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, -0.5)
 mesh = SubResource("PrismMesh_43kvk")
 
-[node name="Grab" parent="Head/Camera3D" instance=ExtResource("4_fanx5")]
+[node name="Grab" parent="Head/Camera3D" instance=ExtResource("2_m1anw")]
 
-[node name="GrapplingHook" parent="Head/Camera3D" instance=ExtResource("5_hpumn")]
+[node name="GrapplingHook" parent="Head/Camera3D" instance=ExtResource("3_leue1")]
 
 [node name="AmmoBackground" type="ColorRect" parent="Head/Camera3D"]
 anchor_left = 0.5
@@ -54,26 +54,26 @@ color = Color(0, 0, 0, 1)
 
 [node name="Abilities" type="Position3D" parent="Head/Camera3D"]
 
-[node name="Shoot" parent="Head/Camera3D/Abilities" instance=ExtResource("3_p7cc4")]
+[node name="Shoot" parent="Head/Camera3D/Abilities" instance=ExtResource("4_j6flt")]
 
-[node name="Flashlight" parent="Head/Camera3D/Abilities" instance=ExtResource("2_7m6j2")]
+[node name="Flashlight" parent="Head/Camera3D/Abilities" instance=ExtResource("5_l1m2c")]
 
 [node name="UncrouchRayCast3D" type="RayCast3D" parent="."]
 target_position = Vector3(0, 1.1, 0)
 
 [node name="JumpSound" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("2_ng7jf")
+stream = ExtResource("6_lpbe2")
 volume_db = -20.0
 pitch_scale = 1.1
 max_polyphony = 100
 
 [node name="LandSound" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("3_vl0s2")
+stream = ExtResource("7_og8mt")
 volume_db = -15.0
 max_polyphony = 100
 
 [node name="FootstepSound" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("4_qyg02")
+stream = ExtResource("8_l1o34")
 volume_db = -25.0
 max_polyphony = 100
 

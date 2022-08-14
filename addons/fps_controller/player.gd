@@ -18,16 +18,9 @@ var distance_per_frame = global_transform.origin
 var distance_total = 0.0
 var previous_position = global_transform.origin
 
-
-
-
 var weapon_sway_amount = 5
 var mouse_relative_x = 0
 var mouse_relative_y = 0
-
-
-	
-
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -35,9 +28,6 @@ func _ready():
 	rotation.z = 0
 
 	$Head/Camera3D/DirectionIndicator.hide()
-
-
-
 
 func _input(event):
 	if event is InputEventMouseMotion:
@@ -51,13 +41,10 @@ func _input(event):
 		mouse_relative_y = clamp(event.relative.y, -50, 10)
 
 func _physics_process(delta):
-	
+	# Sway
 	$Head/Camera3D/Abilities.rotation.z = lerp($Head/Camera3D/Abilities.rotation.z, deg2rad(-mouse_relative_x / 10), weapon_sway_amount * delta)
 	$Head/Camera3D/Abilities.rotation.y = lerp($Head/Camera3D/Abilities.rotation.y, deg2rad(-mouse_relative_x / 20), weapon_sway_amount * delta)
 	$Head/Camera3D/Abilities.rotation.x = lerp($Head/Camera3D/Abilities.rotation.x, deg2rad(-mouse_relative_y / 10), weapon_sway_amount * delta)
-	
-	
-	
 	
 	if Input.get_joy_axis(0, JOY_AXIS_RIGHT_X) < -0.2 or Input.get_joy_axis(0, JOY_AXIS_RIGHT_X) > 0.2:
 		rotation.y -= deg2rad( Input.get_joy_axis(0, 2) * 4.3 )

@@ -1,6 +1,6 @@
 extends Position3D
 
-var impact = preload( "res://player/abilities/shoot/instances/impact.tscn" )
+var impact = preload( "res://addons/fps_controller/abilities/shoot/instances/impact.tscn" )
 
 @export_range(0, 500, 1) var ammo = 30
 

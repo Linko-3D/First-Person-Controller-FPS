@@ -2,13 +2,13 @@
 
 importer="wav"
 type="AudioStreamSample"
-uid="uid://dyuuk1xumppep"
-path="res://.godot/imported/shell.wav-cf7093090f477c9567e60e15bf57f93c.sample"
+uid="uid://b87t3qo74x6eg"
+path="res://.godot/imported/jump.wav-547f9e19f4b8f451c678f1c33cb8638d.sample"
 
 [deps]
 
-source_file="res://player/abilities/shoot/audio/shell.wav"
-dest_files=["res://.godot/imported/shell.wav-cf7093090f477c9567e60e15bf57f93c.sample"]
+source_file="res://addons/fps_controller/audio/jump.wav"
+dest_files=["res://.godot/imported/jump.wav-547f9e19f4b8f451c678f1c33cb8638d.sample"]
 
 [params]
 

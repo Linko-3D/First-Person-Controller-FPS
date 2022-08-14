@@ -1,10 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://7rpywehig4hb"]
+[gd_scene load_steps=2 format=3 uid="uid://dtk06p2raurdp"]
 
-[ext_resource type="Script" path="res://player/abilities/grab/grab.gd" id="1_5lder"]
+[ext_resource type="Script" path="res://addons/fps_controller/abilities/grab/grab.gd" id="1_c5hcc"]
 
 [node name="Grab" type="RayCast3D"]
 target_position = Vector3(0, 0, -2.5)
-script = ExtResource("1_5lder")
+script = ExtResource("1_c5hcc")
 
 [node name="GrabPosition3D" type="Position3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.5)

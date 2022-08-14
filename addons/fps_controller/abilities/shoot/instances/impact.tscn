@@ -1,6 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://dbjcaql707uu2"]
+[gd_scene load_steps=7 format=3 uid="uid://b62q8hieexj4c"]
 
-[ext_resource type="Script" path="res://player/abilities/shoot/instances/impact.gd" id="1_m81p1"]
+[ext_resource type="Script" path="res://addons/fps_controller/abilities/shoot/instances/impact.gd" id="1_noxe0"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yo1u4"]
 albedo_color = Color(1, 0.6, 0, 1)
@@ -25,7 +25,7 @@ initial_velocity_max = 3.0
 size = Vector3(0.02, 0.02, 0.02)
 
 [node name="Impact" type="Position3D"]
-script = ExtResource("1_m81p1")
+script = ExtResource("1_noxe0")
 
 [node name="Flash" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)

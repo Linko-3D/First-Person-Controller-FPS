@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamSample"
 uid="uid://dawjk4vcd5lv7"
-path="res://.godot/imported/reload.wav-1bde27b544f13ad590d0d65ff29bc28b.sample"
+path="res://.godot/imported/reload.wav-818182e23317528837de642a34dcd57c.sample"
 
 [deps]
 
-source_file="res://player/abilities/shoot/audio/reload.wav"
-dest_files=["res://.godot/imported/reload.wav-1bde27b544f13ad590d0d65ff29bc28b.sample"]
+source_file="res://addons/fps_controller/abilities/shoot/audio/reload.wav"
+dest_files=["res://.godot/imported/reload.wav-818182e23317528837de642a34dcd57c.sample"]
 
 [params]
 

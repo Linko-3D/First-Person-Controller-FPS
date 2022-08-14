@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamSample"
 uid="uid://b5jknt70mvwwm"
-path="res://.godot/imported/bang.wav-895631f455241f12f83e76213f1509e4.sample"
+path="res://.godot/imported/bang.wav-4f4c712d304bdb4e1d13c714a315b875.sample"
 
 [deps]
 
-source_file="res://player/abilities/shoot/audio/bang.wav"
-dest_files=["res://.godot/imported/bang.wav-895631f455241f12f83e76213f1509e4.sample"]
+source_file="res://addons/fps_controller/abilities/shoot/audio/bang.wav"
+dest_files=["res://.godot/imported/bang.wav-4f4c712d304bdb4e1d13c714a315b875.sample"]
 
 [params]
 

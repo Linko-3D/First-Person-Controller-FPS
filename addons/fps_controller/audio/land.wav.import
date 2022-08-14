@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamSample"
 uid="uid://kwj04x0wx6ge"
-path="res://.godot/imported/land.wav-30873fe661744bdc60c0d00d7401aab3.sample"
+path="res://.godot/imported/land.wav-1c253645a2dc6f2db91b541d4c58c797.sample"
 
 [deps]
 
-source_file="res://player/audio/land.wav"
-dest_files=["res://.godot/imported/land.wav-30873fe661744bdc60c0d00d7401aab3.sample"]
+source_file="res://addons/fps_controller/audio/land.wav"
+dest_files=["res://.godot/imported/land.wav-1c253645a2dc6f2db91b541d4c58c797.sample"]
 
 [params]
 
