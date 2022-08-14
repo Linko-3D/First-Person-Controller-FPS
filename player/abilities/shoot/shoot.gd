@@ -2,23 +2,11 @@ extends Position3D
 
 var impact = preload( "res://player/abilities/shoot/instances/impact.tscn" )
 
-var ammo = 30
-
-func _ready():
-	$LookAt.position = $Position3D.position
+@export_range(0, 500, 1) var ammo = 30
 
 func _process(delta):
 	$BulletSpread/RayCast3D.rotation.x = randf_range(0, deg2rad(5)) * $RecoilStabilizationTimer.time_left * 5
 
-	if $BulletSpread/RayCast3D.is_colliding():
-		$LookAt.look_at( $BulletSpread/RayCast3D.get_collision_point(), Vector3.UP )
-	else:
-		$LookAt.rotation = Vector3()
-
-	$Position3D.rotation.x = lerp( $Position3D.rotation.x, $LookAt.rotation.x, 10 * delta )
-	$Position3D.rotation.y = lerp( $Position3D.rotation.y, $LookAt.rotation.y, 10 * delta )
-	$Position3D.rotation.z = lerp( $Position3D.rotation.z, $LookAt.rotation.z, 10 * delta )
-	
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) or Input.get_joy_axis(0, JOY_AXIS_TRIGGER_RIGHT) >= 0.6:
 		shoot()
 
@@ -51,9 +39,8 @@ func shoot():
 
 	if ammo <= 0:
 		var tween = create_tween()
-		tween.tween_property( $AmmoBackground, "color", Color(1, 0.75, 0), 0.05 )
-		tween.tween_property( $AmmoBackground, "color", Color(0.25, 0.19, 0), 0.05 )
-		# ici
+		tween.tween_property( $AmmoBackground2, "color", Color(1, 1, 1), 0)
+		tween.tween_property( $AmmoBackground2, "color", Color(0.5, 0.5, 0.5), 0.1 )
 		return
 
 	var tween = create_tween()

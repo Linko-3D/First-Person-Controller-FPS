@@ -3,11 +3,12 @@ extends CharacterBody3D
 @export_range(6, 10, 0.5) var run_speed = 8.0
 @export_range(6.5, 8, 0.5) var jump_velocity = 6.5
 @export_range(0, 10, 1) var air_jumps = 0
+@export_range(1, 3, 1) var gravity_multiplier = 2.0
 
 var current_speed = run_speed
 var remaining_air_jumps = air_jumps
 
-var gravity = ProjectSettings.get_setting("physics/3d/default_gravity") * 2
+var gravity = ProjectSettings.get_setting("physics/3d/default_gravity") * gravity_multiplier
 
 var on_ground = false
 
@@ -17,6 +18,17 @@ var distance_per_frame = global_transform.origin
 var distance_total = 0.0
 var previous_position = global_transform.origin
 
+
+
+
+var weapon_sway_amount = 5
+var mouse_relative_x = 0
+var mouse_relative_y = 0
+
+
+	
+
+
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	rotation.x = 0
@@ -24,13 +36,29 @@ func _ready():
 
 	$Head/Camera3D/DirectionIndicator.hide()
 
+
+
+
 func _input(event):
 	if event is InputEventMouseMotion:
 		rotation.y -= event.relative.x / 1000
 		$Head/Camera3D.rotation.x -= event.relative.y / 1000
 		$Head/Camera3D.rotation.x = clamp( $Head/Camera3D.rotation.x, deg2rad(-90), deg2rad(90) )
+		
+#	Getting the mouse movement for the weapon sway in the physics process
+	if event is InputEventMouseMotion:
+		mouse_relative_x = clamp(event.relative.x, -50, 50)
+		mouse_relative_y = clamp(event.relative.y, -50, 10)
 
 func _physics_process(delta):
+	
+	$Head/Camera3D/Abilities.rotation.z = lerp($Head/Camera3D/Abilities.rotation.z, deg2rad(-mouse_relative_x / 10), weapon_sway_amount * delta)
+	$Head/Camera3D/Abilities.rotation.y = lerp($Head/Camera3D/Abilities.rotation.y, deg2rad(-mouse_relative_x / 20), weapon_sway_amount * delta)
+	$Head/Camera3D/Abilities.rotation.x = lerp($Head/Camera3D/Abilities.rotation.x, deg2rad(-mouse_relative_y / 10), weapon_sway_amount * delta)
+	
+	
+	
+	
 	if Input.get_joy_axis(0, JOY_AXIS_RIGHT_X) < -0.2 or Input.get_joy_axis(0, JOY_AXIS_RIGHT_X) > 0.2:
 		rotation.y -= deg2rad( Input.get_joy_axis(0, 2) * 4.3 )
 	if Input.get_joy_axis(0, JOY_AXIS_RIGHT_Y) < -0.2 or Input.get_joy_axis(0, JOY_AXIS_RIGHT_Y) > 0.2:

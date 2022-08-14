@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bdokvtreqislu"]
+[gd_scene load_steps=12 format=3 uid="uid://bdokvtreqislu"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_iqdp1"]
 [ext_resource type="PackedScene" uid="uid://brqwy1df85k7m" path="res://player/abilities/flashlight/flashlight.tscn" id="2_7m6j2"]
@@ -7,6 +7,7 @@
 [ext_resource type="AudioStream" uid="uid://kwj04x0wx6ge" path="res://player/audio/land.wav" id="3_vl0s2"]
 [ext_resource type="PackedScene" uid="uid://7rpywehig4hb" path="res://player/abilities/grab/grab.tscn" id="4_fanx5"]
 [ext_resource type="AudioStream" uid="uid://cso5c65fmxx1k" path="res://player/audio/footstep.wav" id="4_qyg02"]
+[ext_resource type="PackedScene" uid="uid://cbujch5bwwxtc" path="res://player/abilities/grappling_hook/grappling_hook.tscn" id="5_hpumn"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fd0nu"]
 radius = 0.4
@@ -36,11 +37,26 @@ current = true
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, -0.5)
 mesh = SubResource("PrismMesh_43kvk")
 
-[node name="Flashlight" parent="Head/Camera3D" instance=ExtResource("2_7m6j2")]
-
-[node name="Shoot" parent="Head/Camera3D" instance=ExtResource("3_p7cc4")]
-
 [node name="Grab" parent="Head/Camera3D" instance=ExtResource("4_fanx5")]
+
+[node name="GrapplingHook" parent="Head/Camera3D" instance=ExtResource("5_hpumn")]
+
+[node name="AmmoBackground" type="ColorRect" parent="Head/Camera3D"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -16.0
+offset_top = 10.0
+offset_right = 16.0
+offset_bottom = 15.0
+color = Color(0, 0, 0, 1)
+
+[node name="Abilities" type="Position3D" parent="Head/Camera3D"]
+
+[node name="Shoot" parent="Head/Camera3D/Abilities" instance=ExtResource("3_p7cc4")]
+
+[node name="Flashlight" parent="Head/Camera3D/Abilities" instance=ExtResource("2_7m6j2")]
 
 [node name="UncrouchRayCast3D" type="RayCast3D" parent="."]
 target_position = Vector3(0, 1.1, 0)
@@ -70,7 +86,7 @@ offset_left = -2.0
 offset_top = -2.0
 offset_right = 2.0
 offset_bottom = 2.0
-color = Color(0, 0, 0, 0.501961)
+color = Color(0, 0, 0, 1)
 
 [node name="Crosshair" type="ColorRect" parent="."]
 anchor_left = 0.5
@@ -81,4 +97,3 @@ offset_left = -1.0
 offset_top = -1.0
 offset_right = 1.0
 offset_bottom = 1.0
-color = Color(1, 0.74902, 0, 1)

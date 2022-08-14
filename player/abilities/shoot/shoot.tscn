@@ -40,7 +40,18 @@ max_polyphony = 100
 wait_time = 0.1
 one_shot = true
 
-[node name="AmmoBackground" type="ColorRect" parent="."]
+[node name="AmmoBackground1" type="ColorRect" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -16.0
+offset_top = 10.0
+offset_right = 16.0
+offset_bottom = 15.0
+color = Color(0, 0, 0, 1)
+
+[node name="AmmoBackground2" type="ColorRect" parent="."]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -49,7 +60,7 @@ offset_left = -15.0
 offset_top = 11.0
 offset_right = 15.0
 offset_bottom = 14.0
-color = Color(0, 0, 0, 0.501961)
+color = Color(0.5, 0.5, 0.5, 1)
 
 [node name="AmmoLeft" type="ColorRect" parent="."]
 anchor_left = 0.5
@@ -60,7 +71,6 @@ offset_left = -15.0
 offset_top = 11.0
 offset_right = 15.0
 offset_bottom = 14.0
-color = Color(1, 0.74902, 0, 1)
 
 [node name="BulletSpread" type="Position3D" parent="."]
 
@@ -79,5 +89,4 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.15, -0.1, -0.2)
 
 [node name="Weapon" type="MeshInstance3D" parent="Position3D"]
 mesh = ExtResource("7_o8ljg")
-
-[node name="LookAt" type="Position3D" parent="."]
+skeleton = NodePath("")
