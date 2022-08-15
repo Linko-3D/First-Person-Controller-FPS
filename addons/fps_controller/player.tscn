@@ -41,17 +41,6 @@ mesh = SubResource("PrismMesh_43kvk")
 
 [node name="GrapplingHook" parent="Head/Camera3D" instance=ExtResource("3_leue1")]
 
-[node name="AmmoBackground" type="ColorRect" parent="Head/Camera3D"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -16.0
-offset_top = 10.0
-offset_right = 16.0
-offset_bottom = 15.0
-color = Color(0, 0, 0, 1)
-
 [node name="Abilities" type="Position3D" parent="Head/Camera3D"]
 
 [node name="Shoot" parent="Head/Camera3D/Abilities" instance=ExtResource("4_j6flt")]

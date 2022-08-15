@@ -1,15 +1,63 @@
 [gd_scene load_steps=8 format=3 uid="uid://ccqa7mttvtffe"]
 
 [ext_resource type="Script" path="res://addons/fps_controller/abilities/shoot/shoot.gd" id="1_usqvv"]
-[ext_resource type="AudioStream" path="res://addons/fps_controller/abilities/shoot/audio/shoot.wav" id="2_xm6ji"]
-[ext_resource type="AudioStream" path="res://addons/fps_controller/abilities/shoot/audio/bang.wav" id="3_02ytr"]
-[ext_resource type="AudioStream" path="res://addons/fps_controller/abilities/shoot/audio/trigger.wav" id="4_blmlp"]
-[ext_resource type="AudioStream" path="res://addons/fps_controller/abilities/shoot/audio/shell.wav" id="5_j3sc6"]
-[ext_resource type="AudioStream" path="res://addons/fps_controller/abilities/shoot/audio/reload.wav" id="6_j51q0"]
-[ext_resource type="ArrayMesh" path="res://addons/fps_controller/models/AK-47.obj" id="7_wll2t"]
+[ext_resource type="AudioStream" uid="uid://wurmo7bhfkfd" path="res://addons/fps_controller/abilities/shoot/audio/shoot.wav" id="2_xm6ji"]
+[ext_resource type="AudioStream" uid="uid://b5jknt70mvwwm" path="res://addons/fps_controller/abilities/shoot/audio/bang.wav" id="3_02ytr"]
+[ext_resource type="AudioStream" uid="uid://x5mjykmn3yqk" path="res://addons/fps_controller/abilities/shoot/audio/trigger.wav" id="4_blmlp"]
+[ext_resource type="AudioStream" uid="uid://dyuuk1xumppep" path="res://addons/fps_controller/abilities/shoot/audio/shell.wav" id="5_j3sc6"]
+[ext_resource type="AudioStream" uid="uid://dawjk4vcd5lv7" path="res://addons/fps_controller/abilities/shoot/audio/reload.wav" id="6_j51q0"]
+[ext_resource type="ArrayMesh" uid="uid://daau33dtra4xe" path="res://addons/fps_controller/models/AK-47.obj" id="7_wll2t"]
 
 [node name="Shoot" type="Position3D"]
 script = ExtResource("1_usqvv")
+
+[node name="BulletSpread" type="Position3D" parent="."]
+
+[node name="RayCast3D" type="RayCast3D" parent="BulletSpread"]
+target_position = Vector3(0, 0, -100)
+
+[node name="Position3D" type="Position3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.15, -0.1, -0.2)
+
+[node name="Weapon" type="MeshInstance3D" parent="Position3D"]
+mesh = ExtResource("7_wll2t")
+skeleton = NodePath("")
+
+[node name="Control" type="Control" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="AmmoBackground1" type="ColorRect" parent="Control"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 476.0
+offset_top = 290.0
+offset_right = 508.0
+offset_bottom = 295.0
+color = Color(0, 0, 0, 1)
+
+[node name="AmmoBackground2" type="ColorRect" parent="Control"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 477.0
+offset_top = 291.0
+offset_right = 507.0
+offset_bottom = 294.0
+color = Color(0.5, 0.5, 0.5, 1)
+
+[node name="AmmoLeft" type="ColorRect" parent="Control"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 477.0
+offset_top = 291.0
+offset_right = 507.0
+offset_bottom = 294.0
 
 [node name="ShootSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_xm6ji")
@@ -40,53 +88,9 @@ max_polyphony = 100
 wait_time = 0.1
 one_shot = true
 
-[node name="AmmoBackground1" type="ColorRect" parent="."]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -16.0
-offset_top = 10.0
-offset_right = 16.0
-offset_bottom = 15.0
-color = Color(0, 0, 0, 1)
-
-[node name="AmmoBackground2" type="ColorRect" parent="."]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -15.0
-offset_top = 11.0
-offset_right = 15.0
-offset_bottom = 14.0
-color = Color(0.5, 0.5, 0.5, 1)
-
-[node name="AmmoLeft" type="ColorRect" parent="."]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -15.0
-offset_top = 11.0
-offset_right = 15.0
-offset_bottom = 14.0
-
-[node name="BulletSpread" type="Position3D" parent="."]
-
-[node name="RayCast3D" type="RayCast3D" parent="BulletSpread"]
-target_position = Vector3(0, 0, -100)
-
 [node name="ReloadTimer" type="Timer" parent="."]
 one_shot = true
 
 [node name="RecoilStabilizationTimer" type="Timer" parent="."]
 wait_time = 0.2
 one_shot = true
-
-[node name="Position3D" type="Position3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.15, -0.1, -0.2)
-
-[node name="Weapon" type="MeshInstance3D" parent="Position3D"]
-mesh = ExtResource("7_wll2t")
-skeleton = NodePath("")
