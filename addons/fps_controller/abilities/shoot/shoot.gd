@@ -4,6 +4,8 @@ var impact = preload( "res://addons/fps_controller/abilities/shoot/instances/imp
 
 @export_range(0, 500, 1) var ammo = 30
 
+@onready var ammo_background_color = $Control/AmmoBackground2.color
+
 func _process(delta):
 	$BulletSpread/RayCast3D.rotation.x = randf_range(0, deg2rad(5)) * $RecoilStabilizationTimer.time_left * 5
 
@@ -44,7 +46,7 @@ func shoot():
 	if ammo <= 0:
 		var tween = create_tween()
 		tween.tween_property( $Control/AmmoBackground2, "color", Color(1, 1, 1), 0)
-		tween.tween_property( $Control/AmmoBackground2, "color", Color(0.5, 0.5, 0.5), 0.1 )
+		tween.tween_property( $Control/AmmoBackground2, "color", ammo_background_color, 0.1 )
 		return
 
 	var tween = create_tween()

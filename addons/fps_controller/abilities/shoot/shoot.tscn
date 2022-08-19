@@ -24,6 +24,7 @@ mesh = ExtResource("7_wll2t")
 skeleton = NodePath("")
 
 [node name="Control" type="Control" parent="."]
+modulate = Color(1, 1, 1, 0.5)
 offset_right = 40.0
 offset_bottom = 40.0
 
@@ -47,7 +48,7 @@ offset_left = 477.0
 offset_top = 291.0
 offset_right = 507.0
 offset_bottom = 294.0
-color = Color(0.5, 0.5, 0.5, 1)
+color = Color(0.25, 0.25, 0.25, 1)
 
 [node name="AmmoLeft" type="ColorRect" parent="Control"]
 anchor_left = 0.5

@@ -2,16 +2,15 @@
 
 [ext_resource type="Script" path="res://addons/fps_controller/abilities/shoot/instances/impact.gd" id="1_noxe0"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yo1u4"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uhn7u"]
 albedo_color = Color(1, 0.901961, 0.8, 1)
 emission_enabled = true
 emission = Color(1, 0.901961, 0.8, 1)
 emission_energy = 16.0
 
-[sub_resource type="CylinderMesh" id="CylinderMesh_gf77l"]
-top_radius = 0.1
-bottom_radius = 0.1
-height = 0.1
+[sub_resource type="SphereMesh" id="SphereMesh_rqvso"]
+radius = 0.1
+height = 0.3
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pmjaa"]
 albedo_color = Color(0.1, 0.1, 0.1, 1)
@@ -21,21 +20,22 @@ direction = Vector3(0, 0, 1)
 initial_velocity_min = 2.0
 initial_velocity_max = 3.0
 
-[sub_resource type="BoxMesh" id="BoxMesh_at37q"]
-size = Vector3(0.02, 0.02, 0.02)
+[sub_resource type="SphereMesh" id="SphereMesh_6gxkk"]
+radius = 0.01
+height = 0.02
 
 [node name="Impact" type="Position3D"]
 script = ExtResource("1_noxe0")
 
 [node name="Flash" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
-material_overlay = SubResource("StandardMaterial3D_yo1u4")
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_uhn7u")
 cast_shadow = 0
-mesh = SubResource("CylinderMesh_gf77l")
+mesh = SubResource("SphereMesh_rqvso")
 
 [node name="GPUParticles3D" type="GPUParticles3D" parent="."]
 material_override = SubResource("StandardMaterial3D_pmjaa")
 explosiveness = 1.0
 local_coords = false
 process_material = SubResource("ParticlesMaterial_0lj0k")
-draw_pass_1 = SubResource("BoxMesh_at37q")
+draw_pass_1 = SubResource("SphereMesh_6gxkk")
